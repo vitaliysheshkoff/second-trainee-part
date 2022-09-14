@@ -25,19 +25,29 @@
                     @endif
                     <td>{{$user->gender}}</td>
                     <td style="text-align: center">
-                        <button type="button" class="btn btn-primary " data-toggle="modal"
-                                data-target-user="{{$user}}" data-target="#exampleModalCenter">edit
-                        </button>
-                        <button type="button" class="btn btn-danger"
-                                onclick="window.location='{{ url("remove/user/$user->id") }}'">delete
-                        </button>
+                        <div class="row justify-content-center">
+                            <div class="col-6 col-sm-3">
+                                <button type="button" class="btn btn-primary " data-toggle="modal"
+                                        data-target-user="{{$user}}" data-target="#exampleModalCenter">edit
+                                </button>
+                            </div>
+                            <div class="col-6 col-sm-3">
+                                <form action="/remove/user/{{$user->id}}" method="POST">
+                                    @method('DELETE')
+                                    @csrf
+                                    <button class="btn btn-danger">delete</button>
+                                </form>
+                            </div>
+                        </div>
                     </td>
                 </tr>
             @endforeach
             </tbody>
         </table>
-        <form action="/remove">
-            <button class="btn btn-primary justify-content-center">remove all</button>
+        <form action="/remove" method="POST">
+            @method('DELETE')
+            @csrf
+            <button class="btn btn-primary">remove all</button>
         </form>
     @endif
 </div>

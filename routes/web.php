@@ -17,5 +17,5 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [MainController::class, 'home'])->name('home');
 Route::post('/check', [MainController::class, 'add']);
 Route::put('/edit', [MainController::class, 'put']);
-Route::get('/remove', [MainController::class, 'removeAll']);
-Route::get('/remove/user/{id}', [MainController::class, 'remove']);
+Route::delete('/remove', [MainController::class, 'removeAll']);
+Route::delete('/remove/user/{id}', [MainController::class, 'remove']);
