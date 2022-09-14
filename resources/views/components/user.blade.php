@@ -16,7 +16,6 @@
     <h6>
         {{$user->name}}
     </h6>
-
     <h6>
         gender: {{$user->gender}}
     </h6>
