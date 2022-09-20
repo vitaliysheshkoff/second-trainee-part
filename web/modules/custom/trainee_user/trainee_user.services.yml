@@ -1,4 +1,4 @@
 services:
   trainee_user.user_manager:
-    class: Drupal\trainee_user\Service\UserManager
+    class: Drupal\trainee_user\UserManager
     arguments: ['@current_user']
