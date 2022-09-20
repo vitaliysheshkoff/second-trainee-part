@@ -1,0 +1,7 @@
+trainee_user.users:
+  path: 'users'
+  defaults:
+    _controller: 'Drupal\trainee_user\Controller\UserController::users'
+    _title: 'User form!'
+  requirements:
+    _permission: 'access content'
