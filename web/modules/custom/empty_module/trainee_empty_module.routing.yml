@@ -1,0 +1,7 @@
+trainee_empty_module.hello:
+  path: 'hello'
+  defaults:
+    _controller: 'Drupal\trainee_empty_module\Controller\HelloController::hello'
+    _title: 'Trainee empty module!'
+  requirements:
+    _permission: 'access content'

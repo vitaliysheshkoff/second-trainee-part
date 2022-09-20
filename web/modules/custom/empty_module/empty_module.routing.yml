@@ -1,7 +1,0 @@
-empty_module.hello:
-  path: 'hello'
-  defaults:
-    _controller: 'Drupal\empty_module\Controller\HelloController::hello'
-    _title: 'Hello World!'
-  requirements:
-    _permission: 'access content'
