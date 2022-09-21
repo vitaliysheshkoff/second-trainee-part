@@ -10,7 +10,7 @@ use Drupal\Core\Controller\ControllerBase;
  */
 class UserController extends ControllerBase {
   public function users(): array{
-    $data = Drupal::service('trainee_user.user_manager')->getList(20)[0]->name;
+    $data = Drupal::service('trainee_user.user_manager_service')->getList(20)[0]->name;
     return [
       '#markup' => $data
     ];

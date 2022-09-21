@@ -7,10 +7,10 @@ use GuzzleHttp\Exception\GuzzleException;
 
 
 /**
- * Class UserManager
+ * Class UserManagerService
  * @package Drupal\trainee_user
  */
-class UserManager implements ManagerInterface {
+class UserManagerService implements ManagerInterface {
 
   /**
    * @throws GuzzleException

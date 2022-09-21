@@ -5,3 +5,11 @@ trainee_user.users:
     _title: 'Trainee User form'
   requirements:
     _permission: 'access content'
+
+trainee_user.management_form:
+  path: 'form'
+  defaults:
+    _form: 'Drupal\trainee_user\Form\UserManagementForm'
+    _title: 'Trainee user form'
+  requirements:
+    _permission: 'access content'
