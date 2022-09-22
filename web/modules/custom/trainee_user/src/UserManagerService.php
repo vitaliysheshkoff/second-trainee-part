@@ -4,103 +4,82 @@ namespace Drupal\trainee_user;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
-
+use Throwable;
 
 /**
  * Class UserManagerService
  * @package Drupal\trainee_user
  */
 class UserManagerService implements ManagerInterface {
-
-  /**
-   * @throws GuzzleException
-   */
   public function getList(int $page): ?array {
     $client = new Client();
-    $response = $client->request('GET', "https://gorest.co.in/public/v2/users/?access-token="
-      . getenv('ACCESS_TOKEN'), [
-        'query' => [
-          'page' => $page,
-        ],
-      ]
-    );
-
-    if ($response->getStatusCode() <= 400) {
-      return json_decode($response->getBody());
+    try {
+      $response = $client->request('GET',
+        "https://gorest.co.in/public/v2/users/?access-token=" . getenv('ACCESS_TOKEN'), [
+          'query' => [
+            'page' => $page,
+          ],
+        ]
+      );
+    } catch (Throwable) {
+      return null;
     }
-
-    return null;
+    return json_decode($response->getBody(), true);
   }
 
   /**
    * @throws GuzzleException
    */
-  public function get(int $id): object|null {
+  public function get(int $id): ?array {
     $client = new Client();
-    $response = $client->request('GET', "https://gorest.co.in/public/v2/users/$id?access-token="
-      . getenv('ACCESS_TOKEN')
-    );
-
-    if ($response->getStatusCode() <= 400) {
-      return json_decode($response->getBody());
-    }
-
-    return null;
+    $response = $client->request('GET',
+      "https://gorest.co.in/public/v2/users/$id?access-token=" . getenv('ACCESS_TOKEN'));
+    return json_decode($response->getBody(), true);
   }
 
-  public function update(int $id): object|null {
+  /**
+   * @throws GuzzleException
+   */
+  public function update(int $id, array $record): ?array {
     $client = new Client();
-    $response = $client->request('PUT', "https://gorest.co.in/public/v2/users/$id?access-token="
-      . getenv('ACCESS_TOKEN'), [
+    $response = $client->request('PUT',
+      "https://gorest.co.in/public/v2/users/$id?access-token=" . getenv('ACCESS_TOKEN'), [
         'form_params' => [
-          'name' => 'Bawenali Ramakrishna',
-          'gender' => 'male',
-          'email' => 'pavloereae@mail.com',
-          'status' => 'active'
+          'name' => $record['name'],
+          'gender' => $record['gender'],
+          'email' => $record['email'],
+          'status' => $record['status'],
         ]
       ]
     );
-
-    if ($response->getStatusCode() <= 400) {
-      return json_decode($response->getBody());
-    }
-    return null;
+    return json_decode($response->getBody(), true);
   }
 
   /**
    * @throws GuzzleException
    */
-  public function delete(int $id): int|null {
+  public function delete(int $id): ?int {
     $client = new Client();
-    $response = $client->request('DELETE', "https://gorest.co.in/public/v2/users/$id?access-token="
-      . getenv('ACCESS_TOKEN'));
-
-    if ($response->getStatusCode() <= 400) {
-      return $response->getStatusCode();
-    }
-    return null;
+    $response = $client->request('DELETE',
+      "https://gorest.co.in/public/v2/users/$id?access-token=" . getenv('ACCESS_TOKEN'));
+    return $response->getStatusCode();
   }
 
   /**
    * @throws GuzzleException
    */
-  public function create(): object|null {
+  public function create(array $record): ?array {
     $client = new Client();
-    $response = $client->request('POST', "https://gorest.co.in/public/v2/users?access-token="
-      . getenv('ACCESS_TOKEN') /*'https://gorest.co.in/public/v2/users'*/, [
+    $response = $client->request('POST',
+      "https://gorest.co.in/public/v2/users?access-token=" . getenv('ACCESS_TOKEN'), [
         'form_params' => [
-          'name' => 'Aawenali Ramakrishna',
-          'gender' => 'male',
-          'email' => 'aerrrxqwweeenali.ramakrishna@15ce.com',
-          'status' => 'active'
+          'name' => $record['name'],
+          'status' => $record['status'],
+          'gender' => $record['gender'],
+          'email' => $record['email'],
         ]
       ]
     );
-
-    if ($response->getStatusCode() <= 400) {
-      return json_decode($response->getBody());
-    }
-
-    return null;
+    return json_decode($response->getBody(), true);
   }
 }

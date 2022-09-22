@@ -24,10 +24,10 @@ interface ManagerInterface {
    * @param int $id
    *   record id
    *
-   * @return object|null
-   *   record
+   * @return array|null
+   *   record array
    */
-  public function get(int $id): ?object;
+  public function get(int $id): ?array;
 
   /**
    * Return updated record
@@ -35,10 +35,13 @@ interface ManagerInterface {
    * @param int $id
    *   record id
    *
-   * @return object|null
-   *   record
+   * @param array $record
+   *   record array
+   *
+   * @return array|null
+   *   record array
    */
-  public function update(int $id): ?object;
+  public function update(int $id, array $record): ?array;
 
   /**
    * Return status code of operation
@@ -54,9 +57,12 @@ interface ManagerInterface {
   /**
    * Return created record
    *
-   * @return object|null
-   *   record object
+   * @param array $record
+   *   record array
+   *
+   * @return array|null
+   *   record array
    */
-  public function create(): ?object;
+  public function create(array $record): ?array;
 
 }

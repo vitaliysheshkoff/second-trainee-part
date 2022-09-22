@@ -1,1 +1,16 @@
-<!--User Custom Form-->
+<?php
+
+/**
+ * Implements hook_theme().
+ */
+function trainee_user_theme($existing, $type, $theme, $path): array
+{
+  return [
+    'trainee_user_list' => [
+      'variables' => [
+        'attributes' => [],
+        'user' => [],
+      ],
+    ],
+  ];
+}

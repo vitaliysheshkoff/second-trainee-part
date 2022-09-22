@@ -1,0 +1,28 @@
+{{ attach_library('trainee_user/table-style') }}
+<div>
+  <table>
+    <tr>
+      <th>ID</th>
+      <th>NAME</th>
+      <th>EMAIL</th>
+      <th>GENDER</th>
+      <th>STATUS</th>
+      <th>ACTIONS</th>
+    </tr>
+
+    {% for item in user %}
+      <tr>
+        <td>{{ item.id }}</td>
+        <td>{{ item.name }}</td>
+        <td>{{ item.email }}</td>
+        <td>{{ item.gender }}</td>
+        <td>{{ item.status }}</td>
+        <td>
+          <div class="button-div">
+            <a href="{{ '/delete/' ~ item.id }}" class="button button--link"> delete </a>
+            <a href="{{ '/form?id=' ~ item.id }}" class="button button--link"> edit </a>
+          </div>
+      </tr>
+    {% endfor %}
+  </table>
+</div>
