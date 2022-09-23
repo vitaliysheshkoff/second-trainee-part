@@ -32,6 +32,10 @@ class UserManagementForm extends FormBase {
           "The 'User Name' attribute must be starts with uppercase,
           has a single space between first and second name"));
     }*/
+    $email = $form_state->getValue('email');
+    if (!\Drupal::service('email.validator')->isValid($email)) {
+      $form_state->setErrorByName('email', t('The email address %mail is not valid.', array('%mail' => $email)));
+    }
 
     parent::validateForm($form, $form_state);
   }
@@ -57,7 +61,7 @@ class UserManagementForm extends FormBase {
       '#default_value' => (isset($user['name']) && $_GET['id']) ? $user['name'] : ''
     );
     $form['email'] = array(
-      '#type' => 'email',
+      '#type' => 'textfield',
       '#title' => t('Email:'),
       '#required' => TRUE,
       '#default_value' => (isset($user['email']) && $_GET['id']) ? $user['email'] : ''
