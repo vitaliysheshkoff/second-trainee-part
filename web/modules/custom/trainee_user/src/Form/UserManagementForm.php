@@ -61,7 +61,7 @@ class UserManagementForm extends FormBase {
       '#default_value' => (isset($user['name']) && $_GET['id']) ? $user['name'] : ''
     );
     $form['email'] = array(
-      '#type' => 'textfield',
+      '#type' => 'email',
       '#title' => t('Email:'),
       '#required' => TRUE,
       '#default_value' => (isset($user['email']) && $_GET['id']) ? $user['email'] : ''
