@@ -26,13 +26,13 @@ class UserManagementForm extends FormBase {
    * {@inheritdoc}
    */
   public function validateForm(array &$form, FormStateInterface $form_state) {
-    /*if (!preg_match("/^[A-Z][a-z]+\s[A-Z][a-z]+$/", $form_state->getValue('name'))) {
+   /* if (!preg_match("/^[A-Z][a-z]+\s[A-Z][a-z]+$/", $form_state->getValue('name'))) {
       $form_state->setErrorByName('name',
         $this->t(
           "The 'User Name' attribute must be starts with uppercase,
           has a single space between first and second name"));
-    }
-   */
+    }*/
+
     parent::validateForm($form, $form_state);
   }
 

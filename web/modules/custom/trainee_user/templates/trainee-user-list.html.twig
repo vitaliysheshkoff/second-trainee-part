@@ -1,5 +1,8 @@
 {{ attach_library('trainee_user/table-style') }}
 <div>
+  <div class="button-div">
+    <a href="{{ '/form' ~ item.id }}" class="button button--link"> add new user </a>
+  </div>
   <table>
     <tr>
       <th>ID</th>
@@ -24,5 +27,7 @@
           </div>
       </tr>
     {% endfor %}
+
+
   </table>
 </div>
