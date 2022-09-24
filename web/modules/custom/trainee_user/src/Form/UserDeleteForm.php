@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\trainee_user\Form\UserDeleteForm.
+ */
+
 namespace Drupal\trainee_user\Form;
 
 use Drupal;
@@ -8,63 +13,116 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
 use Throwable;
 
+/**
+ * Class UserDeleteForm.
+ */
 class UserDeleteForm extends ConfirmFormBase {
+
+  /**
+   * The id of deleting user.
+   *
+   * @var int
+   */
   private int $id;
 
+  /**
+   * The page of deleting user.
+   *
+   * @var int
+   */
+  private int $page;
+
+  /**
+   * {@inheritdoc}
+   */
   public function getQuestion(): string {
-    return 'Delete this user?';
+    return $this->t('Delete this user?');
   }
 
+  /**
+   * {@inheritdoc}
+   */
   public function getCancelUrl(): Url {
     return Url::fromRoute('trainee_user.user_list')
-      ->setRouteParameters(array('page' => 1));
+      ->setRouteParameters(['page' => $this->page]);
   }
 
+  /**
+   * {@inheritdoc}
+   */
   public function getFormId(): string {
     return 'user_delete_form';
   }
 
+  /**
+   * {@inheritdoc}
+   */
   public function getDescription(): Drupal\Core\StringTranslation\TranslatableMarkup {
     try {
-      $targetUser = Drupal::service('trainee_user.user_manager_service')->get($this->id);
+      $targetUser = Drupal::service('trainee_user.user_manager_service')
+        ->get($this->id);
     } catch (Throwable $exception) {
       $error_message = preg_replace('/`[\s\S]+?`/', '', $exception->getMessage(), 1);
-      Drupal::messenger()->addMessage(t($error_message), 'error');
-      return t('unable to delete this user');
+      $this->messenger()->addMessage($this->t($error_message), 'error');
+      return $this->t('Unable to delete this user.');
     }
-    return t('Are you sure do you want to delete this user?' . '<br>'
-      . 'ID: ' . $targetUser['id'] . '<br>'
-      . 'NAME: ' . $targetUser['name'] . '<br>'
-      . 'EMAIL: ' . $targetUser['email'] . '<br>'
-      . 'GENDER: ' . $targetUser['gender'] . '<br>'
-      . 'STATUS: ' . $targetUser['status'] . '<br>'
+    return $this->t("Are you sure do you want to delete this user? <br> ID: @userId <br>NAME: @userName <br>EMAIL: @userEmail <br>GENDER: @userGender <br> STATUS: @userStatus",
+      [
+        '@userId' => $targetUser['id'],
+        '@userName' => $targetUser['name'],
+        '@userEmail' => $targetUser['email'],
+        '@userGender' => $targetUser['gender'],
+        '@userStatus' => $targetUser['status'],
+      ]
     );
   }
 
+  /**
+   * {@inheritdoc}
+   */
   public function getConfirmText(): Drupal\Core\StringTranslation\TranslatableMarkup {
-    return t('Delete');
+    return $this->t('Delete');
   }
 
+  /**
+   * {@inheritdoc}
+   */
   public function getCancelText(): Drupal\Core\StringTranslation\TranslatableMarkup {
-    return t('Cancel');
+    return $this->t('Cancel');
   }
 
+  /**
+   * {@inheritdoc}
+   */
   public function buildForm(array $form, FormStateInterface $form_state, int $id = NULL): array {
+
     $this->id = $id;
+
+    if ($this->getRequest()->get('page') !== NULL) {
+      $this->page = $this->getRequest()->get('page');
+    }
+    else {
+      $this->page = 1;
+    }
+
     return parent::buildForm($form, $form_state);
   }
 
+  /**
+   * {@inheritdoc}
+   */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     try {
       Drupal::service('trainee_user.user_manager_service')->delete($this->id);
-      Drupal::messenger()->addMessage(t('User has been successfully deleted'));
+      $this->messenger()
+        ->addMessage($this->t('User has been successfully deleted'));
     } catch (Throwable $exception) {
       $error_message = preg_replace('/`[\s\S]+?`/', '', $exception->getMessage(), 1);
-      Drupal::messenger()->addMessage(t($error_message), 'error');
+      $this->messenger()->addMessage($this->t($error_message), 'error');
     }
 
     $url = Url::fromRoute('trainee_user.user_list')
-      ->setRouteParameters(array('page' => 1));
+      ->setRouteParameters(['page' => $this->page]);
     $form_state->setRedirectUrl($url);
   }
 

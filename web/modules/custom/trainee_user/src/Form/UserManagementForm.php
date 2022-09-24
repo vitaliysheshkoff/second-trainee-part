@@ -13,6 +13,9 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
 use Throwable;
 
+/**
+ * Class UserManagementForm.
+ */
 class UserManagementForm extends FormBase {
 
   /**
@@ -26,15 +29,10 @@ class UserManagementForm extends FormBase {
    * {@inheritdoc}
    */
   public function validateForm(array &$form, FormStateInterface $form_state) {
-   /* if (!preg_match("/^[A-Z][a-z]+\s[A-Z][a-z]+$/", $form_state->getValue('name'))) {
-      $form_state->setErrorByName('name',
-        $this->t(
-          "The 'User Name' attribute must be starts with uppercase,
-          has a single space between first and second name"));
-    }*/
     $email = $form_state->getValue('email');
-    if (!\Drupal::service('email.validator')->isValid($email)) {
-      $form_state->setErrorByName('email', t('The email address %mail is not valid.', array('%mail' => $email)));
+    if (!Drupal::service('email.validator')->isValid($email)) {
+      $form_state->setErrorByName('email',
+        $this->t('The email address %mail is not valid.', ['%mail' => $email]));
     }
 
     parent::validateForm($form, $form_state);
@@ -44,53 +42,59 @@ class UserManagementForm extends FormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
-    if (isset($_GET['id'])) {
+    if ($this->getRequest()->get('id') !== NULL) {
       try {
-        $user = Drupal::service('trainee_user.user_manager_service')->get($_GET['id']);
+        $user = Drupal::service('trainee_user.user_manager_service')
+          ->get($this->getRequest()->get('id'));
       } catch (Throwable $exception) {
-        $error_message = preg_replace('/`[\s\S]+?`/', '', $exception->getMessage(), 1);
-        Drupal::messenger()->addMessage(t($error_message), 'error');
-        $user = null;
+        $error_message = preg_replace('/`[\s\S]+?`/', '',
+          $exception->getMessage(), 1);
+        $this->messenger()->addMessage($this->t($error_message), 'error');
+        $user = NULL;
       }
     }
 
-    $form['name'] = array(
+    $form['name'] = [
       '#type' => 'textfield',
-      '#title' => t('User Name:'),
+      '#title' => $this->t('User Name:'),
       '#required' => TRUE,
-      '#default_value' => (isset($user['name']) && $_GET['id']) ? $user['name'] : ''
-    );
-    $form['email'] = array(
+      '#default_value' => (isset($user['name']) && $this->getRequest()
+          ->get('id')) ? $user['name'] : '',
+    ];
+    $form['email'] = [
       '#type' => 'email',
-      '#title' => t('Email:'),
+      '#title' => $this->t('Email:'),
       '#required' => TRUE,
-      '#default_value' => (isset($user['email']) && $_GET['id']) ? $user['email'] : ''
-    );
-    $form['gender'] = array(
+      '#default_value' => (isset($user['email']) && $this->getRequest()
+          ->get('id')) ? $user['email'] : '',
+    ];
+    $form['gender'] = [
       '#type' => 'select',
       '#title' => ('Gender'),
-      '#options' => array(
-        'female' => t('female'),
-        'male' => t('male'),
-      ),
-      '#default_value' => (isset($user['gender']) && $_GET['id']) ? $user['gender'] : ''
-    );
-    $form['status'] = array(
+      '#options' => [
+        'female' => $this->t('female'),
+        'male' => $this->t('male'),
+      ],
+      '#default_value' => (isset($user['gender']) && $this->getRequest()
+          ->get('id')) ? $user['gender'] : '',
+    ];
+    $form['status'] = [
       '#type' => 'select',
       '#title' => ('Status'),
-      '#options' => array(
-        'active' => t('active'),
-        'inactive' => t('inactive'),
-      ),
-      '#default_value' => (isset($user['status']) && $_GET['id']) ? $user['status'] : ''
-    );
+      '#options' => [
+        'active' => $this->t('active'),
+        'inactive' => $this->t('inactive'),
+      ],
+      '#default_value' => (isset($user['status']) && $this->getRequest()
+          ->get('id')) ? $user['status'] : '',
+    ];
 
     $form['actions']['#type'] = 'actions';
-    $form['actions']['submit'] = array(
+    $form['actions']['submit'] = [
       '#type' => 'submit',
       '#value' => $this->t('Save'),
       '#button_type' => 'primary',
-    );
+    ];
     return $form;
   }
 
@@ -106,33 +110,52 @@ class UserManagementForm extends FormBase {
 
     $error_message = '';
     $answer = '';
-    $newUser = null;
+    $new_user = NULL;
 
     try {
-      if (isset($_GET['id'])) {
-        $newUser = Drupal::service('trainee_user.user_manager_service')->update($_GET['id'], $user);
-        $answer = "New user has been updated successfully";
-      } else {
-        $newUser = Drupal::service('trainee_user.user_manager_service')->create($user);
+      if ($this->getRequest()->get('id') !== NULL) {
+        $new_user = Drupal::service('trainee_user.user_manager_service')
+          ->update($this->getRequest()->get('id'), $user);
+        $answer = "User has been updated successfully";
+      }
+      else {
+        $new_user = Drupal::service('trainee_user.user_manager_service')
+          ->create($user);
         $answer = "New user has been created successfully";
       }
     } catch (Throwable $exception) {
-      $error_message = preg_replace('/`[\s\S]+?`/', '', $exception->getMessage(), 1);
+      $error_message = preg_replace('/`[\s\S]+?`/', '',
+        $exception->getMessage(), 1);
     }
 
-    if ($newUser === null) {
-      Drupal::messenger()->addMessage(t($error_message), 'error');
-    } else {
-      Drupal::messenger()->addMessage(t($answer));
-      Drupal::messenger()->addMessage('User id' . ': ' . $newUser['id']);
-      Drupal::messenger()->addMessage('User name' . ': ' . $newUser['name']);
-      Drupal::messenger()->addMessage('Email' . ': ' . $newUser['email']);
-      Drupal::messenger()->addMessage('Gender' . ': ' . $newUser['gender']);
-      Drupal::messenger()->addMessage('Status' . ': ' . $newUser['status']);
+    if ($new_user === NULL) {
+      $this->messenger()->addMessage($this->t($error_message), 'error');
+    }
+    else {
+      $this->messenger()->addMessage($this->t($answer));
+      $this->messenger()
+        ->addMessage($this->t('User id: @newUserId',
+          ['@newUserId' => $new_user['id']]));
+      $this->messenger()
+        ->addMessage($this->t('User name: @newUserName',
+          ['@newUserName' => $new_user['name']]));
+      $this->messenger()
+        ->addMessage($this->t('Email: @newUserEmail',
+          ['@newUserEmail' => $new_user['email']]));
+      $this->messenger()
+        ->addMessage($this->t('Gender: @newUserGender',
+          ['@newUserGender' => $new_user['gender']]));
+      $this->messenger()
+        ->addMessage($this->t('Status: @newUserStatus',
+          ['@newUserStatus' => $new_user['status']]));
     }
 
     $url = Url::fromRoute('trainee_user.user_list')
-      ->setRouteParameters(array('page' => 1));
+      ->setRouteParameters([
+        'page' => $this->getRequest()
+          ->get('page') ? $this->getRequest()
+          ->get('page') : 1,
+      ]);
     $form_state->setRedirectUrl($url);
   }
 

@@ -21,4 +21,3 @@ trainee_user.delete_form:
     _title: 'Trainee user form'
   requirements:
     _permission: 'access content'
-

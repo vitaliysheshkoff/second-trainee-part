@@ -1,85 +1,130 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\trainee_user\UserManagerService.
+ */
+
 namespace Drupal\trainee_user;
 
 use GuzzleHttp\Client;
-use GuzzleHttp\Exception\GuzzleException;
+use Psr\Http\Message\ResponseInterface;
 use Throwable;
 
 /**
- * Class UserManagerService
- * @package Drupal\trainee_user
+ * Class UserManagerService.
  */
-class UserManagerService implements ManagerInterface {
-  public function getList(int $page): ?array {
-    $client = new Client();
-    try {
-      $response = $client->request('GET',
-        "https://gorest.co.in/public/v2/users/?access-token=" . getenv('ACCESS_TOKEN'), [
-          'query' => [
-            'page' => $page,
-          ],
-        ]
-      );
-    } catch (Throwable) {
-      return null;
-    }
-    return json_decode($response->getBody(), true);
+class UserManagerService implements UserManagerInterface {
+
+  /**
+   * {@inheritdoc}
+   */
+  protected Client $client;
+
+  /**
+   * Constructs the UserManagerService.
+   */
+  public function __construct() {
+    $this->client = new Client();
   }
 
   /**
-   * @throws GuzzleException
+   * {@inheritdoc}
+   */
+  public function getList(int $page): ?array {
+    try {
+      $response = $this->request([
+        'method' => 'GET',
+        'query' => ['page' => $page],
+      ]);
+    } catch (Throwable) {
+      return NULL;
+    }
+    return json_decode($response->getBody(), TRUE);
+  }
+
+  /**
+   * {@inheritdoc}
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public function get(int $id): ?array {
-    $client = new Client();
-    $response = $client->request('GET',
-      "https://gorest.co.in/public/v2/users/$id?access-token=" . getenv('ACCESS_TOKEN'));
-    return json_decode($response->getBody(), true);
+    $response = $this->request(['method' => 'GET', 'id' => $id]);
+    return json_decode($response->getBody(), TRUE);
   }
 
   /**
-   * @throws GuzzleException
+   * {@inheritdoc}
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public function update(int $id, array $record): ?array {
-    $client = new Client();
-    $response = $client->request('PUT',
-      "https://gorest.co.in/public/v2/users/$id?access-token=" . getenv('ACCESS_TOKEN'), [
-        'form_params' => [
-          'name' => $record['name'],
-          'gender' => $record['gender'],
-          'email' => $record['email'],
-          'status' => $record['status'],
-        ]
-      ]
-    );
-    return json_decode($response->getBody(), true);
+    $response = $this->request([
+      'method' => 'PUT',
+      'record' => $record,
+      'id' => $id,
+    ]);
+    return json_decode($response->getBody(), TRUE);
   }
 
   /**
-   * @throws GuzzleException
+   * {@inheritdoc}
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public function delete(int $id): ?int {
-    $client = new Client();
-    $response = $client->request('DELETE',
-      "https://gorest.co.in/public/v2/users/$id?access-token=" . getenv('ACCESS_TOKEN'));
+    $response = $this->request(['method' => 'DELETE', 'id' => $id]);
     return $response->getStatusCode();
   }
 
   /**
-   * @throws GuzzleException
+   * {@inheritdoc}
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public function create(array $record): ?array {
-    $client = new Client();
-    $response = $client->request('POST',
-      "https://gorest.co.in/public/v2/users?access-token=" . getenv('ACCESS_TOKEN'), [
-        'form_params' => [
-          'name' => $record['name'],
-          'status' => $record['status'],
-          'gender' => $record['gender'],
-          'email' => $record['email'],
-        ]
-      ]
-    );
-    return json_decode($response->getBody(), true);
+    $response = $this->request(['method' => 'POST', 'record' => $record]);
+    return json_decode($response->getBody(), TRUE);
   }
+
+
+  /**
+   * Provides response from REST API.
+   *
+   * @param array $params
+   *   string method: 'POST', 'GET', 'PUT', 'PATCH', DELETE',
+   *   array record(name, gender, email,status),
+   *   array query,
+   *   int id.
+   *
+   * @return \Psr\Http\Message\ResponseInterface
+   * @throws \GuzzleHttp\Exception\GuzzleException
+   */
+  public function request(array $params): ResponseInterface {
+
+    $url = "https://gorest.co.in/public/v2/users/{$params['id']}";
+
+    if ($params['method'] == 'DELETE' || $params['method'] == 'GET') {
+      return $this->client->request($params['method'],
+        $url, [
+          'headers' => [
+            'Accept' => 'application/json',
+            'Content-Type' => 'application/json',
+            'Authorization' => " Bearer " . getenv('ACCESS_TOKEN'),
+          ],
+          'query' => $params['query'],
+        ]
+      );
+    }
+    else {
+      return $this->client->request($params['method'],
+        $url . "?access-token="
+        . getenv('ACCESS_TOKEN'), [
+          'form_params' => [
+            'name' => $params['record']['name'],
+            'gender' => $params['record']['gender'],
+            'email' => $params['record']['email'],
+            'status' => $params['record']['status'],
+          ],
+        ]
+      );
+    }
+  }
+
 }

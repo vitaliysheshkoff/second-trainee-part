@@ -1,33 +1,29 @@
-{{ attach_library('trainee_user/table-style') }}
-<div>
-  <div class="button-div">
-    <a href="{{ '/form' ~ item.id }}" class="button button--link"> add new user </a>
+<section>
+  <div>
+    <a href="{{ routes.add }}" class="{{ attributes.button.class }}"> {{ button_text.add }}</a>
   </div>
   <table>
     <tr>
-      <th>ID</th>
-      <th>NAME</th>
-      <th>EMAIL</th>
-      <th>GENDER</th>
-      <th>STATUS</th>
-      <th>ACTIONS</th>
+      {% for name in table %}
+        <th>{{ name }}</th>
+      {% endfor %}
     </tr>
-
-    {% for item in user %}
+    {% for user in users %}
       <tr>
-        <td>{{ item.id }}</td>
-        <td>{{ item.name }}</td>
-        <td>{{ item.email }}</td>
-        <td>{{ item.gender }}</td>
-        <td>{{ item.status }}</td>
+        <td>{{ user.id }}</td>
+        <td>{{ user.name }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.gender }}</td>
+        <td>{{ user.status }}</td>
         <td>
-          <div class="button-div">
-            <a href="{{ '/delete/' ~ item.id }}" class="button button--link"> delete </a>
-            <a href="{{ '/form?id=' ~ item.id }}" class="button button--link"> edit </a>
+          <div>
+            <a href="{{ path(routes.delete, {'id': user.id, 'page': page}) }}"
+               class="{{ attributes.button.class }}"> {{ button_text.delete }} </a>
+            <a href="{{ path(routes.update, {'id': user.id, 'page': page}) }}"
+               class="{{ attributes.button.class }}"> {{ button_text.edit }} </a>
+
           </div>
       </tr>
     {% endfor %}
-
-
   </table>
-</div>
+</section>

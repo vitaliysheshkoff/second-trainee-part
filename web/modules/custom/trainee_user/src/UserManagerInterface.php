@@ -1,16 +1,22 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\trainee_user\UserManagerInterface.
+ */
+
 namespace Drupal\trainee_user;
 
 /**
- * Defines an interface for classes that handle communication with the API.
+ * Defines an interface for classes that handle CRUD operations with the API.
  */
-interface ManagerInterface {
+interface UserManagerInterface {
+
   /**
-   * Return list of records
+   * Provides to get a list of records.
    *
    * @param int $page
-   *   Api page number
+   *   Api page number.
    *
    * @return array|null
    *   A structured array containing all page records.
@@ -19,49 +25,49 @@ interface ManagerInterface {
   public function getList(int $page): ?array;
 
   /**
-   * Return record
+   * Provides to get a record.
    *
    * @param int $id
-   *   record id
+   *   Record id.
    *
    * @return array|null
-   *   record array
+   *   Record array.
    */
   public function get(int $id): ?array;
 
   /**
-   * Return updated record
+   * Provides to update a record.
    *
    * @param int $id
-   *   record id
+   *   Record id.
    *
    * @param array $record
-   *   record array
+   *   Record array.
    *
    * @return array|null
-   *   record array
+   *   Updated record array.
    */
   public function update(int $id, array $record): ?array;
 
   /**
-   * Return status code of operation
+   * Provides to delete a record.
    *
    * @param int $id
-   *   record id
+   *   Record id.
    *
    * @return int|null
-   *   status code of operation
+   *   Status code of operation.
    */
   public function delete(int $id): ?int;
 
   /**
-   * Return created record
+   * Provides to create a new record.
    *
    * @param array $record
-   *   record array
+   *   Record array.
    *
    * @return array|null
-   *   record array
+   *   Created record array.
    */
   public function create(array $record): ?array;
 
