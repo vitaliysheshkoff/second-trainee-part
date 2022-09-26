@@ -17,7 +17,9 @@ use Throwable;
 class UserManagerService implements UserManagerInterface {
 
   /**
-   * {@inheritdoc}
+   * The client of API.
+   *
+   * @var Client
    */
   protected Client $client;
 
@@ -33,10 +35,7 @@ class UserManagerService implements UserManagerInterface {
    */
   public function getList(int $page): ?array {
     try {
-      $response = $this->request([
-        'method' => 'GET',
-        'query' => ['page' => $page],
-      ]);
+      $response = $this->request('GET', ['query' => ['page' => $page]]);
     } catch (Throwable) {
       return NULL;
     }
@@ -48,7 +47,7 @@ class UserManagerService implements UserManagerInterface {
    * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public function get(int $id): ?array {
-    $response = $this->request(['method' => 'GET', 'id' => $id]);
+    $response = $this->request('GET', ['id' => $id]);
     return json_decode($response->getBody(), TRUE);
   }
 
@@ -57,11 +56,7 @@ class UserManagerService implements UserManagerInterface {
    * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public function update(int $id, array $record): ?array {
-    $response = $this->request([
-      'method' => 'PUT',
-      'record' => $record,
-      'id' => $id,
-    ]);
+    $response = $this->request('PUT', ['id' => $id, 'record' => $record]);
     return json_decode($response->getBody(), TRUE);
   }
 
@@ -70,7 +65,7 @@ class UserManagerService implements UserManagerInterface {
    * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public function delete(int $id): ?int {
-    $response = $this->request(['method' => 'DELETE', 'id' => $id]);
+    $response = $this->request('DELETE', ['id' => $id]);
     return $response->getStatusCode();
   }
 
@@ -79,49 +74,46 @@ class UserManagerService implements UserManagerInterface {
    * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public function create(array $record): ?array {
-    $response = $this->request(['method' => 'POST', 'record' => $record]);
+    $response = $this->request('POST', ['record' => $record]);
     return json_decode($response->getBody(), TRUE);
   }
-
 
   /**
    * Provides response from REST API.
    *
+   * @param string $method
+   *   possible values: 'POST', 'GET', 'PUT', 'PATCH', DELETE',
    * @param array $params
-   *   string method: 'POST', 'GET', 'PUT', 'PATCH', DELETE',
-   *   array record(name, gender, email,status),
+   *   Form params:
+   *   array record(name, gender, email, status),
    *   array query,
    *   int id.
    *
-   * @return \Psr\Http\Message\ResponseInterface
+   * @return \Psr\Http\Message\ResponseInterface|null
    * @throws \GuzzleHttp\Exception\GuzzleException
    */
-  public function request(array $params): ResponseInterface {
+  public function request(string $method, array $params): ?ResponseInterface {
 
-    $url = "https://gorest.co.in/public/v2/users/{$params['id']}";
+    $id = $params['id'] ?? '';
+    $url = "https://gorest.co.in/public/v2/users/$id";
 
-    if ($params['method'] == 'DELETE' || $params['method'] == 'GET') {
-      return $this->client->request($params['method'],
+    if ($method == 'DELETE' || $method == 'GET') {
+      return $this->client->request($method,
         $url, [
           'headers' => [
             'Accept' => 'application/json',
             'Content-Type' => 'application/json',
             'Authorization' => " Bearer " . getenv('ACCESS_TOKEN'),
           ],
-          'query' => $params['query'],
+          'query' => $params['query'] ?? [],
         ]
       );
     }
     else {
-      return $this->client->request($params['method'],
+      return $this->client->request($method,
         $url . "?access-token="
         . getenv('ACCESS_TOKEN'), [
-          'form_params' => [
-            'name' => $params['record']['name'],
-            'gender' => $params['record']['gender'],
-            'email' => $params['record']['email'],
-            'status' => $params['record']['status'],
-          ],
+          'form_params' => $params['record'] ?? [],
         ]
       );
     }
