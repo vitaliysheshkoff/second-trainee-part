@@ -10,6 +10,7 @@ namespace Drupal\trainee_user\Form;
 use Drupal;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Link;
 use Drupal\Core\Url;
 use Throwable;
 
@@ -42,6 +43,7 @@ class UserManagementForm extends FormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
+
     if ($this->getRequest()->get('id') !== NULL) {
       try {
         $user = Drupal::service('trainee_user.user_manager_service')
@@ -95,6 +97,14 @@ class UserManagementForm extends FormBase {
       '#value' => $this->t('Save'),
       '#button_type' => 'primary',
     ];
+
+    if ($this->getRequest()->get('page') !== NULL) {
+      $form['action']['cancel'] = [
+        '#markup' => Link::fromTextAndUrl($this->t('back to user list'), $this->getUrl())
+          ->toString(),
+      ];
+    }
+
     return $form;
   }
 
@@ -150,13 +160,22 @@ class UserManagementForm extends FormBase {
           ['@newUserStatus' => $new_user['status']]));
     }
 
-    $url = Url::fromRoute('trainee_user.user_list')
+    $form_state->setRedirectUrl($this->getUrl());
+  }
+
+  /**
+   * Provides to get redirect url.
+   *
+   * @return \Drupal\Core\Url
+   *   Redirect url.
+   */
+  public function getUrl(): Url {
+    return Url::fromRoute('trainee_user.user_list')
       ->setRouteParameters([
         'page' => $this->getRequest()
           ->get('page') ? $this->getRequest()
           ->get('page') : 1,
       ]);
-    $form_state->setRedirectUrl($url);
   }
 
 }

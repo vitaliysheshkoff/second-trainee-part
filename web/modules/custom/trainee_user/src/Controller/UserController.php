@@ -53,7 +53,6 @@ class UserController extends ControllerBase {
       '#routes' => [
         'add' => 'trainee_user.management_form',
         'delete' => 'trainee_user.delete_form',
-        'update' => 'trainee_user.management_form',
       ],
       '#page' => $page,
       '#attached' => ['library' => ['trainee_user/table-style']],

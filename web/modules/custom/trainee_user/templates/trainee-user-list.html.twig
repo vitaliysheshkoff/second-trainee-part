@@ -1,6 +1,6 @@
 <section>
   <div>
-    <a href="{{ path(routes.add) }}" class="{{ attributes.button.class }}"> {{ button_text.add }}</a>
+    <a href="{{ path(routes.add, {'page': page}) }}" class="{{ attributes.button.class }}"> {{ button_text.add }}</a>
   </div>
   <table>
     <tr>
@@ -19,7 +19,7 @@
           <div>
             <a href="{{ path(routes.delete, {'id': user.id, 'page': page}) }}"
                class="{{ attributes.button.class }}"> {{ button_text.delete }} </a>
-            <a href="{{ path(routes.update, {'id': user.id, 'page': page}) }}"
+            <a href="{{ path(routes.add, {'id': user.id, 'page': page}) }}"
                class="{{ attributes.button.class }}"> {{ button_text.edit }} </a>
 
           </div>
