@@ -1,25 +1,19 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\trainee_user\UserManagerService.
- */
-
 namespace Drupal\trainee_user;
 
 use GuzzleHttp\Client;
 use Psr\Http\Message\ResponseInterface;
-use Throwable;
 
 /**
- * Class UserManagerService.
+ * User manager service for trainee_user module.
  */
 class UserManagerService implements UserManagerInterface {
 
   /**
    * The client of API.
    *
-   * @var Client
+   * @var \GuzzleHttp\Client
    */
   protected Client $client;
 
@@ -36,7 +30,8 @@ class UserManagerService implements UserManagerInterface {
   public function getList(int $page): ?array {
     try {
       $response = $this->request('GET', ['query' => ['page' => $page]]);
-    } catch (Throwable) {
+    }
+    catch (\Throwable) {
       return NULL;
     }
     return json_decode($response->getBody(), TRUE);
@@ -44,6 +39,7 @@ class UserManagerService implements UserManagerInterface {
 
   /**
    * {@inheritdoc}
+   *
    * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public function get(int $id): ?array {
@@ -53,6 +49,7 @@ class UserManagerService implements UserManagerInterface {
 
   /**
    * {@inheritdoc}
+   *
    * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public function update(int $id, array $record): ?array {
@@ -62,6 +59,7 @@ class UserManagerService implements UserManagerInterface {
 
   /**
    * {@inheritdoc}
+   *
    * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public function delete(int $id): ?int {
@@ -71,6 +69,7 @@ class UserManagerService implements UserManagerInterface {
 
   /**
    * {@inheritdoc}
+   *
    * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public function create(array $record): ?array {
@@ -82,17 +81,19 @@ class UserManagerService implements UserManagerInterface {
    * Provides response from REST API.
    *
    * @param string $method
-   *   possible values: 'POST', 'GET', 'PUT', 'PATCH', DELETE',
+   *   possible values: 'POST', 'GET', 'PUT', 'PATCH', DELETE',.
    * @param array $params
    *   Form params:
    *   array record(name, gender, email, status),
    *   array query,
    *   int id.
    *
-   * @return \Psr\Http\Message\ResponseInterface|null
+   * @return \Psr\Http\Message\ResponseInterface
+   *   response from API.
+   *
    * @throws \GuzzleHttp\Exception\GuzzleException
    */
-  public function request(string $method, array $params): ?ResponseInterface {
+  public function request(string $method, array $params): ResponseInterface {
 
     $id = $params['id'] ?? '';
     $url = "https://gorest.co.in/public/v2/users/$id";

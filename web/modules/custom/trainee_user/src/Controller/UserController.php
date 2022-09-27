@@ -1,17 +1,11 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\trainee_user\Controller\UserController.
- */
-
 namespace Drupal\trainee_user\Controller;
 
-use Drupal;
 use Drupal\Core\Controller\ControllerBase;
 
 /**
- * Class UserController.
+ * Controller for trainee_user module.
  */
 class UserController extends ControllerBase {
 
@@ -25,8 +19,8 @@ class UserController extends ControllerBase {
    *   User list theme.
    */
   public function showUserList(int $page = 1): array {
-    Drupal::service('page_cache_kill_switch')->trigger();
-    $userList = Drupal::service('trainee_user.user_manager_service')
+    \Drupal::service('page_cache_kill_switch')->trigger();
+    $userList = \Drupal::service('trainee_user.user_manager_service')
       ->getList($page);
 
     return [

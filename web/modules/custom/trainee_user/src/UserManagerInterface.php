@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\trainee_user\UserManagerInterface.
- */
-
 namespace Drupal\trainee_user;
 
 /**
@@ -20,7 +15,6 @@ interface UserManagerInterface {
    *
    * @return array|null
    *   A structured array containing all page records.
-   *
    */
   public function getList(int $page): ?array;
 
@@ -40,7 +34,6 @@ interface UserManagerInterface {
    *
    * @param int $id
    *   Record id.
-   *
    * @param array $record
    *   Record array.
    *

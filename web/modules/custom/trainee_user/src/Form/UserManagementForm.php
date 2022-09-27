@@ -1,21 +1,14 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\trainee_user\Form\UserManagementForm.
- */
-
 namespace Drupal\trainee_user\Form;
 
-use Drupal;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
 use Drupal\Core\Url;
-use Throwable;
 
 /**
- * Class UserManagementForm.
+ * Adding form for trainee_user module.
  */
 class UserManagementForm extends FormBase {
 
@@ -31,7 +24,7 @@ class UserManagementForm extends FormBase {
    */
   public function validateForm(array &$form, FormStateInterface $form_state) {
     $email = $form_state->getValue('email');
-    if (!Drupal::service('email.validator')->isValid($email)) {
+    if (!\Drupal::service('email.validator')->isValid($email)) {
       $form_state->setErrorByName('email',
         $this->t('The email address %mail is not valid.', ['%mail' => $email]));
     }
@@ -46,12 +39,13 @@ class UserManagementForm extends FormBase {
 
     if ($this->getRequest()->get('id') !== NULL) {
       try {
-        $user = Drupal::service('trainee_user.user_manager_service')
+        $user = \Drupal::service('trainee_user.user_manager_service')
           ->get($this->getRequest()->get('id'));
-      } catch (Throwable $exception) {
+      }
+      catch (\Throwable $exception) {
         $error_message = preg_replace('/`[\s\S]+?`/', '',
           $exception->getMessage(), 1);
-        $this->messenger()->addMessage($this->t($error_message), 'error');
+        $this->messenger()->addMessage($error_message, 'error');
         $user = NULL;
       }
     }
@@ -61,14 +55,14 @@ class UserManagementForm extends FormBase {
       '#title' => $this->t('User Name:'),
       '#required' => TRUE,
       '#default_value' => (isset($user['name']) && $this->getRequest()
-          ->get('id')) ? $user['name'] : '',
+        ->get('id')) ? $user['name'] : '',
     ];
     $form['email'] = [
       '#type' => 'email',
       '#title' => $this->t('Email:'),
       '#required' => TRUE,
       '#default_value' => (isset($user['email']) && $this->getRequest()
-          ->get('id')) ? $user['email'] : '',
+        ->get('id')) ? $user['email'] : '',
     ];
     $form['gender'] = [
       '#type' => 'select',
@@ -78,7 +72,7 @@ class UserManagementForm extends FormBase {
         'male' => $this->t('male'),
       ],
       '#default_value' => (isset($user['gender']) && $this->getRequest()
-          ->get('id')) ? $user['gender'] : '',
+        ->get('id')) ? $user['gender'] : '',
     ];
     $form['status'] = [
       '#type' => 'select',
@@ -88,7 +82,7 @@ class UserManagementForm extends FormBase {
         'inactive' => $this->t('inactive'),
       ],
       '#default_value' => (isset($user['status']) && $this->getRequest()
-          ->get('id')) ? $user['status'] : '',
+        ->get('id')) ? $user['status'] : '',
     ];
 
     $form['actions']['#type'] = 'actions';
@@ -124,28 +118,29 @@ class UserManagementForm extends FormBase {
 
     try {
       if ($this->getRequest()->get('id') !== NULL) {
-        $new_user = Drupal::service('trainee_user.user_manager_service')
+        $new_user = \Drupal::service('trainee_user.user_manager_service')
           ->update($this->getRequest()->get('id'), $user);
         $answer = "User has been updated successfully";
       }
       else {
-        $new_user = Drupal::service('trainee_user.user_manager_service')
+        $new_user = \Drupal::service('trainee_user.user_manager_service')
           ->create($user);
         $answer = "New user has been created successfully";
       }
-    } catch (Throwable $exception) {
+    }
+    catch (\Throwable $exception) {
       $error_message = preg_replace('/`[\s\S]+?`/', '',
         $exception->getMessage(), 1);
     }
 
     if ($new_user === NULL) {
-      $this->messenger()->addMessage($this->t($error_message), 'error');
+      $this->messenger()->addMessage($error_message, 'error');
     }
     else {
-      $this->messenger()->addMessage($this->t($answer));
-      $this->messenger()
-        ->addMessage($this->t('User id: @newUserId',
-          ['@newUserId' => $new_user['id']]));
+      $this->messenger()->addMessage($this->t('@answer',
+        ['@answer' => $answer]));
+      $this->messenger()->addMessage($this->t('User id: @newUserId',
+        ['@newUserId' => $new_user['id']]));
       $this->messenger()
         ->addMessage($this->t('User name: @newUserName',
           ['@newUserName' => $new_user['name']]));

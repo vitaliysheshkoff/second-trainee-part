@@ -4,7 +4,9 @@
  * Contains \Drupal\trainee_user\css\style.css.
  */
 
-#main-wrapper section table, th, td {
+#main-wrapper section table,
+th,
+td {
   text-align: center;
   border: 1px solid black;
   border-collapse: collapse;
