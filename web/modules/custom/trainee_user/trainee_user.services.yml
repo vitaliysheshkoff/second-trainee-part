@@ -1,3 +1,5 @@
 services:
   trainee_user.user_manager_service:
     class: Drupal\trainee_user\UserManagerService
+    arguments:
+      [ '@config.factory', '@http_client' ]

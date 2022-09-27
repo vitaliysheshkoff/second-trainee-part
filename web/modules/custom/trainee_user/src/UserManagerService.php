@@ -2,6 +2,7 @@
 
 namespace Drupal\trainee_user;
 
+use Drupal\Core\Config\ConfigFactoryInterface;
 use GuzzleHttp\Client;
 use Psr\Http\Message\ResponseInterface;
 
@@ -18,10 +19,18 @@ class UserManagerService implements UserManagerInterface {
   protected Client $client;
 
   /**
+   * The API config.
+   *
+   * @var \Drupal\Core\Config\ConfigFactoryInterface
+   */
+  protected ConfigFactoryInterface $configFactory;
+
+  /**
    * Constructs the UserManagerService.
    */
-  public function __construct() {
-    $this->client = new Client();
+  public function __construct(ConfigFactoryInterface $configFactory, Client $client) {
+    $this->configFactory = $configFactory;
+    $this->client = $client;
   }
 
   /**
@@ -81,7 +90,7 @@ class UserManagerService implements UserManagerInterface {
    * Provides response from REST API.
    *
    * @param string $method
-   *   possible values: 'POST', 'GET', 'PUT', 'PATCH', DELETE',.
+   *   possible values: 'POST', 'GET', 'PUT', 'PATCH', DELETE'.
    * @param array $params
    *   Form params:
    *   array record(name, gender, email, status),
@@ -94,17 +103,18 @@ class UserManagerService implements UserManagerInterface {
    * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public function request(string $method, array $params): ResponseInterface {
+    $config = $this->configFactory->getEditable('trainee_user.settings');
 
-    $id = $params['id'] ?? '';
-    $url = "https://gorest.co.in/public/v2/users/$id";
+    $url = $config->get('api_base_url') ?? 'https://gorest.co.in/public/v2/users/';
+    $url .= ($params['id'] ?? '');
 
     if ($method == 'DELETE' || $method == 'GET') {
       return $this->client->request($method,
         $url, [
           'headers' => [
-            'Accept' => 'application/json',
-            'Content-Type' => 'application/json',
-            'Authorization' => " Bearer " . getenv('ACCESS_TOKEN'),
+            'Accept' => $config->get('header_accept') ?? 'application/json',
+            'Content-Type' => $config->get('header_content_type') ?? 'application/json',
+            'Authorization' => " Bearer " . ($config->get('api_token') ?? getenv('ACCESS_TOKEN')),
           ],
           'query' => $params['query'] ?? [],
         ]
@@ -113,7 +123,7 @@ class UserManagerService implements UserManagerInterface {
     else {
       return $this->client->request($method,
         $url . "?access-token="
-        . getenv('ACCESS_TOKEN'), [
+        . ($config->get('api_token') ?? getenv('ACCESS_TOKEN')), [
           'form_params' => $params['record'] ?? [],
         ]
       );

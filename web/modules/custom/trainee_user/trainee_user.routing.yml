@@ -1,3 +1,11 @@
+trainee_user.api_config_page:
+  path: '/admin/config/users-api'
+  defaults:
+    _form: 'Drupal\trainee_user\Form\UserApiConfigForm'
+    _title: 'User API Settings'
+  requirements:
+    _permission: 'administer site configuration'
+
 trainee_user.user_list:
   path: 'users-page/{page}'
   defaults:
