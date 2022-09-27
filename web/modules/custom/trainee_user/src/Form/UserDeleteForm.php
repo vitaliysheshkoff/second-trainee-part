@@ -6,11 +6,30 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\Form\ConfirmFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
+use Drupal\trainee_user\UserManagerService;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Delete form for trainee_user module.
  */
 class UserDeleteForm extends ConfirmFormBase {
+
+  /**
+   * The user manager.
+   *
+   * @var \Drupal\trainee_user\UserManagerService
+   */
+  protected UserManagerService $userManager;
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container): UserDeleteForm {
+    $instance = parent::create($container);
+    $instance->userManager = $container->get('trainee_user.user_manager_service');
+
+    return $instance;
+  }
 
   /**
    * The id of deleting user.
@@ -53,8 +72,7 @@ class UserDeleteForm extends ConfirmFormBase {
    */
   public function getDescription(): TranslatableMarkup {
     try {
-      $targetUser = \Drupal::service('trainee_user.user_manager_service')
-        ->get($this->id);
+      $targetUser = $this->userManager->get($this->id);
     }
     catch (\Throwable $exception) {
       $error_message = preg_replace('/`[\s\S]+?`/', '', $exception->getMessage(), 1);
@@ -108,7 +126,7 @@ class UserDeleteForm extends ConfirmFormBase {
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     try {
-      \Drupal::service('trainee_user.user_manager_service')->delete($this->id);
+      $this->userManager->delete($this->id);
       $this->messenger()
         ->addMessage($this->t('User has been successfully deleted'));
     }

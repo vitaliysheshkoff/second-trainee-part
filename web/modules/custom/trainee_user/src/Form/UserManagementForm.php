@@ -2,15 +2,43 @@
 
 namespace Drupal\trainee_user\Form;
 
+use Drupal\Component\Utility\EmailValidator;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
 use Drupal\Core\Url;
+use Drupal\trainee_user\UserManagerService;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Adding form for trainee_user module.
  */
 class UserManagementForm extends FormBase {
+
+  /**
+   * The user manager.
+   *
+   * @var \Drupal\trainee_user\UserManagerService
+   */
+  protected UserManagerService $userManager;
+
+  /**
+   * The email validator.
+   *
+   * @var \Drupal\Component\Utility\EmailValidator
+   */
+  protected EmailValidator $emailValidator;
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container): UserManagementForm {
+    $instance = parent::create($container);
+    $instance->userManager = $container->get('trainee_user.user_manager_service');
+    $instance->emailValidator = $container->get('email.validator');
+
+    return $instance;
+  }
 
   /**
    * {@inheritdoc}
@@ -24,7 +52,7 @@ class UserManagementForm extends FormBase {
    */
   public function validateForm(array &$form, FormStateInterface $form_state) {
     $email = $form_state->getValue('email');
-    if (!\Drupal::service('email.validator')->isValid($email)) {
+    if (!$this->emailValidator->isValid($email)) {
       $form_state->setErrorByName('email',
         $this->t('The email address %mail is not valid.', ['%mail' => $email]));
     }
@@ -39,8 +67,7 @@ class UserManagementForm extends FormBase {
 
     if ($this->getRequest()->get('id') !== NULL) {
       try {
-        $user = \Drupal::service('trainee_user.user_manager_service')
-          ->get($this->getRequest()->get('id'));
+        $user = $this->userManager->get($this->getRequest()->get('id'));
       }
       catch (\Throwable $exception) {
         $error_message = preg_replace('/`[\s\S]+?`/', '',
@@ -118,13 +145,12 @@ class UserManagementForm extends FormBase {
 
     try {
       if ($this->getRequest()->get('id') !== NULL) {
-        $new_user = \Drupal::service('trainee_user.user_manager_service')
-          ->update($this->getRequest()->get('id'), $user);
+        $new_user = $this->userManager->update($this->getRequest()
+          ->get('id'), $user);
         $answer = "User has been updated successfully";
       }
       else {
-        $new_user = \Drupal::service('trainee_user.user_manager_service')
-          ->create($user);
+        $new_user = $this->userManager->create($user);
         $answer = "New user has been created successfully";
       }
     }
