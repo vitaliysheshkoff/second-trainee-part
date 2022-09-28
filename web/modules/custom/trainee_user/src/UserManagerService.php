@@ -3,6 +3,7 @@
 namespace Drupal\trainee_user;
 
 use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\trainee_user\Form\UserApiConfigForm;
 use GuzzleHttp\Client;
 use Psr\Http\Message\ResponseInterface;
 
@@ -103,18 +104,18 @@ class UserManagerService implements UserManagerInterface {
    * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public function request(string $method, array $params): ResponseInterface {
-    $config = $this->configFactory->getEditable('trainee_user.settings');
+    $config = $this->configFactory->getEditable(UserApiConfigForm::SETTINGS);
 
-    $url = $config->get('api_base_url') ?? 'https://gorest.co.in/public/v2/users/';
+    $url = $config->get('api_base_url') ?? '';
     $url .= ($params['id'] ?? '');
 
     if ($method == 'DELETE' || $method == 'GET') {
       return $this->client->request($method,
         $url, [
           'headers' => [
-            'Accept' => $config->get('header_accept') ?? 'application/json',
-            'Content-Type' => $config->get('header_content_type') ?? 'application/json',
-            'Authorization' => " Bearer " . ($config->get('api_token') ?? getenv('ACCESS_TOKEN')),
+            'Accept' => $config->get('header_accept') ?? '',
+            'Content-Type' => $config->get('header_content_type') ?? '',
+            'Authorization' => " Bearer " . ($config->get('api_token') ?? ''),
           ],
           'query' => $params['query'] ?? [],
         ]
@@ -123,7 +124,7 @@ class UserManagerService implements UserManagerInterface {
     else {
       return $this->client->request($method,
         $url . "?access-token="
-        . ($config->get('api_token') ?? getenv('ACCESS_TOKEN')), [
+        . ($config->get('api_token') ?? ''), [
           'form_params' => $params['record'] ?? [],
         ]
       );

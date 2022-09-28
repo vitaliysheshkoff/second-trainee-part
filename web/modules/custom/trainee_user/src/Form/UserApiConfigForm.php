@@ -11,11 +11,18 @@ use Drupal\Core\Form\FormStateInterface;
 class UserApiConfigForm extends ConfigFormBase {
 
   /**
+   * Config settings.
+   *
+   * @var string
+   */
+  const SETTINGS = 'trainee_user.settings';
+
+  /**
    * {@inheritdoc}
    */
   protected function getEditableConfigNames(): array {
     return [
-      'trainee_user.settings',
+      static::SETTINGS,
     ];
   }
 
@@ -31,14 +38,14 @@ class UserApiConfigForm extends ConfigFormBase {
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
 
-    $config = $this->config('trainee_user.settings');
+    $config = $this->config(static::SETTINGS);
 
     $form['api_base_url'] = [
       '#type' => 'textfield',
       '#title' => $this->t('API Base URL'),
       '#decription' => $this->t('the API Base URL'),
       '#required' => TRUE,
-      '#default_value' => $config->get('api_base_url'),
+      '#default_value' => $config->get('api_base_url' ?? ''),
     ];
 
     $form['header_accept'] = [
@@ -46,7 +53,7 @@ class UserApiConfigForm extends ConfigFormBase {
       '#title' => $this->t('Header Accept'),
       '#decription' => $this->t('header parameter'),
       '#required' => TRUE,
-      '#default_value' => $config->get('header_accept'),
+      '#default_value' => $config->get('header_accept') ?? '',
     ];
 
     $form['header_content_type'] = [
@@ -54,7 +61,7 @@ class UserApiConfigForm extends ConfigFormBase {
       '#title' => $this->t('Header Content-Type'),
       '#decription' => $this->t('header parameter'),
       '#required' => TRUE,
-      '#default_value' => $config->get('header_content_type'),
+      '#default_value' => $config->get('header_content_type') ?? '',
     ];
 
     $form['api_token'] = [
@@ -62,7 +69,7 @@ class UserApiConfigForm extends ConfigFormBase {
       '#title' => $this->t('API Access-Token'),
       '#decription' => $this->t('the API Access-Token that will be used to access the API'),
       '#required' => TRUE,
-      '#default_value' => $config->get('api_token'),
+      '#default_value' => $config->get('api_token') ?? '',
     ];
 
     $form['action']['#type'] = 'action';
@@ -79,8 +86,7 @@ class UserApiConfigForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    $config = $this->config('trainee_user.settings');
-    $config
+    $this->config(static::SETTINGS)
       ->set('api_base_url', $form_state->getValue('api_base_url'))
       ->set('api_token', $form_state->getValue('api_token'))
       ->set('header_content_type', $form_state->getValue('header_content_type'))
