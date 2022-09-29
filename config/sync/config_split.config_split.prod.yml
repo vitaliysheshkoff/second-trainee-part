@@ -9,7 +9,10 @@ weight: 0
 stackable: false
 storage: folder
 folder: ../config/prod
-module: {  }
+module:
+  trainee_empty_module: 0
+  trainee_user: 0
 theme: {  }
-complete_list: {  }
+complete_list:
+  - trainee_user.settings
 partial_list: {  }
