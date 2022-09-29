@@ -1,0 +1,28 @@
+<section>
+  <div>
+    <a href="{{ path(routes.add, {'page': page}) }}" class="{{ attributes.button.class }}"> {{ button_text.add }}</a>
+  </div>
+  <table>
+    <tr>
+      {% for name in table %}
+        <th>{{ name }}</th>
+      {% endfor %}
+    </tr>
+    {% for user in users %}
+      <tr>
+        <td>{{ user.id }}</td>
+        <td>{{ user.name }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.gender }}</td>
+        <td>{{ user.status }}</td>
+        <td>
+          <div>
+            <a href="{{ path(routes.delete, {'id': user.id, 'page': page}) }}"
+               class="{{ attributes.button.class }}"> {{ button_text.delete }} </a>
+            <a href="{{ path(routes.add, {'id': user.id, 'page': page}) }}"
+               class="{{ attributes.button.class }}"> {{ button_text.edit }} </a>
+          </div>
+      </tr>
+    {% endfor %}
+  </table>
+</section>

@@ -1,0 +1,16 @@
+/**
+ * @file
+ * Styles for User form.
+ * Contains \Drupal\trainee_user\css\style.css.
+ */
+
+#main-wrapper section table, th, td {
+  text-align: center;
+  border: 1px solid black;
+  border-collapse: collapse;
+  font-family: "Open Sans", Verdana, sans-serif;
+}
+
+#main-wrapper section div {
+  display: flex;
+}

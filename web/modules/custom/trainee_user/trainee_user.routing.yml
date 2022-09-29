@@ -1,0 +1,23 @@
+trainee_user.user_list:
+  path: 'users-page/{page}'
+  defaults:
+    _controller: 'Drupal\trainee_user\Controller\UserController::showUserList'
+    _title: 'List of Users'
+  requirements:
+    _permission: 'access content'
+
+trainee_user.management_form:
+  path: 'form'
+  defaults:
+    _form: 'Drupal\trainee_user\Form\UserManagementForm'
+    _title: 'Trainee user form'
+  requirements:
+    _permission: 'access content'
+
+trainee_user.delete_form:
+  path: 'delete/{id}'
+  defaults:
+    _form: 'Drupal\trainee_user\Form\UserDeleteForm'
+    _title: 'Trainee user form'
+  requirements:
+    _permission: 'access content'

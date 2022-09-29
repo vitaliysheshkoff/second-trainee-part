@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * @file
+ * Contains trainee_user.module.
+ */
+
+/**
+ * Implements hook_theme().
+ */
+function trainee_user_theme($existing, $type, $theme, $path): array {
+  return [
+    'trainee_user_list' => [
+      'variables' => [
+        'attributes' => [],
+        'table' => [],
+        'button_text' => [],
+        'users' => [],
+        'routes' => [],
+        'page' => NULL,
+      ],
+    ],
+  ];
+}
