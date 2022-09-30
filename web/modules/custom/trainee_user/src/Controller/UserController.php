@@ -2,6 +2,7 @@
 
 namespace Drupal\trainee_user\Controller;
 
+use Drupal\Core\Url;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\PageCache\ResponsePolicy\KillSwitch;
 use Drupal\trainee_user\UserManagerService;
@@ -48,11 +49,19 @@ class UserController extends ControllerBase {
    */
   public function showUserList(int $page = 1): array {
     $this->killSwitch->trigger();
-    $userList = $this->userManager->getList($page);
+
+    $user_list = $this->userManager->getList($page);
+
+    $add_path = $this->getUrl($page, 'trainee_user.management_form');
+
+    foreach ($user_list as &$user) {
+      $user['delete_path'] = $this->getUrl($page, 'trainee_user.delete_form', $user['id'] ?? -1);
+      $user['update_path'] = $this->getUrl($page, 'trainee_user.management_form', $user['id'] ?? -1);
+    }
 
     return [
       '#theme' => 'trainee_user_list',
-      '#users' => $userList,
+      '#users' => $user_list,
       '#attributes' => [
         'button' => [
           'class' => 'button button--link',
@@ -71,13 +80,35 @@ class UserController extends ControllerBase {
         'STATUS',
         'ACTION',
       ],
-      '#routes' => [
-        'add' => 'trainee_user.management_form',
-        'delete' => 'trainee_user.delete_form',
-      ],
-      '#page' => $page,
+      '#add_path' => $add_path,
       '#attached' => ['library' => ['trainee_user/table-style']],
     ];
+  }
+
+  /**
+   * Provides to get URL by route.
+   *
+   * @param int $page
+   *   The page.
+   * @param string $route
+   *   The route.
+   * @param int|null $id
+   *   (optional)The id.
+   *
+   * @return \Drupal\Core\Url
+   *   The Url from route.
+   */
+  private function getUrl(int $page, string $route, int $id = NULL): Url {
+
+    $route_params = [
+      'page' => $page,
+    ];
+
+    if ($id !== NULL) {
+      $route_params += ['id' => $id];
+    }
+
+    return Url::fromRoute($route)->setRouteParameters($route_params);
   }
 
 }

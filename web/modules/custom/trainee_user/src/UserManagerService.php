@@ -29,8 +29,8 @@ class UserManagerService implements UserManagerInterface {
   /**
    * Constructs the UserManagerService.
    */
-  public function __construct(ConfigFactoryInterface $configFactory, Client $client) {
-    $this->configFactory = $configFactory;
+  public function __construct(ConfigFactoryInterface $config_factory, Client $client) {
+    $this->configFactory = $config_factory;
     $this->client = $client;
   }
 

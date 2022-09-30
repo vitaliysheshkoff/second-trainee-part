@@ -16,8 +16,7 @@ function trainee_user_theme($existing, $type, $theme, $path): array {
         'table' => [],
         'button_text' => [],
         'users' => [],
-        'routes' => [],
-        'page' => NULL,
+        'add_path' => NULL,
       ],
     ],
   ];
