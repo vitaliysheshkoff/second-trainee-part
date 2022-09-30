@@ -1,6 +1,6 @@
 _core:
   default_config_hash: wWYC0PN5q0-bzxYqQs9uYH_gKTeCK8fJhzNaOTcKmMA
-api_base_url: 'https://gorest.co.in/public/v2/users/1'
+api_base_url: 'https://gorest.co.in/public/v2/users/'
 api_token: 6251cb35e55c0bf37ec6e902d7b26683b1609f2b5aaf841d42e9290130ec01ba
 header_content_type: application/json
 header_accept: application/json
