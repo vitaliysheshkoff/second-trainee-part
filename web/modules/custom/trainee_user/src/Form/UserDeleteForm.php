@@ -22,13 +22,22 @@ class UserDeleteForm extends ConfirmFormBase {
   protected UserManagerService $userManager;
 
   /**
+   * UserDeleteForm constructor.
+   *
+   * @param \Drupal\trainee_user\UserManagerService $userManager
+   *   The user manager.
+   */
+  public function __construct(UserManagerService $userManager) {
+    $this->userManager = $userManager;
+  }
+
+  /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container): UserDeleteForm {
-    $instance = parent::create($container);
-    $instance->userManager = $container->get('trainee_user.user_manager_service');
-
-    return $instance;
+    return new static(
+      $container->get('trainee_user.user_manager_service'),
+    );
   }
 
   /**

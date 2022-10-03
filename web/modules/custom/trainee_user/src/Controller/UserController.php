@@ -28,14 +28,26 @@ class UserController extends ControllerBase {
   protected KillSwitch $killSwitch;
 
   /**
+   * UserController constructor.
+   *
+   * @param \Drupal\trainee_user\UserManagerService $userManager
+   *   The user manager.
+   * @param \Drupal\Core\PageCache\ResponsePolicy\KillSwitch $killSwitch
+   *   The kill switch.
+   */
+  public function __construct(UserManagerService $userManager, KillSwitch $killSwitch) {
+    $this->userManager = $userManager;
+    $this->killSwitch = $killSwitch;
+  }
+
+  /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container): UserController {
-    $instance = parent::create($container);
-    $instance->userManager = $container->get('trainee_user.user_manager_service');
-    $instance->killSwitch = $container->get('page_cache_kill_switch');
-
-    return $instance;
+    return new static(
+      $container->get('trainee_user.user_manager_service'),
+      $container->get('page_cache_kill_switch'),
+    );
   }
 
   /**
@@ -52,11 +64,24 @@ class UserController extends ControllerBase {
 
     $user_list = $this->userManager->getList($page);
 
-    $add_path = $this->getUrl($page, 'trainee_user.management_form');
+    $add_path = Url::fromRoute('trainee_user.management_form')->setRouteParameters([
+      'page' => $page,
+    ]);
 
     foreach ($user_list as &$user) {
-      $user['delete_path'] = $this->getUrl($page, 'trainee_user.delete_form', $user['id'] ?? -1);
-      $user['update_path'] = $this->getUrl($page, 'trainee_user.management_form', $user['id'] ?? -1);
+
+      if ($user['id'] === -1) {
+        continue;
+      }
+
+      $user['delete_path'] = Url::fromRoute('trainee_user.delete_form')->setRouteParameters([
+        'page' => $page,
+        'id' => $user['id'] ?? -1,
+      ]);
+      $user['update_path'] = Url::fromRoute('trainee_user.management_form')->setRouteParameters([
+        'page' => $page,
+        'id' => $user['id'] ?? -1,
+      ]);
     }
 
     return [
@@ -83,32 +108,6 @@ class UserController extends ControllerBase {
       '#add_path' => $add_path,
       '#attached' => ['library' => ['trainee_user/table-style']],
     ];
-  }
-
-  /**
-   * Provides to get URL by route.
-   *
-   * @param int $page
-   *   The page.
-   * @param string $route
-   *   The route.
-   * @param int|null $id
-   *   (optional)The id.
-   *
-   * @return \Drupal\Core\Url
-   *   The Url from route.
-   */
-  private function getUrl(int $page, string $route, int $id = NULL): Url {
-
-    $route_params = [
-      'page' => $page,
-    ];
-
-    if ($id !== NULL) {
-      $route_params += ['id' => $id];
-    }
-
-    return Url::fromRoute($route)->setRouteParameters($route_params);
   }
 
 }

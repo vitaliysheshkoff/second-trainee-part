@@ -30,14 +30,26 @@ class UserManagementForm extends FormBase {
   protected EmailValidator $emailValidator;
 
   /**
+   * UserManagementForm constructor.
+   *
+   * @param \Drupal\trainee_user\UserManagerService $userManager
+   *   The user manager.
+   * @param \Drupal\Component\Utility\EmailValidator $emailValidator
+   *   The email validator.
+   */
+  public function __construct(UserManagerService $userManager, EmailValidator $emailValidator) {
+    $this->userManager = $userManager;
+    $this->emailValidator = $emailValidator;
+  }
+
+  /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container): UserManagementForm {
-    $instance = parent::create($container);
-    $instance->userManager = $container->get('trainee_user.user_manager_service');
-    $instance->emailValidator = $container->get('email.validator');
-
-    return $instance;
+    return new static(
+     $container->get('trainee_user.user_manager_service'),
+     $container->get('email.validator'),
+    );
   }
 
   /**
@@ -140,18 +152,17 @@ class UserManagementForm extends FormBase {
     $user['gender'] = $form_state->getValue('gender');
 
     $error_message = '';
-    $answer = '';
     $new_user = NULL;
 
     try {
       if ($this->getRequest()->get('id') !== NULL) {
         $new_user = $this->userManager->update($this->getRequest()
           ->get('id'), $user);
-        $answer = "User has been updated successfully";
+        $this->messenger()->addMessage($this->t('User has been updated successfully'));
       }
       else {
         $new_user = $this->userManager->create($user);
-        $answer = "New user has been created successfully";
+        $this->messenger()->addMessage($this->t('New user has been created successfully'));
       }
     }
     catch (\Throwable $exception) {
@@ -163,8 +174,6 @@ class UserManagementForm extends FormBase {
       $this->messenger()->addMessage($error_message, 'error');
     }
     else {
-      $this->messenger()->addMessage($this->t('@answer',
-        ['@answer' => $answer]));
       $this->messenger()->addMessage($this->t('User id: @newUserId',
         ['@newUserId' => $new_user['id']]));
       $this->messenger()
