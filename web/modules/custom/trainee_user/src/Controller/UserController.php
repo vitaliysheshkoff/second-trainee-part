@@ -64,24 +64,24 @@ class UserController extends ControllerBase {
 
     $user_list = $this->userManager->getList($page);
 
-    $add_path = Url::fromRoute('trainee_user.management_form')->setRouteParameters([
-      'page' => $page,
-    ]);
+    $add_path = Url::fromRoute('trainee_user.management_form')
+      ->setRouteParameters([
+        'page' => $page,
+      ]);
 
     foreach ($user_list as &$user) {
-
-      if ($user['id'] === -1) {
-        continue;
+      if (isset($user['id'])) {
+        $user['delete_path'] = Url::fromRoute('trainee_user.delete_form')
+          ->setRouteParameters([
+            'page' => $page,
+            'id' => $user['id'],
+          ]);
+        $user['update_path'] = Url::fromRoute('trainee_user.management_form')
+          ->setRouteParameters([
+            'page' => $page,
+            'id' => $user['id'],
+          ]);
       }
-
-      $user['delete_path'] = Url::fromRoute('trainee_user.delete_form')->setRouteParameters([
-        'page' => $page,
-        'id' => $user['id'] ?? -1,
-      ]);
-      $user['update_path'] = Url::fromRoute('trainee_user.management_form')->setRouteParameters([
-        'page' => $page,
-        'id' => $user['id'] ?? -1,
-      ]);
     }
 
     return [
