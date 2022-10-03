@@ -1,19 +1,54 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\trainee_user\Controller\UserController.
- */
-
 namespace Drupal\trainee_user\Controller;
 
-use Drupal;
+use Drupal\Core\Url;
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\PageCache\ResponsePolicy\KillSwitch;
+use Drupal\trainee_user\UserManagerService;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Class UserController.
+ * Controller for trainee_user module.
  */
 class UserController extends ControllerBase {
+
+  /**
+   * The user manager.
+   *
+   * @var \Drupal\trainee_user\UserManagerService
+   */
+  protected UserManagerService $userManager;
+
+  /**
+   * Page cache killer.
+   *
+   * @var \Drupal\Core\PageCache\ResponsePolicy\KillSwitch
+   */
+  protected KillSwitch $killSwitch;
+
+  /**
+   * UserController constructor.
+   *
+   * @param \Drupal\trainee_user\UserManagerService $userManager
+   *   The user manager.
+   * @param \Drupal\Core\PageCache\ResponsePolicy\KillSwitch $killSwitch
+   *   The kill switch.
+   */
+  public function __construct(UserManagerService $userManager, KillSwitch $killSwitch) {
+    $this->userManager = $userManager;
+    $this->killSwitch = $killSwitch;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container): UserController {
+    return new static(
+      $container->get('trainee_user.user_manager_service'),
+      $container->get('page_cache_kill_switch'),
+    );
+  }
 
   /**
    * Provides to show user list theme.
@@ -25,13 +60,33 @@ class UserController extends ControllerBase {
    *   User list theme.
    */
   public function showUserList(int $page = 1): array {
-    Drupal::service('page_cache_kill_switch')->trigger();
-    $userList = Drupal::service('trainee_user.user_manager_service')
-      ->getList($page);
+    $this->killSwitch->trigger();
+
+    $user_list = $this->userManager->getList($page);
+
+    $add_path = Url::fromRoute('trainee_user.management_form')
+      ->setRouteParameters([
+        'page' => $page,
+      ]);
+
+    foreach ($user_list as &$user) {
+      if (isset($user['id'])) {
+        $user['delete_path'] = Url::fromRoute('trainee_user.delete_form')
+          ->setRouteParameters([
+            'page' => $page,
+            'id' => $user['id'],
+          ]);
+        $user['update_path'] = Url::fromRoute('trainee_user.management_form')
+          ->setRouteParameters([
+            'page' => $page,
+            'id' => $user['id'],
+          ]);
+      }
+    }
 
     return [
       '#theme' => 'trainee_user_list',
-      '#users' => $userList,
+      '#users' => $user_list,
       '#attributes' => [
         'button' => [
           'class' => 'button button--link',
@@ -50,11 +105,7 @@ class UserController extends ControllerBase {
         'STATUS',
         'ACTION',
       ],
-      '#routes' => [
-        'add' => 'trainee_user.management_form',
-        'delete' => 'trainee_user.delete_form',
-      ],
-      '#page' => $page,
+      '#add_path' => $add_path,
       '#attached' => ['library' => ['trainee_user/table-style']],
     ];
   }

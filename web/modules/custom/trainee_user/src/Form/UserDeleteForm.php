@@ -1,22 +1,44 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\trainee_user\Form\UserDeleteForm.
- */
-
 namespace Drupal\trainee_user\Form;
 
-use Drupal;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\Form\ConfirmFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
-use Throwable;
+use Drupal\trainee_user\UserManagerService;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Class UserDeleteForm.
+ * Delete form for trainee_user module.
  */
 class UserDeleteForm extends ConfirmFormBase {
+
+  /**
+   * The user manager.
+   *
+   * @var \Drupal\trainee_user\UserManagerService
+   */
+  protected UserManagerService $userManager;
+
+  /**
+   * UserDeleteForm constructor.
+   *
+   * @param \Drupal\trainee_user\UserManagerService $userManager
+   *   The user manager.
+   */
+  public function __construct(UserManagerService $userManager) {
+    $this->userManager = $userManager;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container): UserDeleteForm {
+    return new static(
+      $container->get('trainee_user.user_manager_service'),
+    );
+  }
 
   /**
    * The id of deleting user.
@@ -57,13 +79,13 @@ class UserDeleteForm extends ConfirmFormBase {
   /**
    * {@inheritdoc}
    */
-  public function getDescription(): Drupal\Core\StringTranslation\TranslatableMarkup {
+  public function getDescription(): TranslatableMarkup {
     try {
-      $targetUser = Drupal::service('trainee_user.user_manager_service')
-        ->get($this->id);
-    } catch (Throwable $exception) {
+      $targetUser = $this->userManager->get($this->id);
+    }
+    catch (\Throwable $exception) {
       $error_message = preg_replace('/`[\s\S]+?`/', '', $exception->getMessage(), 1);
-      $this->messenger()->addMessage($this->t($error_message), 'error');
+      $this->messenger()->addMessage($error_message, 'error');
       return $this->t('Unable to delete this user.');
     }
     return $this->t("Are you sure do you want to delete this user? <br> ID: @userId <br>NAME: @userName <br>EMAIL: @userEmail <br>GENDER: @userGender <br> STATUS: @userStatus",
@@ -80,14 +102,14 @@ class UserDeleteForm extends ConfirmFormBase {
   /**
    * {@inheritdoc}
    */
-  public function getConfirmText(): Drupal\Core\StringTranslation\TranslatableMarkup {
+  public function getConfirmText(): TranslatableMarkup {
     return $this->t('Delete');
   }
 
   /**
    * {@inheritdoc}
    */
-  public function getCancelText(): Drupal\Core\StringTranslation\TranslatableMarkup {
+  public function getCancelText(): TranslatableMarkup {
     return $this->t('Cancel');
   }
 
@@ -113,12 +135,13 @@ class UserDeleteForm extends ConfirmFormBase {
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     try {
-      Drupal::service('trainee_user.user_manager_service')->delete($this->id);
+      $this->userManager->delete($this->id);
       $this->messenger()
         ->addMessage($this->t('User has been successfully deleted'));
-    } catch (Throwable $exception) {
+    }
+    catch (\Throwable $exception) {
       $error_message = preg_replace('/`[\s\S]+?`/', '', $exception->getMessage(), 1);
-      $this->messenger()->addMessage($this->t($error_message), 'error');
+      $this->messenger()->addMessage($error_message, 'error');
     }
 
     $url = Url::fromRoute('trainee_user.user_list')

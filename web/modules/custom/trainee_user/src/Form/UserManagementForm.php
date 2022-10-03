@@ -1,23 +1,56 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\trainee_user\Form\UserManagementForm.
- */
-
 namespace Drupal\trainee_user\Form;
 
-use Drupal;
+use Drupal\Component\Utility\EmailValidator;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
 use Drupal\Core\Url;
-use Throwable;
+use Drupal\trainee_user\UserManagerService;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Class UserManagementForm.
+ * Adding form for trainee_user module.
  */
 class UserManagementForm extends FormBase {
+
+  /**
+   * The user manager.
+   *
+   * @var \Drupal\trainee_user\UserManagerService
+   */
+  protected UserManagerService $userManager;
+
+  /**
+   * The email validator.
+   *
+   * @var \Drupal\Component\Utility\EmailValidator
+   */
+  protected EmailValidator $emailValidator;
+
+  /**
+   * UserManagementForm constructor.
+   *
+   * @param \Drupal\trainee_user\UserManagerService $userManager
+   *   The user manager.
+   * @param \Drupal\Component\Utility\EmailValidator $emailValidator
+   *   The email validator.
+   */
+  public function __construct(UserManagerService $userManager, EmailValidator $emailValidator) {
+    $this->userManager = $userManager;
+    $this->emailValidator = $emailValidator;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container): UserManagementForm {
+    return new static(
+     $container->get('trainee_user.user_manager_service'),
+     $container->get('email.validator'),
+    );
+  }
 
   /**
    * {@inheritdoc}
@@ -31,7 +64,7 @@ class UserManagementForm extends FormBase {
    */
   public function validateForm(array &$form, FormStateInterface $form_state) {
     $email = $form_state->getValue('email');
-    if (!Drupal::service('email.validator')->isValid($email)) {
+    if (!$this->emailValidator->isValid($email)) {
       $form_state->setErrorByName('email',
         $this->t('The email address %mail is not valid.', ['%mail' => $email]));
     }
@@ -46,12 +79,12 @@ class UserManagementForm extends FormBase {
 
     if ($this->getRequest()->get('id') !== NULL) {
       try {
-        $user = Drupal::service('trainee_user.user_manager_service')
-          ->get($this->getRequest()->get('id'));
-      } catch (Throwable $exception) {
+        $user = $this->userManager->get($this->getRequest()->get('id'));
+      }
+      catch (\Throwable $exception) {
         $error_message = preg_replace('/`[\s\S]+?`/', '',
           $exception->getMessage(), 1);
-        $this->messenger()->addMessage($this->t($error_message), 'error');
+        $this->messenger()->addMessage($error_message, 'error');
         $user = NULL;
       }
     }
@@ -61,14 +94,14 @@ class UserManagementForm extends FormBase {
       '#title' => $this->t('User Name:'),
       '#required' => TRUE,
       '#default_value' => (isset($user['name']) && $this->getRequest()
-          ->get('id')) ? $user['name'] : '',
+        ->get('id')) ? $user['name'] : '',
     ];
     $form['email'] = [
       '#type' => 'email',
       '#title' => $this->t('Email:'),
       '#required' => TRUE,
       '#default_value' => (isset($user['email']) && $this->getRequest()
-          ->get('id')) ? $user['email'] : '',
+        ->get('id')) ? $user['email'] : '',
     ];
     $form['gender'] = [
       '#type' => 'select',
@@ -78,7 +111,7 @@ class UserManagementForm extends FormBase {
         'male' => $this->t('male'),
       ],
       '#default_value' => (isset($user['gender']) && $this->getRequest()
-          ->get('id')) ? $user['gender'] : '',
+        ->get('id')) ? $user['gender'] : '',
     ];
     $form['status'] = [
       '#type' => 'select',
@@ -88,7 +121,7 @@ class UserManagementForm extends FormBase {
         'inactive' => $this->t('inactive'),
       ],
       '#default_value' => (isset($user['status']) && $this->getRequest()
-          ->get('id')) ? $user['status'] : '',
+        ->get('id')) ? $user['status'] : '',
     ];
 
     $form['actions']['#type'] = 'actions';
@@ -119,33 +152,30 @@ class UserManagementForm extends FormBase {
     $user['gender'] = $form_state->getValue('gender');
 
     $error_message = '';
-    $answer = '';
     $new_user = NULL;
 
     try {
       if ($this->getRequest()->get('id') !== NULL) {
-        $new_user = Drupal::service('trainee_user.user_manager_service')
-          ->update($this->getRequest()->get('id'), $user);
-        $answer = "User has been updated successfully";
+        $new_user = $this->userManager->update($this->getRequest()
+          ->get('id'), $user);
+        $this->messenger()->addMessage($this->t('User has been updated successfully'));
       }
       else {
-        $new_user = Drupal::service('trainee_user.user_manager_service')
-          ->create($user);
-        $answer = "New user has been created successfully";
+        $new_user = $this->userManager->create($user);
+        $this->messenger()->addMessage($this->t('New user has been created successfully'));
       }
-    } catch (Throwable $exception) {
+    }
+    catch (\Throwable $exception) {
       $error_message = preg_replace('/`[\s\S]+?`/', '',
         $exception->getMessage(), 1);
     }
 
     if ($new_user === NULL) {
-      $this->messenger()->addMessage($this->t($error_message), 'error');
+      $this->messenger()->addMessage($error_message, 'error');
     }
     else {
-      $this->messenger()->addMessage($this->t($answer));
-      $this->messenger()
-        ->addMessage($this->t('User id: @newUserId',
-          ['@newUserId' => $new_user['id']]));
+      $this->messenger()->addMessage($this->t('User id: @newUserId',
+        ['@newUserId' => $new_user['id']]));
       $this->messenger()
         ->addMessage($this->t('User name: @newUserName',
           ['@newUserName' => $new_user['name']]));
