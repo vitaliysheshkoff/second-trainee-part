@@ -1,0 +1,26 @@
+uuid: 6d8df3b7-9185-4ccb-bb5c-ea8f3e9751eb
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+    - trainee_user
+  theme:
+    - olivero
+id: user_table_block
+theme: olivero
+region: content
+weight: 0
+provider: null
+plugin: trainee_user_user_table_block
+settings:
+  id: trainee_user_user_table_block
+  label: 'User table block'
+  label_display: visible
+  provider: trainee_user
+  page: 1
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    pages: '<front>'

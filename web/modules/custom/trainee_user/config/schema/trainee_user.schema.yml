@@ -14,3 +14,10 @@ trainee_user.settings:
     header_accept:
       type: string
       label: 'Header Accept'
+block.settings.trainee_user_user_table_block:
+  type: block_settings
+  label: 'Configuration of user table block'
+  mapping:
+    page:
+      type: integer
+      label: 'The page of user table'
