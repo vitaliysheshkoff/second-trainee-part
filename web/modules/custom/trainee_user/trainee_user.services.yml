@@ -3,7 +3,3 @@ services:
     class: Drupal\trainee_user\UserManagerService
     arguments:
       [ '@config.factory', '@http_client' ]
-  trainee_user.user_controller:
-    class: Drupal\trainee_user\Controller\UserController
-    arguments:
-      [ '@trainee_user.user_manager_service',"@page_cache_kill_switch" ]

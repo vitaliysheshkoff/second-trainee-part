@@ -5,7 +5,7 @@ namespace Drupal\trainee_user\Plugin\Block;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
-use Drupal\trainee_user\Controller\UserController;
+use Drupal\trainee_user\UserManagerService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -19,11 +19,11 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class UserTableBlock extends BlockBase implements ContainerFactoryPluginInterface {
 
   /**
-   * The user controller.
+   * The user manager.
    *
-   * @var \Drupal\trainee_user\Controller\UserController
+   * @var \Drupal\trainee_user\UserManagerService
    */
-  protected UserController $userController;
+  protected UserManagerService $userManager;
 
   /**
    * Constructs a new UserTableBlock.
@@ -34,12 +34,12 @@ class UserTableBlock extends BlockBase implements ContainerFactoryPluginInterfac
    *   The plugin ID for the plugin instance.
    * @param mixed $plugin_definition
    *   The plugin implementation definition.
-   * @param \Drupal\trainee_user\Controller\UserController $userController
-   *   The user controller.
+   * @param \Drupal\trainee_user\UserManagerService $userManager
+   *   The user manager.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, UserController $userController) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, UserManagerService $userManager) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
-    $this->userController = $userController;
+    $this->userManager = $userManager;
   }
 
   /**
@@ -50,7 +50,7 @@ class UserTableBlock extends BlockBase implements ContainerFactoryPluginInterfac
       $configuration,
       $plugin_id,
       $plugin_definition,
-      $container->get('trainee_user.user_controller'),
+      $container->get('trainee_user.user_manager_service'),
     );
   }
 
@@ -103,7 +103,35 @@ class UserTableBlock extends BlockBase implements ContainerFactoryPluginInterfac
   public function build(): array {
     $config = $this->getConfiguration();
 
-    return $this->userController->showUserList($config['page'] ?? 1);
+    $user_list = $this->userManager->getList($config['page'] ?? 1);
+
+    $header = [
+      'id' => $this->t('ID'),
+      'name' => $this->t('Username'),
+      'email' => $this->t('Email'),
+      'gender' => $this->t('Gender'),
+      'status' => $this->t('Gender'),
+    ];
+
+    $rows = [];
+
+    if ($user_list) {
+      foreach ($user_list as $user) {
+        $rows[] = [
+          'id' => $user['id'],
+          'name' => $user['name'],
+          'email' => $user['email'],
+          'gender' => $user['gender'],
+          'status' => $user['status'],
+        ];
+      }
+    }
+    return [
+      '#type' => 'table',
+      '#header' => $header,
+      '#rows' => $rows,
+      '#attached' => ['library' => ['trainee_user/table-style']],
+    ];
   }
 
 }
