@@ -18,7 +18,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class UserTableBlock extends BlockBase implements ContainerFactoryPluginInterface {
 
-
   /**
    * The user controller.
    *

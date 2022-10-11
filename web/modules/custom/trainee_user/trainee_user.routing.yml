@@ -29,3 +29,10 @@ trainee_user.delete_form:
     _title: 'Trainee user form'
   requirements:
     _permission: 'access content'
+
+trainee_user.external_user_autocomplete:
+  path: '/admin/user/autocomplete'
+  defaults:
+    _controller: 'Drupal\trainee_user\Controller\UserController::handleEmailAutocomplete'
+  requirements:
+    _permission: 'administer content types'

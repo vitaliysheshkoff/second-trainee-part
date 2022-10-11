@@ -6,6 +6,8 @@ use Drupal\Core\Url;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\PageCache\ResponsePolicy\KillSwitch;
 use Drupal\trainee_user\UserManagerService;
+use Laminas\Diactoros\Response\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -108,6 +110,43 @@ class UserController extends ControllerBase {
       '#add_path' => $add_path,
       '#attached' => ['library' => ['trainee_user/table-style']],
     ];
+  }
+
+  /**
+   * Provides handle autocomplete.
+   *
+   * @param \Symfony\Component\HttpFoundation\Request $request
+   *   The request.
+   *
+   * @return \Laminas\Diactoros\Response\JsonResponse
+   *   The response.
+   */
+  public function handleEmailAutocomplete(Request $request): JsonResponse {
+
+    $string = $request->query->get('q');
+
+    $matches = [];
+
+    if ($string) {
+
+      $input = preg_quote($string, '~');
+
+      $user_list = $this->userManager->getList(1);
+
+      $emails = [];
+
+      foreach ($user_list as $user) {
+        $emails[] = $user['email'];
+      }
+
+      $result = preg_grep('~' . $input . '~', $emails);
+
+      foreach ($result as $res) {
+        $value = $res;
+        $matches[] = ['email' => $value, 'label' => $value];
+      }
+    }
+    return new JsonResponse($matches);
   }
 
 }
