@@ -24,11 +24,11 @@ class UserDeleteForm extends ConfirmFormBase {
   /**
    * UserDeleteForm constructor.
    *
-   * @param \Drupal\trainee_user\UserManagerService $userManager
+   * @param \Drupal\trainee_user\UserManagerService $user_manager
    *   The user manager.
    */
-  public function __construct(UserManagerService $userManager) {
-    $this->userManager = $userManager;
+  public function __construct(UserManagerService $user_manager) {
+    $this->userManager = $user_manager;
   }
 
   /**

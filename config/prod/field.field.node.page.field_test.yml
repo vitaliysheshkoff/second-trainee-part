@@ -1,0 +1,21 @@
+uuid: c0e3a745-9271-4574-b307-a0cfaac30e20
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_test
+    - node.type.page
+  module:
+    - trainee_user
+id: node.page.field_test
+field_name: field_test
+entity_type: node
+bundle: page
+label: test1
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: user_reference_field

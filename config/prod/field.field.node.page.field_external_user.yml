@@ -1,0 +1,21 @@
+uuid: fa119cb6-78dd-464e-a17b-d8d59c6e1826
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_external_user
+    - node.type.page
+  module:
+    - trainee_user
+id: node.page.field_external_user
+field_name: field_external_user
+entity_type: node
+bundle: page
+label: f
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: user_reference_field

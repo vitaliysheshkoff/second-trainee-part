@@ -10,45 +10,32 @@ use Drupal\Core\Form\FormStateInterface;
  * Plugin implementation of the 'external_user_reference' widget.
  *
  * @FieldWidget(
- *   id = "external_user_reference_widget",
- *   label = @Translation("External user"),
+ *   id = "external_user_email_autocomplete_widget",
+ *   label = @Translation("User Email Autocomplete Picker"),
  *   field_types = {
  *     "user_reference_field"
  *   }
  * )
  */
-class ExternalUserReferenceWidget extends WidgetBase {
+class ExternalUserEmailAutocompleteWidget extends WidgetBase {
 
   /**
    * {@inheritdoc}
    */
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state): array {
 
-    $default_value_email = $items[$delta]->email ?? '';
+    $default_value = $items[$delta]->id ?? '';
 
-    $element['email'] = [
-      '#title' => $this->t('Api user email'),
+    $element['id'] = [
+      '#title' => $this->t('User email'),
       '#type' => 'textfield',
       '#autocomplete_route_name' => 'trainee_user.external_user_autocomplete',
-      '#autocomplite_route_parameters' => [/*'page' => 1*/],
+      '#autocomplite_route_parameters' => [],
       '#placeholder' => $this->t('User email'),
-      '#default_value' => $default_value_email,
+      '#default_value' => $default_value,
       '#element_validate' => [
         [$this, 'userValidation'],
       ],
-    ];
-
-    $names = [];
-    $user_list = \Drupal::service('trainee_user.user_manager_service')->getList(1);
-    foreach ($user_list as $user) {
-      $names[] = $user['name'];
-    }
-
-    $element['name'] = [
-      '#title' => $this->t('Api user name'),
-      '#type' => 'select',
-     // '#autocomplete_route_name' => 'trainee_user.external_user_autocomplete',
-      '#options' => $names,
     ];
 
     return $element;

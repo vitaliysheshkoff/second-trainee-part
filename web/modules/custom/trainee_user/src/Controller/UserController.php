@@ -32,13 +32,13 @@ class UserController extends ControllerBase {
   /**
    * UserController constructor.
    *
-   * @param \Drupal\trainee_user\UserManagerService $userManager
+   * @param \Drupal\trainee_user\UserManagerService $user_manager
    *   The user manager.
    * @param \Drupal\Core\PageCache\ResponsePolicy\KillSwitch $killSwitch
    *   The kill switch.
    */
-  public function __construct(UserManagerService $userManager, KillSwitch $killSwitch) {
-    $this->userManager = $userManager;
+  public function __construct(UserManagerService $user_manager, KillSwitch $killSwitch) {
+    $this->userManager = $user_manager;
     $this->killSwitch = $killSwitch;
   }
 
@@ -136,14 +136,13 @@ class UserController extends ControllerBase {
       $emails = [];
 
       foreach ($user_list as $user) {
-        $emails[] = $user['email'];
+        $emails[$user['id']] = $user['email'];
       }
 
-      $result = preg_grep('~' . $input . '~', $emails);
+      $suitable_emails = preg_grep('~' . $input . '~', $emails);
 
-      foreach ($result as $res) {
-        $value = $res;
-        $matches[] = ['email' => $value, 'label' => $value];
+      foreach ($suitable_emails as $key => $email) {
+        $matches[] = ['value' => $key, 'label' => $email];
       }
     }
     return new JsonResponse($matches);

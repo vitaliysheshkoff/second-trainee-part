@@ -34,12 +34,12 @@ class UserTableBlock extends BlockBase implements ContainerFactoryPluginInterfac
    *   The plugin ID for the plugin instance.
    * @param mixed $plugin_definition
    *   The plugin implementation definition.
-   * @param \Drupal\trainee_user\UserManagerService $userManager
+   * @param \Drupal\trainee_user\UserManagerService $user_manager
    *   The user manager.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, UserManagerService $userManager) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, UserManagerService $user_manager) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
-    $this->userManager = $userManager;
+    $this->userManager = $user_manager;
   }
 
   /**

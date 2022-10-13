@@ -15,8 +15,8 @@ use Drupal\Core\TypedData\DataDefinition;
  *   module = "trainee_user",
  *   description = @Translation("External user"),
  *   category = @Translation("External user"),
- *   default_widget = "external_user_reference_widget",
- *   default_formatter = "external_user_reference_default_formatter"
+ *   default_widget = "external_user_name_widget",
+ *   default_formatter = "external_user_default_formatter"
  * )
  */
 class ExternalUserReference extends FieldItemBase {
@@ -27,17 +27,12 @@ class ExternalUserReference extends FieldItemBase {
   public static function schema(FieldStorageDefinitionInterface $field_definition): array {
     return [
       'columns' => [
-        'email' => [
-          'description' => 'The external user email',
-          'type' => 'text',
-          'size' => 'tiny',
-          'not null' => FALSE,
-        ],
-        'name' => [
-          'description' => 'The external user name',
-          'type' => 'text',
-          'size' => 'tiny',
-          'not null' => FALSE,
+        'id' => [
+          'description' => 'The external user id',
+          'unsigned' => TRUE,
+          'type' => 'int',
+          'size' => 'normal',
+          'not null' => TRUE,
         ],
       ],
     ];
@@ -49,8 +44,7 @@ class ExternalUserReference extends FieldItemBase {
   public static function propertyDefinitions(FieldStorageDefinitionInterface $field_definition): array {
     $properties = [];
 
-    $properties['email'] = DataDefinition::create('string')->setLabel(t('User Email'));
-    $properties['name'] = DataDefinition::create('string')->setLabel(t('User Name'));
+    $properties['id'] = DataDefinition::create('integer')->setLabel(t('User id'));
 
     return $properties;
   }
@@ -59,7 +53,7 @@ class ExternalUserReference extends FieldItemBase {
    * {@inheritdoc}
    */
   public function isEmpty(): bool {
-    return empty($this->email);
+    return empty($this->id);
   }
 
 }
