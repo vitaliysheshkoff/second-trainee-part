@@ -21,3 +21,10 @@ block.settings.trainee_user_user_table_block:
     page:
       type: integer
       label: 'The page of user table'
+field.value.user_reference_field:
+  type: mapping
+  label: 'External user'
+  mapping:
+    external_user_id:
+      type: integer
+      label: 'External user id'

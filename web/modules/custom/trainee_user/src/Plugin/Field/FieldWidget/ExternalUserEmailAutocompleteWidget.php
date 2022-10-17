@@ -24,9 +24,9 @@ class ExternalUserEmailAutocompleteWidget extends WidgetBase {
    */
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state): array {
 
-    $default_value = $items[$delta]->id ?? '';
+    $default_value = $items[$delta]->external_user_id ?? '';
 
-    $element['id'] = [
+    $element['external_user_id'] = [
       '#title' => $this->t('User email'),
       '#type' => 'textfield',
       '#autocomplete_route_name' => 'trainee_user.external_user_autocomplete',
@@ -49,7 +49,7 @@ class ExternalUserEmailAutocompleteWidget extends WidgetBase {
    * @param \Drupal\Core\Form\FormStateInterface $form_state
    *   The form state.
    */
-  public function userValidation(array $element, FormStateInterface $form_state) {
+  public function userValidation(array &$element, FormStateInterface $form_state) {
   }
 
 }

@@ -27,7 +27,7 @@ class ExternalUserReference extends FieldItemBase {
   public static function schema(FieldStorageDefinitionInterface $field_definition): array {
     return [
       'columns' => [
-        'id' => [
+        'external_user_id' => [
           'description' => 'The external user id',
           'unsigned' => TRUE,
           'type' => 'int',
@@ -44,7 +44,7 @@ class ExternalUserReference extends FieldItemBase {
   public static function propertyDefinitions(FieldStorageDefinitionInterface $field_definition): array {
     $properties = [];
 
-    $properties['id'] = DataDefinition::create('integer')->setLabel(t('User id'));
+    $properties['external_user_id'] = DataDefinition::create('integer')->setLabel(t('External user id'));
 
     return $properties;
   }
@@ -53,7 +53,7 @@ class ExternalUserReference extends FieldItemBase {
    * {@inheritdoc}
    */
   public function isEmpty(): bool {
-    return empty($this->id);
+    return empty($this->external_user_id);
   }
 
 }

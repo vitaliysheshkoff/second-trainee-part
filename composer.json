@@ -31,7 +31,7 @@
         "webflo/drupal-finder": "^1.2"
     },
     "require-dev": {
-        "drupal/core-dev": "^9.4",
+        "drupal/core-dev": "^9.5.0-beta2",
         "drupal/devel": "^4.1"
     },
     "conflict": {

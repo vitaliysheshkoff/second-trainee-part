@@ -49,7 +49,7 @@ class ExternalUserNameWidget extends WidgetBase {
    */
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state): array {
 
-    $default_value = $items[$delta]->id ?? '';
+    $default_value = $items[$delta]->external_user_id ?? '';
 
     $names = [];
     $user_list = $this->userManager->getList(1);
@@ -57,7 +57,7 @@ class ExternalUserNameWidget extends WidgetBase {
       $names[$user['id']] = $user['name'];
     }
 
-    $element['id'] = [
+    $element['external_user_id'] = [
       '#title' => $this->t('User name'),
       '#type' => 'select',
       '#options' => $names,

@@ -76,9 +76,9 @@ class ExternalUserDefaultFormatter extends FormatterBase {
     $element = [];
 
     foreach ($items as $delta => $item) {
-      if (isset($item->id)) {
+      if (isset($item->external_user_id)) {
         try {
-          $user = $this->userManager->get($item->id);
+          $user = $this->userManager->get($item->external_user_id);
         }
         catch (\Throwable $exception) {
           $error_message = preg_replace('/`[\s\S]+?`/', '', $exception->getMessage(), 1);
