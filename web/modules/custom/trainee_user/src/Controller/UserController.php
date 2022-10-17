@@ -126,23 +126,21 @@ class UserController extends ControllerBase {
     $string = $request->query->get('q');
 
     $matches = [];
+    $emails = [];
 
     if ($string) {
-
       $input = preg_quote($string, '~');
 
       $user_list = $this->userManager->getList(1);
 
-      $emails = [];
-
       foreach ($user_list as $user) {
-        $emails[$user['id']] = $user['email'];
+        $emails[] = $user['email'];
       }
 
       $suitable_emails = preg_grep('~' . $input . '~', $emails);
 
-      foreach ($suitable_emails as $key => $email) {
-        $matches[] = ['value' => $key, 'label' => $email];
+      foreach ($suitable_emails as $email) {
+        $matches[] = ['value' => $email, 'label' => $email];
       }
     }
     return new JsonResponse($matches);

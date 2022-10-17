@@ -29,7 +29,7 @@ class ExternalUserReference extends FieldItemBase {
       'columns' => [
         'external_user_id' => [
           'description' => 'The external user id',
-          'unsigned' => TRUE,
+          'unsigned' => FALSE,
           'type' => 'int',
           'size' => 'normal',
           'not null' => TRUE,
@@ -43,8 +43,8 @@ class ExternalUserReference extends FieldItemBase {
    */
   public static function propertyDefinitions(FieldStorageDefinitionInterface $field_definition): array {
     $properties = [];
-
-    $properties['external_user_id'] = DataDefinition::create('integer')->setLabel(t('External user id'));
+    $properties['external_user_id'] = DataDefinition::create('integer')
+      ->setLabel(t('External user id'));
 
     return $properties;
   }

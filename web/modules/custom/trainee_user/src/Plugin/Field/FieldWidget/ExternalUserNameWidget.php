@@ -67,15 +67,4 @@ class ExternalUserNameWidget extends WidgetBase {
     return $element;
   }
 
-  /**
-   * Provides user validation.
-   *
-   * @param array $element
-   *   The array of element.
-   * @param \Drupal\Core\Form\FormStateInterface $form_state
-   *   The form state.
-   */
-  public function userValidation(array $element, FormStateInterface $form_state) {
-  }
-
 }
