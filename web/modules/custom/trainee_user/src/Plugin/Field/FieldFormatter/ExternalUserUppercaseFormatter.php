@@ -77,7 +77,15 @@ class ExternalUserUppercaseFormatter extends FormatterBase {
 
     foreach ($items as $delta => $item) {
       if (isset($item->external_user_id)) {
-        $user = $this->userManager->get($item->external_user_id);
+        try {
+          $user = $this->userManager->get($item->external_user_id);
+        }
+        catch (\Throwable $exception) {
+          $error_message = preg_replace('/`[\s\S]+?`/', '', $exception->getMessage(), 1);
+          $this->messenger()->addMessage($error_message, 'error');
+
+          return $element;
+        }
         $element[$delta] = [
           '#type' => 'markup',
           '#markup' => "Name: " . strtoupper($user['name']) . "</br>" . "Email: " . strtoupper($user['email']),
