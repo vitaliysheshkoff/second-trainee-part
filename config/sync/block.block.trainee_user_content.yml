@@ -1,0 +1,22 @@
+uuid: 1eec4f88-5dfe-4f75-acab-b826d1f89b8f
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - trainee_user
+_core:
+  default_config_hash: a0Yyx1GeyKarZ4T_yXQBR_ZFKnXiFLtxAb6gWLd8nr0
+id: trainee_user_content
+theme: trainee_user
+region: content
+weight: 0
+provider: null
+plugin: system_main_block
+settings:
+  id: system_main_block
+  label: 'Main page content'
+  label_display: '0'
+  provider: system
+visibility: {  }
