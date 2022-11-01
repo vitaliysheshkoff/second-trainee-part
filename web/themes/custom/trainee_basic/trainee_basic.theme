@@ -1,0 +1,86 @@
+<?php
+
+/**
+ * @file
+ * Contains theme override functions and preprocess functions
+ */
+
+/**
+ * Implements hook_form_system_theme_settings_alter().
+ */
+function trainee_basic_form_system_theme_settings_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state) {
+  //Copyright
+  $form['trainee_basic_settings']['copyright'] = [
+    '#type' => 'details',
+    '#title' => t('Copyright'),
+    '#collapsible' => TRUE,
+    '#collapsed' => FALSE,
+  ];
+  $form['trainee_basic_settings']['copyright']['copyright_site_name'] = [
+    '#type' => 'textfield',
+    '#title' => t('Enter site name'),
+    '#default_value' => theme_get_setting('copyright_site_name'),
+  ];
+  $form['trainee_basic_settings']['copyright']['copyright_text'] = [
+    '#type' => 'textfield',
+    '#title' => t('Enter copyright text'),
+    '#default_value' => theme_get_setting('copyright_text'),
+  ];
+
+  //Show/Hide credit
+  $form['trainee_basic_settings']['credit_link'] = [
+    '#type' => 'details',
+    '#title' => t('Credit'),
+    '#collapsible' => TRUE,
+    '#collapsed' => FALSE,
+  ];
+  $form['trainee_basic_settings']['credit_link']['credit_text'] = [
+    '#type' => 'textfield',
+    '#title' => t('Enter credit text'),
+    '#default_value' => theme_get_setting('credit_text'),
+  ];
+  $form['trainee_basic_settings']['credit_link']['credit_href'] = [
+    '#type' => 'textfield',
+    '#title' => t('Enter credit href'),
+    '#default_value' => theme_get_setting('credit_href'),
+  ];
+  $form['trainee_basic_settings']['credit_link']['credit_href_text'] = [
+    '#type' => 'textfield',
+    '#title' => t('Enter credit href text'),
+    '#default_value' => theme_get_setting('credit_href_text'),
+  ];
+  $form['trainee_basic_settings']['credit_link']['show_credit_link'] = [
+    '#type' => 'checkbox',
+    '#title' => t("Show/hide credit text"),
+    '#default_value' => theme_get_setting('show_credit_link'),
+    '#description'   => t("Recommend you to display credit in footer"),
+  ];
+
+  //Show/Hide contact details
+  $form['trainee_basic_settings']['contact_details'] = [
+    '#type' => 'details',
+    '#title' => t('Contact Details'),
+    '#collapsible' => TRUE,
+    '#collapsed' => FALSE,
+  ];
+  $form['trainee_basic_settings']['contact_details']['show_contact_details'] = [
+    '#type' => 'checkbox',
+    '#title' => t("Show/hide contact details"),
+    '#default_value' => theme_get_setting('show_contact_details'),
+    '#description'   => t("Recommend you to display in header"),
+  ];
+
+}
+
+function trainee_basic_preprocess_page(&$variables){
+  //Copyright
+  $variables['copyright_text'] = theme_get_setting('copyright_text');
+  $variables['copyright_site_name'] = theme_get_setting('copyright_site_name');
+
+  // Credit link
+  $variables['show_credit_link'] = theme_get_setting('show_credit_link');
+  $variables['credit_text'] = theme_get_setting('credit_text');
+  $variables['credit_href'] = theme_get_setting('credit_href');
+  $variables['credit_href_text'] = theme_get_setting('credit_href_text');
+
+}
