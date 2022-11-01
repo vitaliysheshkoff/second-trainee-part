@@ -1,0 +1,22 @@
+uuid: 70102f9c-5847-404e-ae10-3f46551ed61d
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - trainee_basic
+_core:
+  default_config_hash: '-Ac3ISpIT0PQ-whzD7_dw0SdKi6dAbRFNWdSjOiVDqg'
+id: trainee_basic_messages
+theme: trainee_basic
+region: header
+weight: 0
+provider: null
+plugin: system_messages_block
+settings:
+  id: system_messages_block
+  label: 'Status messages'
+  label_display: '0'
+  provider: system
+visibility: {  }

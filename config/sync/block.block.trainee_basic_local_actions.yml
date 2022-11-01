@@ -1,0 +1,20 @@
+uuid: 81685410-47ce-42fb-81bf-e5976fd16159
+langcode: en
+status: true
+dependencies:
+  theme:
+    - trainee_basic
+_core:
+  default_config_hash: CdXfDmRgAvms7EQovxxWPdYi0GitxeRbVtScYK16ZH0
+id: trainee_basic_local_actions
+theme: trainee_basic
+region: content
+weight: -10
+provider: null
+plugin: local_actions_block
+settings:
+  id: local_actions_block
+  label: 'Primary admin actions'
+  label_display: '0'
+  provider: core
+visibility: {  }

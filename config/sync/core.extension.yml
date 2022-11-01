@@ -12,6 +12,7 @@ module:
   breakpoint: 0
   ckeditor: 0
   comment: 0
+  components: 0
   config: 0
   config_filter: 0
   config_inspector: 0
@@ -59,5 +60,6 @@ theme:
   claro: 0
   stable: 0
   classy: 0
-  trainee_user: 0
+  radix: 0
+  trainee_basic: 0
 profile: standard
