@@ -1,0 +1,9 @@
+services:
+  minute.minute_checker:
+    class: Drupal\minute\MinuteChecker
+    arguments: [ '@datetime.time' ]
+  cache_context.minute_request_timestamp:
+    class: Drupal\minute\Cache\Context\MinuteRequestTimestamp
+    arguments: [ '@minute.minute_checker', '@datetime.time' ]
+    tags:
+      - { name: cache.context }

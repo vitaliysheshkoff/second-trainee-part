@@ -1,0 +1,7 @@
+minute.cashed_text:
+  path: 'cached'
+  defaults:
+    _controller: 'Drupal\minute\Controller\MinuteController::showCachedResult'
+    _title: 'cached text'
+  requirements:
+    _permission: 'access content'
