@@ -4,6 +4,11 @@ services:
     arguments: [ '@datetime.time' ]
   cache_context.minute_request_timestamp:
     class: Drupal\minute\Cache\Context\MinuteRequestTimestamp
-    arguments: [ '@minute.minute_checker', '@datetime.time' ]
+    arguments: [ '@minute.minute_checker' ]
+    tags:
+      - { name: cache.context }
+  cache_context.minute_request_timestamp_node_and_title:
+    class: Drupal\minute\Cache\Context\MinuteRequestTimestampNodeAndTitle
+    arguments: [ '@minute.minute_checker' ]
     tags:
       - { name: cache.context }

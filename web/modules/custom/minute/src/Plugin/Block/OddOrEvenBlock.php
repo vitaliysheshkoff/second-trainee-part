@@ -2,7 +2,6 @@
 
 namespace Drupal\minute\Plugin\Block;
 
-use Drupal\Component\Datetime\Time;
 use Drupal\Core\Block\Annotation\Block;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Cache\Cache;
@@ -21,11 +20,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class OddOrEvenBlock extends BlockBase implements ContainerFactoryPluginInterface {
 
   /**
-   * @var \Drupal\Component\Datetime\Time
-   */
-  protected Time $time;
-
-  /**
    * @var \Drupal\minute\MinuteChecker
    */
   protected MinuteChecker $minuteChecker;
@@ -33,9 +27,8 @@ class OddOrEvenBlock extends BlockBase implements ContainerFactoryPluginInterfac
   /**
    * {@inheritdoc}
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, Time $time, MinuteChecker $minute_checker) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, MinuteChecker $minute_checker) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
-    $this->time = $time;
     $this->minuteChecker = $minute_checker;
   }
 
@@ -47,7 +40,6 @@ class OddOrEvenBlock extends BlockBase implements ContainerFactoryPluginInterfac
       $configuration,
       $plugin_id,
       $plugin_definition,
-      $container->get('datetime.time'),
       $container->get('minute.minute_checker'),
     );
   }
@@ -56,14 +48,11 @@ class OddOrEvenBlock extends BlockBase implements ContainerFactoryPluginInterfac
    * {@inheritdoc}
    */
   public function build() {
-
-    $minutes_amount = intval($this->time->getCurrentTime() / 60);
-    $result =  $this->minuteChecker->isEven($minutes_amount) ? 'Even Minute' : 'Odd Minute';
-
+    $result = $this->minuteChecker->isEven() ? 'Even Minute' : 'Odd Minute';
     return [
       '#markup' => $result,
       '#cache' => [
-        'contexts' => /*$this->getCacheContexts()*/ ['minute_request_timestamp'],
+        'contexts' => $this->getCacheContexts(),
       ],
     ];
 

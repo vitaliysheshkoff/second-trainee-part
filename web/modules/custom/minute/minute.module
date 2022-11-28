@@ -4,3 +4,16 @@
  * @file
  * Primary module hooks for minute module.
  */
+/**
+ * Implements hook_theme().
+ */
+function minute_theme($existing, $type, $theme, $path): array {
+  return [
+    'minute_odd_or_even_page' => [
+      'variables' => [
+        'title' => NULL,
+        'node' => [],
+      ],
+    ],
+  ];
+}

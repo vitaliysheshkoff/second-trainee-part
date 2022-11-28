@@ -28,4 +28,7 @@ class MinuteChecker implements MinuteManagerInterface {
     return  intval($this->time->getCurrentTime() / 60) % 2 == 0;
   }
 
+
+
+
 }
