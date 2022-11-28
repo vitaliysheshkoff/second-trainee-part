@@ -1,4 +1,4 @@
-uuid: c3de73fc-3d5d-4c5a-a2eb-5e1a2f8ae072
+uuid: 44d8f1f9-badf-41af-87d2-b5b621ae9ed5
 langcode: en
 status: true
 dependencies:
@@ -265,6 +265,7 @@ display:
     display_plugin: feed
     position: 2
     display_options:
+      enabled: true
       pager:
         type: some
         options:
@@ -300,6 +301,7 @@ display:
     display_plugin: page
     position: 1
     display_options:
+      enabled: true
       display_extenders: {  }
       path: node
     cache_metadata:

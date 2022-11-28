@@ -32,13 +32,13 @@ class UserManagementForm extends FormBase {
   /**
    * UserManagementForm constructor.
    *
-   * @param \Drupal\trainee_user\UserManagerService $userManager
+   * @param \Drupal\trainee_user\UserManagerService $user_manager
    *   The user manager.
    * @param \Drupal\Component\Utility\EmailValidator $emailValidator
    *   The email validator.
    */
-  public function __construct(UserManagerService $userManager, EmailValidator $emailValidator) {
-    $this->userManager = $userManager;
+  public function __construct(UserManagerService $user_manager, EmailValidator $emailValidator) {
+    $this->userManager = $user_manager;
     $this->emailValidator = $emailValidator;
   }
 

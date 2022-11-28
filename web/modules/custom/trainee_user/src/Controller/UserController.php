@@ -6,6 +6,8 @@ use Drupal\Core\Url;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\PageCache\ResponsePolicy\KillSwitch;
 use Drupal\trainee_user\UserManagerService;
+use Laminas\Diactoros\Response\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -30,13 +32,13 @@ class UserController extends ControllerBase {
   /**
    * UserController constructor.
    *
-   * @param \Drupal\trainee_user\UserManagerService $userManager
+   * @param \Drupal\trainee_user\UserManagerService $user_manager
    *   The user manager.
    * @param \Drupal\Core\PageCache\ResponsePolicy\KillSwitch $killSwitch
    *   The kill switch.
    */
-  public function __construct(UserManagerService $userManager, KillSwitch $killSwitch) {
-    $this->userManager = $userManager;
+  public function __construct(UserManagerService $user_manager, KillSwitch $killSwitch) {
+    $this->userManager = $user_manager;
     $this->killSwitch = $killSwitch;
   }
 
@@ -108,6 +110,40 @@ class UserController extends ControllerBase {
       '#add_path' => $add_path,
       '#attached' => ['library' => ['trainee_user/table-style']],
     ];
+  }
+
+  /**
+   * Provides handle autocomplete.
+   *
+   * @param \Symfony\Component\HttpFoundation\Request $request
+   *   The request.
+   *
+   * @return \Laminas\Diactoros\Response\JsonResponse
+   *   The response.
+   */
+  public function handleEmailAutocomplete(Request $request): JsonResponse {
+
+    $string = $request->query->get('q');
+
+    $matches = [];
+    $emails = [];
+
+    if ($string) {
+      $input = preg_quote($string, '~');
+
+      $user_list = $this->userManager->getList(1);
+
+      foreach ($user_list as $user) {
+        $emails[] = $user['email'];
+      }
+
+      $suitable_emails = preg_grep('~' . $input . '~', $emails);
+
+      foreach ($suitable_emails as $email) {
+        $matches[] = ['value' => $email, 'label' => $email];
+      }
+    }
+    return new JsonResponse($matches);
   }
 
 }
