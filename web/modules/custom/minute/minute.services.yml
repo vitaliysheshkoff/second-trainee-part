@@ -7,8 +7,3 @@ services:
     arguments: [ '@minute.minute_checker' ]
     tags:
       - { name: cache.context }
-  cache_context.minute_request_timestamp_node_and_title:
-    class: Drupal\minute\Cache\Context\MinuteRequestTimestampNodeAndTitle
-    arguments: [ '@minute.minute_checker' ]
-    tags:
-      - { name: cache.context }

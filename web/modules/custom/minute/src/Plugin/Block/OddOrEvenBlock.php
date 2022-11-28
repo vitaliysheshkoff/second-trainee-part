@@ -22,7 +22,7 @@ class OddOrEvenBlock extends BlockBase implements ContainerFactoryPluginInterfac
   /**
    * @var \Drupal\minute\MinuteChecker
    */
-  protected MinuteChecker $minuteChecker;
+  protected $minuteChecker;
 
   /**
    * {@inheritdoc}

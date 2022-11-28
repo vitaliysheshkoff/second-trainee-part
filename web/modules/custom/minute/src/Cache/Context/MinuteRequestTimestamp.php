@@ -14,7 +14,7 @@ class MinuteRequestTimestamp implements CacheContextInterface {
   /**
    * @var \Drupal\minute\MinuteChecker
    */
-  protected MinuteChecker $minuteChecker;
+  protected $minuteChecker;
 
   /**
    * {@inheritdoc}
@@ -34,7 +34,7 @@ class MinuteRequestTimestamp implements CacheContextInterface {
    * {@inheritdoc}
    */
   public function getContext(): string {
-    return $this->minuteChecker->isEven() ? 'Even Minute;' : 'Odd Minute';
+    return $this->minuteChecker->isEven() ? 'Even Minute' : 'Odd Minute';
   }
 
   /**

@@ -2,12 +2,9 @@
 
 namespace Drupal\minute\Controller;
 
-use Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException;
-use Drupal\Component\Plugin\Exception\PluginNotFoundException;
 use \Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Entity\EntityTypeManager;
-use Drupal\minute\Form\MinuteTitleAndNodeConfigForm;
 use Drupal\minute\MinuteChecker;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -26,7 +23,7 @@ class MinuteController extends ControllerBase {
   /**
    * @var \Drupal\minute\MinuteChecker
    */
-  protected MinuteChecker $minuteChecker;
+  protected $minuteChecker;
 
   /**
    * Config factory.
@@ -61,7 +58,7 @@ class MinuteController extends ControllerBase {
    * @return array
    *   Cached result.
    */
-  public function showCachedResult(): array {
+  public function showTextPage(): array {
     return [
       '#type' => 'html_tag',
       '#tag' => 'p',
@@ -84,34 +81,36 @@ class MinuteController extends ControllerBase {
    */
   public function showPageWithTitleAndNode(): array {
 
-    $config = $this->configFactory->getEditable(MinuteTitleAndNodeConfigForm::SETTINGS);
+    $config = $this->configFactory->getEditable('module.settings');
 
-    $str = $this->minuteChecker->isEven() ? 'even_title;even_entity' : 'odd_title;odd_entity';
-    $data = explode(';', $str);
-
-    $title = $config->get($data[0]);
-    $entity = $data[1];
-
-    $node = [];
-    try {
-      $node = $this->entityTypeManager->getStorage('node')
-        ->load($config->get($entity)[0]['target_id']);
-    } catch (InvalidPluginDefinitionException|PluginNotFoundException $e) {
-      $error_message = $e->getMessage();
-      $this->messenger()->addMessage($error_message, 'error');
+    if ($this->minuteChecker->isEven()) {
+      $title = 'even_title';
+      $entity = 'even_entity';
     }
+    else {
+      $title = 'odd_title';
+      $entity = 'odd_entity';
+    }
+
+    $title = $config->get($title);
+
+    $node = $this->entityTypeManager->getStorage('node')
+      ->load($config->get($entity)[0]['target_id']);
+
+    if(!is_null($node)) {
+      $node = $this->entityTypeManager
+        ->getViewBuilder('node')
+        ->view($node, 'teaser');
+      }
 
     return [
       '#theme' => 'minute_odd_or_even_page',
       '#title' => $title,
-      '#node' => $this->entityTypeManager
-        ->getViewBuilder('node')
-        ->view($node, 'teaser'),
+      '#node' => $node,
       '#cache' => [
         'tags' => ['node:' . $config->get($entity)[0]['target_id']],
         'contexts' =>
-          ['minute_request_timestamp_node_and_title'],
-        //['theme']
+          ['minute_request_timestamp'],
       ],
     ];
   }

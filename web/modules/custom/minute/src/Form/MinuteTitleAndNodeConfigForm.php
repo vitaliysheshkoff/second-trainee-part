@@ -19,7 +19,7 @@ class MinuteTitleAndNodeConfigForm extends ConfigFormBase {
    *
    * @var \Drupal\Core\Entity\EntityTypeManager
    */
-  protected EntityTypeManager $entityTypeManager;
+  protected $entityTypeManager;
 
   /**
    * MinuteTitleAndNodeConfigForm constructor.
@@ -41,19 +41,10 @@ class MinuteTitleAndNodeConfigForm extends ConfigFormBase {
   }
 
   /**
-   * Config settings.
-   *
-   * @var string
-   */
-  const SETTINGS = 'module.settings';
-
-  /**
    * {@inheritdoc}
    */
   protected function getEditableConfigNames(): array {
-    return [
-      static::SETTINGS,
-    ];
+    return ['module.settings'];
   }
 
   /**
@@ -68,14 +59,14 @@ class MinuteTitleAndNodeConfigForm extends ConfigFormBase {
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
 
-    $config = $this->config(static::SETTINGS);
+    $config = $this->config('module.settings');
 
     $form['even_title'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Even title in node'),
       '#decription' => $this->t('text for even title'),
       '#required' => TRUE,
-      '#default_value' => $config->get('even_title' ?? ''),
+      '#default_value' => $config->get('even_title') ?? '',
     ];
 
     $form['odd_title'] = [
@@ -133,7 +124,7 @@ class MinuteTitleAndNodeConfigForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    $this->config(static::SETTINGS)
+    $this->config('module.settings')
       ->set('even_title', $form_state->getValue('even_title'))
       ->set('odd_title', $form_state->getValue('odd_title'))
       ->set('even_entity', $form_state->getValue('even_entity'))

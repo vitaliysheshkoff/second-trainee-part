@@ -1,12 +1,12 @@
-minute.cashed_text:
-  path: 'cached'
+minute.text_page:
+  path: 'odd-even'
   defaults:
-    _controller: 'Drupal\minute\Controller\MinuteController::showCachedResult'
-    _title: 'cached text'
+    _controller: 'Drupal\minute\Controller\MinuteController::showTextPage'
+    _title: 'Odd or Even'
   requirements:
     _permission: 'access content'
 minute.even_odd_page:
-      path: 'odd-even'
+      path: 'odd-even-teaser'
       defaults:
         _controller: 'Drupal\minute\Controller\MinuteController::showPageWithTitleAndNode'
         _title: 'Odd or Even Node'
