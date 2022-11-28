@@ -12,7 +12,7 @@ class MinuteChecker implements MinuteManagerInterface {
   /**
    * @var \Drupal\Component\Datetime\Time
    */
-  protected Time $time;
+  protected $time;
 
   /**
    * {@inheritdoc}
