@@ -1,0 +1,29 @@
+uuid: 15327727-73a2-4974-b8a8-5661fffa69ac
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_habitat
+    - node.type.pokemon
+    - taxonomy.vocabulary.habitats
+id: node.pokemon.field_habitat
+field_name: field_habitat
+entity_type: node
+bundle: pokemon
+label: Habitat
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      habitats: habitats
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

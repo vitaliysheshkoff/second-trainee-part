@@ -1,0 +1,29 @@
+uuid: 1d45834e-4b4b-4393-9172-5669a0013b5e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ability
+    - node.type.pokemon
+    - taxonomy.vocabulary.abilities
+id: node.pokemon.field_ability
+field_name: field_ability
+entity_type: node
+bundle: pokemon
+label: Ability
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      abilities: abilities
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

@@ -1,0 +1,19 @@
+uuid: 1368d551-e215-4911-b7c9-34ea3413989e
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - trainee_user
+id: node.field_external_user
+field_name: field_external_user
+entity_type: node
+type: user_reference_field
+settings: {  }
+module: trainee_user
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

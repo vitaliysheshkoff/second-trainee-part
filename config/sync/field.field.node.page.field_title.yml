@@ -1,0 +1,21 @@
+uuid: cf6fc112-3b3d-4a1d-95cb-44e88921c393
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_title
+    - node.type.page
+  module:
+    - text
+id: node.page.field_title
+field_name: field_title
+entity_type: node
+bundle: page
+label: title
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text

@@ -1,0 +1,8 @@
+uuid: 3e72c073-7e48-42b7-9809-3738111f6082
+langcode: en
+status: true
+dependencies: {  }
+name: Characteristics
+vid: characteristics
+description: 'Characteristics indicate which stat contains a Pokémon''s highest IV. A Pokémon''s Characteristic is determined by the remainder o'
+weight: 0

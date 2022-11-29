@@ -1,0 +1,8 @@
+uuid: 195e37d2-2876-4594-9e87-5de073c638db
+langcode: en
+status: true
+dependencies: {  }
+name: Habitats
+vid: habitats
+description: 'Habitats are generally different terrain Pokémon can be found in but can also be areas designated for rare or legendary Pokémon.'
+weight: 0

@@ -1,0 +1,22 @@
+uuid: a6015c4d-227e-4e81-90de-1679d159674c
+langcode: en
+status: true
+dependencies:
+  theme:
+    - trainee_basic
+_core:
+  default_config_hash: nGE3EoPQQaQCuqTUtZgw0-KIzmrqdKDzdNQf2JyPUt4
+id: trainee_basic_primary_local_tasks
+theme: trainee_basic
+region: header_first
+weight: -4
+provider: null
+plugin: local_tasks_block
+settings:
+  id: local_tasks_block
+  label: 'Primary tabs'
+  label_display: '0'
+  provider: core
+  primary: true
+  secondary: false
+visibility: {  }
