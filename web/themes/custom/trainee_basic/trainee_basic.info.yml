@@ -1,0 +1,21 @@
+name: Trainee Theme
+description: Trainee theme
+type: theme
+core_version_requirement: ^8 || ^9
+package: Trainee custom themes
+libraries:
+  - trainee_basic/global-styling
+  - trainee_basic/bootstrap
+  - trainee_basic/fontawesome
+  - trainee_basic/smartmenus
+  - trainee_basic/flexslider
+  - trainee_basic/global-components
+base theme: false
+regions:
+  header_first: Header first
+  header_second: Header second
+  hero: Hero
+  content: Content
+  right_sidebar: Right sidebar
+  footer_first: Footer first
+  footer_second: Footer second

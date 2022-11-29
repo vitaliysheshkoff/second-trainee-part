@@ -1,0 +1,23 @@
+uuid: a652af63-db8b-4531-8eeb-619863155be8
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_user
+    - node.type.page
+  module:
+    - trainee_user
+id: node.page.field_user
+field_name: field_user
+entity_type: node
+bundle: page
+label: user
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    external_user_id: 4004
+default_value_callback: ''
+settings: {  }
+field_type: user_reference_field

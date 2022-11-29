@@ -1,0 +1,8 @@
+name: Trainee Hospital Site Module
+description: Trainee base module
+type: module
+core: 8.x
+core_version_requirement: ^8 || ^9
+package: Trainee custom modules
+libraries:
+  - trainee_site/site-style

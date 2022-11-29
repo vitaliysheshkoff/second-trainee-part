@@ -1,0 +1,124 @@
+{#
+/**
+* @file
+*  Custom theme.
+*/
+#}
+
+<!-- Topbar Start -->
+{% if show_contact_details %}
+<div class="container-fluid py-2 border-bottom d-none d-lg-block">
+  <div class="container">
+    <div class="row">
+      {% if show_contact_details %}
+      <div class="col-md-6 text-center text-lg-start mb-2 mb-lg-0">
+        <div class="d-inline-flex align-items-center">
+          <a class="text-decoration-none text-body pe-3" href=""><i class="bi bi-telephone me-2"></i>+012 345 6789</a>
+          <span class="text-body">|</span>
+          <a class="text-decoration-none text-body px-3" href=""><i class="bi bi-envelope me-2"></i>info@example.com</a>
+        </div>
+      </div>
+      {% endif %}
+      <div class="col-md-6 text-center text-lg-end">
+        <div class="d-inline-flex align-items-center">
+          <a class="text-body px-2" href="">
+            <i class="fab fa-facebook-f"></i>
+          </a>
+          <a class="text-body px-2" href="">
+            <i class="fab fa-twitter"></i>
+          </a>
+          <a class="text-body px-2" href="">
+            <i class="fab fa-linkedin-in"></i>
+          </a>
+          <a class="text-body px-2" href="">
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a class="text-body ps-2" href="">
+            <i class="fab fa-youtube"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+<!-- Topbar End -->
+
+<header aria-label="Site header" class="header" id="header" role="banner">
+ {# <div class="header--first">
+    {% if page.header_first %}
+      {{ page.header_first }}
+    {% endif %}
+  </div>
+  <div class="header--second">
+    {% if page.header_second %}
+      {{ page.header_second }}
+    {% endif %}
+  </div>
+  {% if page.hero %}
+    {{ page.hero }}
+  {% endif %}#}
+</header>
+<section class="main" id="main">
+  <main aria-label="Site main content" class="content" id="content" role="main">
+    {{ page.content }}
+  </main>
+  <aside class="right--sidebar" id="sidebar" role="complementary">
+    {{ page.right_sidebar }}
+  </aside>
+</section>
+<!-- Footer Start -->
+ {#<footer aria-label="Site footer" class="footer" id="footer" role="contentinfo">
+  <div class="footer--first">
+    {% if page.footer_first %}
+      {{ page.footer_first }}
+    {% endif %}
+  </div>
+  <div class="footer--second">
+    {% if page.footer_second %}
+      {{ page.footer_second }}
+    {% endif %}
+  </div>#}
+<!-- Footer End -->
+
+
+{% if copyright_text or copyright_site_name or show_credit_link or credit_text or credit_href or credit_href_text %}
+  <div class="container-fluid bg-dark text-light border-top border-secondary py-4">
+    <div class="container">
+      <div class="row g-5">
+
+        <!-- Copyright -->
+        <div class="col-md-6 text-center text-md-start">
+          {% if copyright_text %}
+            <p class="mb-md-0">&copy;
+              {% if copyright_site_name %}
+                <a class="text-primary" href="#">{{ copyright_site_name }}</a>
+              {% endif %}
+              . {{ copyright_text }}.</p>
+          {% endif %}
+        </div>
+        <!-- End Copyright -->
+
+        <!-- Credit link -->
+        {% if show_credit_link %}
+          <div class="col-md-6 text-center text-md-end">
+            {% if credit_text %}
+              <p class="mb-0">{{ credit_text }}
+              {% if credit_href and credit_href_text %}
+                <a class="text-primary" href={{ credit_href }}>{{ credit_href_text }}</a></p>
+              {% endif %}
+            {% endif %}
+          </div>
+        {% endif %}
+        <!-- End Credit link -->
+
+      </div>
+    </div>
+  </div>
+{% endif %}
+
+
+  <!-- Back to Top -->
+  <a href="" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+  </footer>
+

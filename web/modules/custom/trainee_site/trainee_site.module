@@ -1,0 +1,20 @@
+<?php
+
+/**
+ * @file
+ * Contains trainee_sile.module.
+ */
+
+/**
+ * Implements hook_theme().
+ */
+function trainee_site_theme(): array {
+  return [
+    'hero_block' => [
+      'variables' => [
+        'text' => [],
+        'button_text' => [],
+      ],
+    ],
+  ];
+}

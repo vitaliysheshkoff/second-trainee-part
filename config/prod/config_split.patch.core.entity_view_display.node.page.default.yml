@@ -1,0 +1,7 @@
+adding:
+  dependencies:
+    config:
+      - field.field.node.page.field_user
+  hidden:
+    field_user: true
+removing: {  }

@@ -1,0 +1,25 @@
+copyright_text: 'All rights reserved'
+copyright_site_name: 'Your Site Name'
+show_credit_link: 1
+credit_text: 'Designed by'
+credit_href: 'https://htmlcodex.com'
+credit_href_text: 'HTML Codex'
+
+show_contact_details: 1
+bootstrap_icon_phone_number_name: 'telephone'
+phone_number: '+012 345 6789'
+email: 'info@example.com'
+phone_number_url: '#'
+email_number_url: '#'
+
+show_social_icon: 1
+bootstrap_icon_1_name: 'facebook'
+bootstrap_icon_2_name: 'twitter'
+bootstrap_icon_3_name: 'linkedin'
+bootstrap_icon_4_name: 'instagram'
+bootstrap_icon_5_name: 'youtube'
+url_1: 'https://www.facebook.com/'
+url_2: 'https://twitter.com/'
+url_3: 'https://www.linkedin.com/'
+url_4: 'https://www.instagram.com/'
+url_5: 'https://www.youtube.com/'

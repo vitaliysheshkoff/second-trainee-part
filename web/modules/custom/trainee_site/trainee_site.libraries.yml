@@ -1,0 +1,5 @@
+site-style:
+  css:
+    theme:
+      css/style.css: { }
+      css/bootstrap.min.css: { }

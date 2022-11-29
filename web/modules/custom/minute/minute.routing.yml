@@ -1,0 +1,21 @@
+minute.text_page:
+  path: 'odd-even'
+  defaults:
+    _controller: 'Drupal\minute\Controller\MinuteController::showTextPage'
+    _title: 'Odd or Even'
+  requirements:
+    _permission: 'access content'
+minute.even_odd_page:
+      path: 'odd-even-teaser'
+      defaults:
+        _controller: 'Drupal\minute\Controller\MinuteController::showPageWithTitleAndNode'
+        _title: 'Odd or Even Node'
+      requirements:
+        _permission: 'access content'
+minute.minute_title_and_node_config_page:
+  path: '/admin/config/odd-even'
+  defaults:
+    _form: 'Drupal\minute\Form\MinuteTitleAndNodeConfigForm'
+    _title: 'Page view settings'
+  requirements:
+    _permission: 'administer site configuration'
