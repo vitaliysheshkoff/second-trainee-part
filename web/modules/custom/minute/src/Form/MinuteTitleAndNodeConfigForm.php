@@ -2,8 +2,6 @@
 
 namespace Drupal\minute\Form;
 
-use Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException;
-use Drupal\Component\Plugin\Exception\PluginNotFoundException;
 use Drupal\Core\Entity\EntityTypeManager;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
@@ -13,6 +11,13 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * Form to handle minute module configurations.
  */
 class MinuteTitleAndNodeConfigForm extends ConfigFormBase {
+
+  /**
+   * Config settings.
+   *
+   * @var string
+   */
+  const SETTINGS = 'module.settings';
 
   /**
    * The entity type manager.
@@ -44,7 +49,9 @@ class MinuteTitleAndNodeConfigForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   protected function getEditableConfigNames(): array {
-    return ['module.settings'];
+    return [
+      self::SETTINGS,
+    ];
   }
 
   /**
@@ -59,7 +66,7 @@ class MinuteTitleAndNodeConfigForm extends ConfigFormBase {
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
 
-    $config = $this->config('module.settings');
+    $config = $this->config(static::SETTINGS);
 
     $form['even_title'] = [
       '#type' => 'textfield',
@@ -77,38 +84,33 @@ class MinuteTitleAndNodeConfigForm extends ConfigFormBase {
       '#default_value' => $config->get('odd_title') ?? '',
     ];
 
-    try {
-      $form['odd_entity'] = [
-        '#type' => 'entity_autocomplete',
-        '#target_type' => 'node',
-        '#title' => $this->t('Odd Node'),
-        '#description' => $this->t('Select Node that is showing Odd context'),
-        '#required' => TRUE,
-        '#default_value' => $this->entityTypeManager->getStorage('node')
-          ->load($config->get('odd_entity')[0]['target_id']),
-        '#tags' => TRUE,
-        '#selection_settings' => [
-          'target_bundles' => ['page', 'article'],
-        ],
-      ];
+    $form['odd_entity'] = [
+      '#type' => 'entity_autocomplete',
+      '#target_type' => 'node',
+      '#title' => $this->t('Odd Node'),
+      '#description' => $this->t('Select Node that is showing Odd context'),
+      '#required' => TRUE,
+      '#default_value' => $this->entityTypeManager->getStorage('node')
+        ->load($config->get('odd_entity')[0]['target_id']),
+      '#tags' => TRUE,
+      '#selection_settings' => [
+        'target_bundles' => ['page', 'article'],
+      ],
+    ];
 
-      $form['even_entity'] = [
-        '#type' => 'entity_autocomplete',
-        '#target_type' => 'node',
-        '#title' => $this->t('Even Node'),
-        '#description' => $this->t('Select Node that is showing Odd context'),
-        '#required' => TRUE,
-        '#default_value' => $this->entityTypeManager->getStorage('node')
-          ->load($config->get('even_entity')[0]['target_id']),
-        '#tags' => TRUE,
-        '#selection_settings' => [
-          'target_bundles' => ['page', 'article'],
-        ],
-      ];
-    } catch (InvalidPluginDefinitionException|PluginNotFoundException $e) {
-      $error_message = $e->getMessage();
-      $this->messenger()->addMessage($error_message, 'error');
-    }
+    $form['even_entity'] = [
+      '#type' => 'entity_autocomplete',
+      '#target_type' => 'node',
+      '#title' => $this->t('Even Node'),
+      '#description' => $this->t('Select Node that is showing Odd context'),
+      '#required' => TRUE,
+      '#default_value' => $this->entityTypeManager->getStorage('node')
+        ->load($config->get('even_entity')[0]['target_id']),
+      '#tags' => TRUE,
+      '#selection_settings' => [
+        'target_bundles' => ['page', 'article'],
+      ],
+    ];
 
     $form['action']['#type'] = 'action';
     $form['action']['submit'] = [
@@ -124,7 +126,9 @@ class MinuteTitleAndNodeConfigForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    $this->config('module.settings')
+    parent::submitForm($form, $form_state);
+
+    $this->config(self::SETTINGS)
       ->set('even_title', $form_state->getValue('even_title'))
       ->set('odd_title', $form_state->getValue('odd_title'))
       ->set('even_entity', $form_state->getValue('even_entity'))
@@ -134,7 +138,6 @@ class MinuteTitleAndNodeConfigForm extends ConfigFormBase {
     $this->messenger()
       ->addMessage($this->t('New configuration has been saved'));
 
-    parent::submitForm($form, $form_state);
   }
 
 }

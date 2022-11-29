@@ -12,7 +12,7 @@ function minute_theme($existing, $type, $theme, $path): array {
     'minute_odd_or_even_page' => [
       'variables' => [
         'title' => NULL,
-        'node' => [],
+        'node' => NULL,
       ],
     ],
   ];

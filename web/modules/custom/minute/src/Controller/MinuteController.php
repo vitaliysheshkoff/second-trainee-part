@@ -5,6 +5,7 @@ namespace Drupal\minute\Controller;
 use \Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Entity\EntityTypeManager;
+use Drupal\minute\Form\MinuteTitleAndNodeConfigForm;
 use Drupal\minute\MinuteChecker;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -80,16 +81,14 @@ class MinuteController extends ControllerBase {
    *   odd or even theme.
    */
   public function showPageWithTitleAndNode(): array {
+    $config = $this->configFactory->getEditable(MinuteTitleAndNodeConfigForm::SETTINGS);
 
-    $config = $this->configFactory->getEditable('module.settings');
+    $title = 'odd_title';
+    $entity = 'odd_entity';
 
     if ($this->minuteChecker->isEven()) {
       $title = 'even_title';
       $entity = 'even_entity';
-    }
-    else {
-      $title = 'odd_title';
-      $entity = 'odd_entity';
     }
 
     $title = $config->get($title);
@@ -97,11 +96,11 @@ class MinuteController extends ControllerBase {
     $node = $this->entityTypeManager->getStorage('node')
       ->load($config->get($entity)[0]['target_id']);
 
-    if(!is_null($node)) {
+    if (!is_null($node)) {
       $node = $this->entityTypeManager
         ->getViewBuilder('node')
         ->view($node, 'teaser');
-      }
+    }
 
     return [
       '#theme' => 'minute_odd_or_even_page',
