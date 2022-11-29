@@ -1,15 +1,15 @@
-uuid: 74123091-c825-41d8-9aaa-c20ca2028eb4
+uuid: fc208f02-5a3c-4d92-8b4e-3d5a69ed42ef
 langcode: en
-status: false
+status: true
 dependencies:
   theme:
     - trainee_basic
 _core:
-  default_config_hash: fNwDdW063tk_ktzSWzZVeQS9wzvLooVO280BQ9WrsIs
+  default_config_hash: 6aOgWsNTXjqrDm98TXSAjP6qd2nCijD1xw45MrnbK-Y
 id: trainee_basic_page_title
 theme: trainee_basic
-region: header
-weight: -30
+region: header_first
+weight: -5
 provider: null
 plugin: page_title_block
 settings:

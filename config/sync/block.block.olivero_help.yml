@@ -1,6 +1,6 @@
-uuid: 57d4281f-28b4-4a27-acec-02995ff9d451
+uuid: 3c688a53-22b6-4a55-92c8-def7e1051d8c
 langcode: en
-status: false
+status: true
 dependencies:
   module:
     - help
@@ -11,7 +11,7 @@ _core:
 id: olivero_help
 theme: olivero
 region: content_above
-weight: -6
+weight: 0
 provider: null
 plugin: help_block
 settings:

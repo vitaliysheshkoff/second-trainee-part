@@ -1,16 +1,16 @@
-uuid: d139ab9d-d886-4f41-8730-0c3c48563e71
+uuid: 2b46636b-9c9b-4bd3-af6b-6d73039c64b5
 langcode: en
-status: false
+status: true
 dependencies:
   module:
     - system
   theme:
     - trainee_basic
 _core:
-  default_config_hash: NjcxOBrPOiK5-38t56DwFBDVY4yer7YSlbRWXFuHe7A
+  default_config_hash: VhBzWb7lMRtIOg9G7VSw_0uopi-7zXeHq4vXqqV1HFE
 id: trainee_basic_breadcrumbs
 theme: trainee_basic
-region: header
+region: header_first
 weight: 0
 provider: null
 plugin: system_breadcrumb_block

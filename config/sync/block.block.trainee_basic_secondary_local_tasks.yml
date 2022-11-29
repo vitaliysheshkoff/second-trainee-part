@@ -1,15 +1,15 @@
-uuid: ceec34a5-8044-4ef0-ac13-5474ead1b88a
+uuid: c1846384-fe5c-4991-8fd4-cc666ebb0b11
 langcode: en
 status: true
 dependencies:
   theme:
     - trainee_basic
 _core:
-  default_config_hash: 2L0geP-ixCbCkEpW6BVF6H7vDUZN4ea07_Y9CociQm4
+  default_config_hash: ydSxdq7R66I8UMC460rOzlfzvlUL4VRbdwc6z9DWaUI
 id: trainee_basic_secondary_local_tasks
 theme: trainee_basic
-region: header
-weight: 0
+region: header_first
+weight: -2
 provider: null
 plugin: local_tasks_block
 settings:

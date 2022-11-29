@@ -1,4 +1,4 @@
-uuid: d69e8a37-e388-4f0d-a4a1-5586c75f818f
+uuid: 53507943-14b5-47d6-9c80-47867afda3af
 langcode: en
 status: true
 dependencies:
@@ -7,7 +7,7 @@ dependencies:
   theme:
     - trainee_basic
 _core:
-  default_config_hash: a0Yyx1GeyKarZ4T_yXQBR_ZFKnXiFLtxAb6gWLd8nr0
+  default_config_hash: erQSEZF2XUjNmgTl0uNRBzmg18ZGXwUcw2FhApoeuHk
 id: trainee_basic_content
 theme: trainee_basic
 region: content
