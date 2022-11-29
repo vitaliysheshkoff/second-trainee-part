@@ -66,7 +66,7 @@ class MinuteTitleAndNodeConfigForm extends ConfigFormBase {
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
 
-    $config = $this->config(static::SETTINGS);
+    $config = $this->config(self::SETTINGS);
 
     $form['even_title'] = [
       '#type' => 'textfield',
@@ -84,19 +84,24 @@ class MinuteTitleAndNodeConfigForm extends ConfigFormBase {
       '#default_value' => $config->get('odd_title') ?? '',
     ];
 
+    $odd_node = $this->entityTypeManager->getStorage('node')
+      ->load($config->get('odd_entity')[0]['target_id']);
+
     $form['odd_entity'] = [
       '#type' => 'entity_autocomplete',
       '#target_type' => 'node',
       '#title' => $this->t('Odd Node'),
       '#description' => $this->t('Select Node that is showing Odd context'),
       '#required' => TRUE,
-      '#default_value' => $this->entityTypeManager->getStorage('node')
-        ->load($config->get('odd_entity')[0]['target_id']),
+      '#default_value' => $odd_node,
       '#tags' => TRUE,
       '#selection_settings' => [
         'target_bundles' => ['page', 'article'],
       ],
     ];
+
+    $even_node = $this->entityTypeManager->getStorage('node')
+      ->load($config->get('even_entity')[0]['target_id']);
 
     $form['even_entity'] = [
       '#type' => 'entity_autocomplete',
@@ -104,8 +109,7 @@ class MinuteTitleAndNodeConfigForm extends ConfigFormBase {
       '#title' => $this->t('Even Node'),
       '#description' => $this->t('Select Node that is showing Odd context'),
       '#required' => TRUE,
-      '#default_value' => $this->entityTypeManager->getStorage('node')
-        ->load($config->get('even_entity')[0]['target_id']),
+      '#default_value' => $even_node,
       '#tags' => TRUE,
       '#selection_settings' => [
         'target_bundles' => ['page', 'article'],

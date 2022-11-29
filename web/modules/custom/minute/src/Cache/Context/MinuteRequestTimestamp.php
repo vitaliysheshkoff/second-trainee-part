@@ -7,17 +7,23 @@ use Drupal\Core\Cache\Context\CacheContextInterface;
 use Drupal\minute\MinuteChecker;
 
 /**
+ * Defines the MinuteRequestTimestamp service, provides caching according timestamp.
  * Cache context ID: 'minute_request_timestamp'.
  */
 class MinuteRequestTimestamp implements CacheContextInterface {
 
   /**
+   * A minute checker.
+   *
    * @var \Drupal\minute\MinuteChecker
    */
   protected $minuteChecker;
 
   /**
-   * {@inheritdoc}
+   * MinuteRequestTimestamp constructor.
+   *
+   * @param \Drupal\minute\MinuteChecker $minute_checker;
+   *   The minutes checker.
    */
   public function __construct(MinuteChecker $minute_checker) {
     $this->minuteChecker = $minute_checker;

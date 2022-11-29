@@ -22,6 +22,8 @@ class MinuteController extends ControllerBase {
   protected $entityTypeManager;
 
   /**
+   * A minute checker.
+   *
    * @var \Drupal\minute\MinuteChecker
    */
   protected $minuteChecker;
@@ -34,7 +36,14 @@ class MinuteController extends ControllerBase {
   protected $configFactory;
 
   /**
-   * {@inheritdoc}
+   * MinuteController constructor.
+   *
+   * @param \Drupal\minute\MinuteChecker $minute_checker
+   *   A minute checker.
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
+   *   The config factory.
+   * @param \Drupal\Core\Entity\EntityTypeManager $entity_type_manager
+   *   The entity type manager.
    */
   public function __construct(MinuteChecker $minute_checker, ConfigFactoryInterface $config_factory, EntityTypeManager $entity_type_manager) {
     $this->minuteChecker = $minute_checker;
@@ -54,7 +63,7 @@ class MinuteController extends ControllerBase {
   }
 
   /**
-   * Provides showing cashed result.
+   * Provides showing cached result.
    *
    * @return array
    *   Cached result.
@@ -107,7 +116,10 @@ class MinuteController extends ControllerBase {
       '#title' => $title,
       '#node' => $node,
       '#cache' => [
-        'tags' => ['node:' . $config->get($entity)[0]['target_id']],
+        'tags' => [
+          'node:' . $config->get('odd_entity')[0]['target_id'],
+          'node:' . $config->get('even_entity')[0]['target_id'],
+        ],
         'contexts' =>
           ['minute_request_timestamp'],
       ],

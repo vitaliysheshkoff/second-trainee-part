@@ -10,12 +10,17 @@ use Drupal\Component\Datetime\Time;
 class MinuteChecker implements MinuteManagerInterface {
 
   /**
+   * A Time object.
+   *
    * @var \Drupal\Component\Datetime\Time
    */
   protected $time;
 
   /**
-   * {@inheritdoc}
+   * MinuteChecker constructor.
+   *
+   * @param \Drupal\Component\Datetime\Time $time
+   *   A Time object.
    */
   public function __construct(Time $time) {
     $this->time = $time;

@@ -20,12 +20,23 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class OddOrEvenBlock extends BlockBase implements ContainerFactoryPluginInterface {
 
   /**
+   *  A minute checker.
+   *
    * @var \Drupal\minute\MinuteChecker
    */
   protected $minuteChecker;
 
   /**
-   * {@inheritdoc}
+   * OddOrEvenBlock constructor.
+   *
+   * @param array $configuration
+   *   A configuration array containing information about the plugin instance.
+   * @param string $plugin_id
+   *   The plugin ID for the plugin instance.
+   * @param mixed $plugin_definition
+   *   The plugin implementation definition.
+   * @param \Drupal\minute\MinuteChecker $minute_checker
+   *   A minute checker.
    */
   public function __construct(array $configuration, $plugin_id, $plugin_definition, MinuteChecker $minute_checker) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
