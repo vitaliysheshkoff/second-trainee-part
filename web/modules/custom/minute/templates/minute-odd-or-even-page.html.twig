@@ -1,6 +1,10 @@
 <section>
   <div>
-    {{ title }}
-    {{ node }}
+    {% if title %}
+      {{ title }}
+    {% endif %}
+    {% if node %}
+      {{ node }}
+    {% endif %}
   </div>
 </section>
