@@ -1,0 +1,28 @@
+uuid: f14a4e3a-17ce-4848-8344-006ad5626472
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.pokemon_api.body
+    - node.type.pokemon_api
+  module:
+    - text
+    - user
+id: node.pokemon_api.default
+targetEntityType: node
+bundle: pokemon_api
+mode: default
+content:
+  body:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 101
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden: {  }

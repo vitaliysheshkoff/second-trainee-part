@@ -1,0 +1,8 @@
+uuid: 85af003a-a03d-4913-96a9-d49d224a64fb
+langcode: en
+status: true
+dependencies: {  }
+name: 'Ability API'
+vid: ability_API
+description: 'Abilities provide passive effects for Pokémon in battle or in the overworld. Pokémon have multiple possible abilities but can have only one ability at a time.'
+weight: 0
