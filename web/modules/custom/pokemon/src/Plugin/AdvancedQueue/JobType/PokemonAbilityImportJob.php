@@ -4,6 +4,7 @@ namespace Drupal\pokemon\Plugin\AdvancedQueue\JobType;
 
 use Drupal\advancedqueue\Annotation\AdvancedQueueJobType;
 use Drupal\advancedqueue\Job;
+use Drupal\advancedqueue\JobResult;
 
 /**
  * @AdvancedQueueJobType(
@@ -18,13 +19,11 @@ class PokemonAbilityImportJob extends PokemonBaseJobType {
    */
   public function process(Job $job) {
     $payload = $job->getPayload();
-    // Как только мы получили пэйлоад мы должны вызвать менеджера покемонов
-    // В этом менеджере мы должны вызвать метод который по определенному эндпоинту вернет нам результат.
-    // Результат мы запихнем в метод создания таксономии
-    $this->pokemonManager->createTaxonomy($payload['endpoint'], $payload['description'], $payload['list']);
-    // Метод по созданию таксономии нам тоже должен что-то возвращать
-    // И на основании этого результата мы уже будет возвращать
-    // return JobResult(и сюда уже нужно передавать необходимые параметры посмотри уже этот метод сам);
+
+    $ability = $this->pokemonManager->getResourceList("ability/{$payload['ability_name']}",327 );
+    $status = $this->createTaxonomyTerm('ability_api', $ability['name']);
+
+    return ($status == SAVED_NEW || $status == SAVED_UPDATED) ? JobResult::success('Node was saved.') : JobResult::failure('Node creation failed');
   }
 
 }

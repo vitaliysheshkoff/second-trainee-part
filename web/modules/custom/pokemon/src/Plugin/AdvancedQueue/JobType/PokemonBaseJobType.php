@@ -21,7 +21,7 @@ abstract class PokemonBaseJobType extends JobTypeBase implements ContainerFactor
   protected $entityTypeManager;
 
   /**
-   * Helper service to common functionality wit Pokemon.
+   * Helper service to common functionality with Pokemon.
    *
    * @var \Drupal\pokemon\PokemonManager
    */
@@ -58,7 +58,27 @@ abstract class PokemonBaseJobType extends JobTypeBase implements ContainerFactor
     );
   }
 
-  // Тут мы должны поместить два метода для того что бы создавать таксономию и ноды.
-  // Для примера для создания таксономии нам нужно знать машинное имя словаря и соответственно результат ответа.
+  /**
+   * Creates taxonomy term.
+   *
+   * @param string $vid
+   *   Vocabulary machine name.
+   *
+   * @param string $term_name
+   *   Taxonomy term name.
+   *
+   * @return int
+   *   Either SAVED_NEW or SAVED_UPDATED, depending on the operation performed.
+   */
+  public function createTaxonomyTerm(string $vid, string $term_name): int {
+    $term = $this->entityTypeManager
+      ->getStorage('taxonomy_term')
+      ->create([
+        'name' => $term_name,
+        'vid' => $vid,
+      ]);
+
+    return $term->save();
+  }
 
 }

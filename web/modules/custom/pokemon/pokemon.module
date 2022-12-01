@@ -6,7 +6,6 @@
 
 use Drupal\advancedqueue\Entity\Queue;
 use Drupal\advancedqueue\Job;
-use Drupal\pokemon\PokemonManager;
 
 /**
  * The callback for the cron job.
@@ -14,24 +13,11 @@ use Drupal\pokemon\PokemonManager;
 function pokemon_ability_tax_callback() {
   /** @var \Drupal\pokemon\PokemonManager $pokemon_manager */
   $pokemon_manager = \Drupal::service('pokemon.pokemon_manager');
+  $list = $pokemon_manager->getResourceList('ability');
 
-  $description = PokemonManager::getTaxonomyEndpoints()['ability'];
-
-  $list = $pokemon_manager->getResourceList('ability', PokemonManager::MAX_LIMIT);
-
-  $payload = [
-    'endpoint' => 'ability',
-    'description' => $description,
-    'list' => $list,
-  ];
-  $job = Job::create('pokemons_import_job', $payload);
-  if ($job instanceof Job) {
-    $q = Queue::load('import_ability');
-    $q->enqueueJob($job);
+  $queue = Queue::load('import_ability');
+  foreach ($list['results'] as $key => $value) {
+    $job = Job::create('pokemon_ability_import_job', ['ability_name' => $value['name']]);
+    $queue->enqueueJob($job);
   }
-
-  \Drupal::logger('custom_utility')->notice('ability cron job ended');
-
-
-  // В данном кроне мы должны вытянуть список всех абилити и добавить в очередь нужный тип джобы с определенным пэйлоадом
 }

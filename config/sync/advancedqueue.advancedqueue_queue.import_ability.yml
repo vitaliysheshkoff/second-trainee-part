@@ -2,8 +2,8 @@ uuid: 0e656970-56ca-458e-9e77-f6d02c192cfb
 langcode: en
 status: true
 dependencies: {  }
-id: pokemon_import_ability
-label: 'Pokemon: Import Ability'
+id: import_ability
+label: 'Import Ability'
 backend: database
 backend_configuration:
   lease_time: 300
