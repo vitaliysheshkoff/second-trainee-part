@@ -12,7 +12,6 @@ use Drupal\pokemon\PokemonManager;
  * The callback for the cron job.
  */
 function pokemon_ability_tax_callback() {
-
   /** @var \Drupal\pokemon\PokemonManager $pokemon_manager */
   $pokemon_manager = \Drupal::service('pokemon.pokemon_manager');
 
@@ -32,4 +31,7 @@ function pokemon_ability_tax_callback() {
   }
 
   \Drupal::logger('custom_utility')->notice('ability cron job ended');
+
+
+  // В данном кроне мы должны вытянуть список всех абилити и добавить в очередь нужный тип джобы с определенным пэйлоадом
 }
