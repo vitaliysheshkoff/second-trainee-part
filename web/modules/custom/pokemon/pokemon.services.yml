@@ -1,0 +1,4 @@
+services:
+  pokemon.pokemon_manager:
+    class: Drupal\pokemon\PokemonManager
+    arguments: [ '@entity_type.manager' ]

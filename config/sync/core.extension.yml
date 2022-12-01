@@ -44,6 +44,7 @@ module:
   toolbar: 0
   tour: 0
   trainee_user: 0
+  ultimate_cron: 0
   update: 0
   user: 0
   views_ui: 0

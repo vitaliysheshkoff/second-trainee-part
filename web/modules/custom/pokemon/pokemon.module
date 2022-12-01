@@ -5,3 +5,40 @@
  * Primary module hooks for pokemon module.
  */
 
+use Drupal\advancedqueue\Entity\Queue;
+use Drupal\advancedqueue\Job;
+use Drupal\pokemon\PokemonManager;
+
+/**
+ * The callback for the cron job.
+ */
+function pokemon_callback() {
+
+  /** @var \Drupal\pokemon\PokemonManager $pokemon_manager */
+  $pokemon_manager = \Drupal::service('pokemon.pokemon_manager');
+
+  $taxonomy_endpoints = PokemonManager::getTaxonomyEndpoints();
+
+  $count = 0;
+  foreach ($taxonomy_endpoints as $endpoint_name => $description) {
+    $list = $pokemon_manager->getResourceList($endpoint_name, PokemonManager::MAX_LIMIT);
+
+    if ($list) {
+      $payload = [
+        'endpoint' => $endpoint_name,
+        'description' => $description,
+        'list' => $list
+      ];
+      $job = Job::create('pokemons_import_job', $payload);
+      if ($job instanceof Job) {
+        $q = Queue::load('default');
+        $q->enqueueJob($job);
+        $count++;
+      }
+    }
+  }
+
+  $msg = $count ? "Imported $count endpoint data" : "Importing was failed";
+
+  \Drupal::logger('custom_utility')->notice($msg);
+}

@@ -1,5 +1,5 @@
-name: pokemon
+name: Pokemon
 type: module
-description: Custom module for creating content from https://pokeapi.co/
+description: Custom module for creating content from https://pokeapi.co/.
 package: Trainee custom modules
 core_version_requirement: ^9 || ^10
