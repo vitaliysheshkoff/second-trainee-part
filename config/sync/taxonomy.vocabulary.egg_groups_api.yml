@@ -1,0 +1,8 @@
+uuid: 78a52cdf-f79d-4691-a2e0-2f8632f90679
+langcode: en
+status: true
+dependencies: {  }
+name: 'Egg Groups API'
+vid: egg_groups_api
+description: ''
+weight: 0

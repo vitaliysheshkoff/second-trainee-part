@@ -1,0 +1,8 @@
+uuid: 7683404d-2d80-461a-9b3e-0577c9828a8e
+langcode: en
+status: true
+dependencies: {  }
+name: 'Shapes API'
+vid: shapes_api
+description: ''
+weight: 0

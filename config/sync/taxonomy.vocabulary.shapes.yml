@@ -1,8 +1,0 @@
-uuid: dc0d023b-5150-4c22-9380-e1370bd834f6
-langcode: en
-status: true
-dependencies: {  }
-name: Shapes
-vid: shapes
-description: 'Shapes used for sorting Pokémon in a Pokédex.'
-weight: 0

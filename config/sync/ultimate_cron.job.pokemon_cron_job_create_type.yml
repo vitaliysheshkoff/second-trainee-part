@@ -1,0 +1,19 @@
+uuid: ac7cfa96-2d6a-4c9b-9b2b-91b03af8b035
+langcode: en
+status: true
+dependencies:
+  module:
+    - pokemon
+_core:
+  default_config_hash: aXeq972JuHYfrZExYXYhjbRXM-lWkStSkwlvnvixl2s
+title: 'Cron for creating type taxonomy from Pokemon API'
+id: pokemon_cron_job_create_type
+weight: 0
+module: pokemon
+callback: pokemon_type_tax_callback
+scheduler:
+  id: simple
+launcher:
+  id: serial
+logger:
+  id: database

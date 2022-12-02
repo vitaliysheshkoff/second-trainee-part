@@ -1,0 +1,18 @@
+uuid: 91ca5974-4ec4-4f80-8c3a-c4ef525123fe
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: DeeFKrV_vARxAWlJnAguymSte9GU3Le-G0HwOS-YpB4
+id: pokemon_import_egg_group
+label: 'Pokemon: Import Egg Group'
+backend: database
+backend_configuration:
+  lease_time: 300
+processor: cron
+processing_time: 90
+threshold:
+  type: 0
+  limit: 0
+  state: all
+locked: false

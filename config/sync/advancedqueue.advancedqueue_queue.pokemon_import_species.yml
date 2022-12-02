@@ -1,0 +1,18 @@
+uuid: 8ac580dc-b5b5-40cc-91e4-9330d46e5d08
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: vArX1Q7SdWcBDgw-VJxIziW0GqrNioI7Ne2laQzuu74
+id: pokemon_import_species
+label: 'Pokemon: Import Species'
+backend: database
+backend_configuration:
+  lease_time: 300
+processor: cron
+processing_time: 900
+locked: false
+threshold:
+  type: 0
+  limit: 0
+  state: all

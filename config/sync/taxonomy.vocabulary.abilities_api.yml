@@ -1,0 +1,8 @@
+uuid: 3d4e5480-452e-46b1-bbb1-a713c72f1879
+langcode: en
+status: true
+dependencies: {  }
+name: 'Abilities API'
+vid: abilities_api
+description: ''
+weight: 0

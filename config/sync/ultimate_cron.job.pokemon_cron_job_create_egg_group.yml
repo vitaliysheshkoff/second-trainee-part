@@ -1,0 +1,19 @@
+uuid: 0ca51747-01da-4b49-bed1-3990d8f1bdf6
+langcode: en
+status: true
+dependencies:
+  module:
+    - pokemon
+_core:
+  default_config_hash: lZ9eMPEGFeQLnG0tCnRUQMu70h_z_dy8fuMK1DyUOqQ
+title: 'Cron for creating egg group taxonomy from Pokemon API'
+id: pokemon_cron_job_create_egg_group
+weight: 0
+module: pokemon
+callback: pokemon_egg_group_tax_callback
+scheduler:
+  id: simple
+launcher:
+  id: serial
+logger:
+  id: database

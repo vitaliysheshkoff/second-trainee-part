@@ -1,0 +1,19 @@
+uuid: 36cfe9c7-bfca-4f3d-b198-715f714ea57c
+langcode: en
+status: true
+dependencies:
+  module:
+    - pokemon
+_core:
+  default_config_hash: p4PZo_amwnSmBw8wVivtRfPE2SDTb1OSvHAh6OMdu_I
+title: 'Cron for creating shape taxonomy from Pokemon API'
+id: pokemon_cron_job_create_shape
+weight: 0
+module: pokemon
+callback: pokemon_shape_tax_callback
+scheduler:
+  id: simple
+launcher:
+  id: serial
+logger:
+  id: database

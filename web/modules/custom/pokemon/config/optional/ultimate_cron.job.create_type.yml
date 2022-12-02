@@ -1,0 +1,16 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - pokemon
+title: 'Cron for creating type taxonomy from Pokemon API'
+id: pokemon_cron_job_create_type
+weight: 0
+module: pokemon
+callback: pokemon_type_tax_callback
+scheduler:
+  id: simple
+launcher:
+  id: serial
+logger:
+  id: database

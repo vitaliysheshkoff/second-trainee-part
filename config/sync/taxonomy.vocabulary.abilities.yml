@@ -1,8 +1,0 @@
-uuid: 43df7a7c-0cca-4a0a-9c92-3798d087579d
-langcode: en
-status: true
-dependencies: {  }
-name: Abilities
-vid: abilities
-description: 'Abilities provide passive effects for Pokémon in battle or in the overworld. Pokémon have multiple possible abilities'
-weight: 0

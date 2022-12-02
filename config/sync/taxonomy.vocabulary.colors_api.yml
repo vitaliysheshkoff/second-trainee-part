@@ -1,0 +1,8 @@
+uuid: 097c95d1-2293-437b-a351-781aa2d2dbb9
+langcode: en
+status: true
+dependencies: {  }
+name: 'Colors API'
+vid: colors_api
+description: ''
+weight: 0

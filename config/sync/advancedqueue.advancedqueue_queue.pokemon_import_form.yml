@@ -1,0 +1,18 @@
+uuid: 1f044298-eca3-45e6-baef-3906edc41507
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: C3NqwqHLClaWC_eiX8ms66q4KQcoytWzZvA6OF4laDM
+id: pokemon_import_form
+label: 'Pokemon: Import Form'
+backend: database
+backend_configuration:
+  lease_time: 300
+processor: cron
+processing_time: 900
+locked: false
+threshold:
+  type: 0
+  limit: 0
+  state: all

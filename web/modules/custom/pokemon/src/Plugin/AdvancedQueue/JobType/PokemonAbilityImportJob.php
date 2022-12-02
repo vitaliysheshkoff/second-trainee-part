@@ -20,10 +20,14 @@ class PokemonAbilityImportJob extends PokemonBaseJobType {
   public function process(Job $job) {
     $payload = $job->getPayload();
 
-    $ability = $this->pokemonManager->getResourceList("ability/{$payload['ability_name']}",327 );
-    $status = $this->createTaxonomyTerm('ability_api', $ability['name']);
+    $ability = $this->pokemonManager->getResourceList("ability/{$payload['ability_name']}");
+    $status = $this->createTaxonomyTerm('abilities_api', $ability['name']);
 
-    return ($status == SAVED_NEW || $status == SAVED_UPDATED) ? JobResult::success('Node was saved.') : JobResult::failure('Node creation failed');
+    return ($status == SAVED_NEW || $status == SAVED_UPDATED) ?
+      JobResult::success('Taxonomy was saved.')
+      : (($status == NULL) ?
+        JobResult::success('Taxonomy term is already exist')
+        : JobResult::failure('Taxonomy creation failed'));
   }
 
 }

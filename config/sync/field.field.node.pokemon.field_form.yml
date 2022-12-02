@@ -5,7 +5,6 @@ dependencies:
   config:
     - field.storage.node.field_form
     - node.type.pokemon
-    - taxonomy.vocabulary.forms
 id: node.pokemon.field_form
 field_name: field_form
 entity_type: node
@@ -19,8 +18,7 @@ default_value_callback: ''
 settings:
   handler: 'default:taxonomy_term'
   handler_settings:
-    target_bundles:
-      forms: forms
+    target_bundles: {  }
     sort:
       field: name
       direction: asc

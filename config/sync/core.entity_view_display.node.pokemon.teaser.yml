@@ -6,7 +6,6 @@ dependencies:
     - core.entity_view_mode.node.teaser
     - field.field.node.pokemon.body
     - field.field.node.pokemon.field_ability
-    - field.field.node.pokemon.field_characteristic
     - field.field.node.pokemon.field_color
     - field.field.node.pokemon.field_egg_group
     - field.field.node.pokemon.field_form
@@ -42,7 +41,6 @@ content:
     region: content
 hidden:
   field_ability: true
-  field_characteristic: true
   field_color: true
   field_egg_group: true
   field_form: true

@@ -5,7 +5,6 @@ dependencies:
   config:
     - field.field.node.pokemon.body
     - field.field.node.pokemon.field_ability
-    - field.field.node.pokemon.field_characteristic
     - field.field.node.pokemon.field_color
     - field.field.node.pokemon.field_egg_group
     - field.field.node.pokemon.field_form
@@ -45,16 +44,6 @@ content:
   field_ability:
     type: entity_reference_autocomplete
     weight: 122
-    region: content
-    settings:
-      match_operator: CONTAINS
-      match_limit: 10
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-  field_characteristic:
-    type: entity_reference_autocomplete
-    weight: 128
     region: content
     settings:
       match_operator: CONTAINS

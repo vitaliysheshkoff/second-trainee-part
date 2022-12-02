@@ -1,0 +1,19 @@
+uuid: df88ade8-bce9-4983-bd81-7fd69fe3550a
+langcode: en
+status: true
+dependencies:
+  module:
+    - pokemon
+_core:
+  default_config_hash: rS1wpvhLJKtmbteT1cU9zlZRrPV-7ypBBmY-CaLn19E
+title: 'Cron for creating habitat taxonomy from Pokemon API'
+id: pokemon_cron_job_create_habitat
+weight: 0
+module: pokemon
+callback: pokemon_habitat_tax_callback
+scheduler:
+  id: simple
+launcher:
+  id: serial
+logger:
+  id: database

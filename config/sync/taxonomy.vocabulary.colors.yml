@@ -1,8 +1,0 @@
-uuid: 0a7fcf90-cc64-4054-8882-e9cb3862d423
-langcode: en
-status: true
-dependencies: {  }
-name: Colors
-vid: colors
-description: 'Colors used for sorting Pokémon in a Pokédex. The color listed in the Pokédex is usually the color most apparent or covering eac'
-weight: 0

@@ -67,10 +67,17 @@ abstract class PokemonBaseJobType extends JobTypeBase implements ContainerFactor
    * @param string $term_name
    *   Taxonomy term name.
    *
-   * @return int
-   *   Either SAVED_NEW or SAVED_UPDATED, depending on the operation performed.
+   * @return ?int
+   *   Either SAVED_NEW or SAVED_UPDATED, or NULL depending on the operation
+   *   performed.
    */
-  public function createTaxonomyTerm(string $vid, string $term_name): int {
+  public function createTaxonomyTerm(string $vid, string $term_name): ?int {
+    $term_id = $this->getTidByName($term_name, $vid);
+
+    if ($term_id) {
+      return NULL;
+    }
+
     $term = $this->entityTypeManager
       ->getStorage('taxonomy_term')
       ->create([
@@ -79,6 +86,81 @@ abstract class PokemonBaseJobType extends JobTypeBase implements ContainerFactor
       ]);
 
     return $term->save();
+  }
+
+  /**
+   * Creates node with fields.
+   *
+   * @param array $fields
+   *   List of regular fields.
+   *
+   * @param array $tax_fields
+   *   List of taxonomy fields.
+   *
+   * @param string $title
+   *   Node title.
+   *
+   * @param string $type
+   *   Node type.
+   *
+   * @return int
+   *   Either SAVED_NEW or SAVED_UPDATED, depending on the operation performed.
+   */
+  public function createNode(array $fields, array $tax_fields, string $title, string $type): int {
+    $node = $this->entityTypeManager
+      ->getStorage('node')
+      ->create([
+        'type' => $type,
+        'title' => $title,
+      ]);
+    $node->save();
+
+    // Set regular fields.
+    foreach ($fields as $field) {
+      $node->set($field['field_name'], $field['value']);
+    }
+
+    // Set taxonomy fields.
+    foreach ($tax_fields as $tax_field) {
+      $terms = [];
+      foreach ($tax_field['terms'] as $term) {
+        $term_id = $this->getTidByName($term, $tax_field['vid']);
+        if (!$term_id) {
+          // Create new taxonomy term.
+          $this->createTaxonomyTerm($tax_field['vid'], $term);
+          $term_id = $this->getTidByName($term, $tax_field['vid']);
+        }
+        $terms[] = ['target_id' => $term_id];
+      }
+      $node->set($tax_field['field_name'], $terms);
+    }
+    return $node->save();
+  }
+
+  /**
+   * Finds term by name and vid.
+   *
+   * @param null $name
+   *  Term name.
+   * @param null $vid
+   *  Term vid.
+   *
+   * @return int
+   *  Term id or 0 if none.
+   */
+  protected function getTidByName($name = NULL, $vid = NULL): int {
+    $properties = [];
+    if (!empty($name)) {
+      $properties['name'] = $name;
+    }
+    if (!empty($vid)) {
+      $properties['vid'] = $vid;
+    }
+    $terms = $this->entityTypeManager->getStorage('taxonomy_term')
+      ->loadByProperties($properties);
+    $term = reset($terms);
+
+    return !empty($term) ? $term->id() : 0;
   }
 
 }
