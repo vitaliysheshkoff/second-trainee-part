@@ -104,9 +104,18 @@ abstract class PokemonBaseJobType extends JobTypeBase implements ContainerFactor
    *   Node type.
    *
    * @return int
-   *   Either SAVED_NEW or SAVED_UPDATED, depending on the operation performed.
+   *   Either SAVED_NEW or SAVED_UPDATED or NULL, depending on the operation performed.
    */
-  public function createNode(array $fields, array $tax_fields, string $title, string $type): int {
+  public function createNode(array $fields, array $tax_fields, string $title, string $type): ?int {
+
+    $query = $this->entityTypeManager->getStorage('node')->getQuery();
+    $query->condition('title', $title);
+    $result = $query->execute();
+
+    if(!empty($result)) {
+      return NULL;
+    }
+
     $node = $this->entityTypeManager
       ->getStorage('node')
       ->create([

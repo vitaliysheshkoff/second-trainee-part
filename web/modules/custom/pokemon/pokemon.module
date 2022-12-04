@@ -10,150 +10,128 @@ use Drupal\advancedqueue\Job;
 /**
  * The callback for the cron job.
  */
-function pokemon_ability_tax_callback() {
-  /** @var \Drupal\pokemon\PokemonManager $pokemon_manager */
-  $pokemon_manager = \Drupal::service('pokemon.pokemon_manager');
-  $list = $pokemon_manager->getResourceList('ability');
-
-  $queue = Queue::load('pokemon_import_ability');
-  foreach ($list['results'] as $key => $value) {
-    $job = Job::create('pokemon_ability_import_job', ['ability_name' => $value['name']]);
-    $queue->enqueueJob($job);
-  }
+function pokemon_ability_tax_callback(): void {
+  pokemon_create_jobs(
+    'ability',
+    'pokemon_import_ability',
+    'pokemon_ability_import_job',
+    'ability_name');
 }
 
 /**
  * The callback for the cron job.
  */
-function pokemon_color_tax_callback() {
-  /** @var \Drupal\pokemon\PokemonManager $pokemon_manager */
-  $pokemon_manager = \Drupal::service('pokemon.pokemon_manager');
-  $list = $pokemon_manager->getResourceList('pokemon-color');
-
-  $queue = Queue::load('pokemon_import_color');
-  foreach ($list['results'] as $key => $value) {
-    $job = Job::create('pokemon_color_import_job', ['color_name' => $value['name']]);
-    $queue->enqueueJob($job);
-  }
+function pokemon_color_tax_callback(): void {
+  pokemon_create_jobs(
+    'pokemon-color',
+    'pokemon_import_color',
+    'pokemon_color_import_job',
+    'color_name');
 }
 
 /**
  * The callback for the cron job.
  */
-function pokemon_habitat_tax_callback() {
-  /** @var \Drupal\pokemon\PokemonManager $pokemon_manager */
-  $pokemon_manager = \Drupal::service('pokemon.pokemon_manager');
-  $list = $pokemon_manager->getResourceList('pokemon-habitat');
-
-  $queue = Queue::load('pokemon_import_habitat');
-  foreach ($list['results'] as $key => $value) {
-    $job = Job::create('pokemon_habitat_import_job', ['habitat_name' => $value['name']]);
-    $queue->enqueueJob($job);
-  }
+function pokemon_habitat_tax_callback(): void {
+  pokemon_create_jobs(
+    'pokemon-habitat',
+    'pokemon_import_habitat',
+    'pokemon_habitat_import_job',
+    'habitat_name');
 }
 
 /**
  * The callback for the cron job.
  */
-function pokemon_shape_tax_callback() {
-  /** @var \Drupal\pokemon\PokemonManager $pokemon_manager */
-  $pokemon_manager = \Drupal::service('pokemon.pokemon_manager');
-  $list = $pokemon_manager->getResourceList('pokemon-shape');
-
-  $queue = Queue::load('pokemon_import_shape');
-  foreach ($list['results'] as $key => $value) {
-    $job = Job::create('pokemon_shape_import_job', ['shape_name' => $value['name']]);
-    $queue->enqueueJob($job);
-  }
+function pokemon_shape_tax_callback(): void {
+  pokemon_create_jobs(
+    'pokemon-shape',
+    'pokemon_import_shape',
+    'pokemon_shape_import_job',
+    'shape_name'
+  );
 }
 
 /**
  * The callback for the cron job.
  */
-function pokemon_species_tax_callback() {
-  /** @var \Drupal\pokemon\PokemonManager $pokemon_manager */
-  $pokemon_manager = \Drupal::service('pokemon.pokemon_manager');
-  $list = $pokemon_manager->getResourceList('pokemon-species');
-
-  $queue = Queue::load('pokemon_import_species');
-  foreach ($list['results'] as $key => $value) {
-    $job = Job::create('pokemon_species_import_job', ['species_name' => $value['name']]);
-    $queue->enqueueJob($job);
-  }
+function pokemon_species_tax_callback(): void {
+  pokemon_create_jobs(
+    'pokemon-species',
+    'pokemon_import_species',
+    'pokemon_species_import_job',
+    'species_name');
 }
 
 /**
  * The callback for the cron job.
  */
-function pokemon_form_tax_callback() {
-  /** @var \Drupal\pokemon\PokemonManager $pokemon_manager */
-  $pokemon_manager = \Drupal::service('pokemon.pokemon_manager');
-  $list = $pokemon_manager->getResourceList('pokemon-form');
-
-  $queue = Queue::load('pokemon_import_form');
-  foreach ($list['results'] as $key => $value) {
-    $job = Job::create('pokemon_form_import_job', ['form_name' => $value['name']]);
-    $queue->enqueueJob($job);
-  }
+function pokemon_form_tax_callback(): void {
+  pokemon_create_jobs(
+    'pokemon-form',
+    'pokemon_import_form',
+    'pokemon_form_import_job',
+    'form_name');
 }
 
 /**
  * The callback for the cron job.
  */
-function pokemon_type_tax_callback() {
-  /** @var \Drupal\pokemon\PokemonManager $pokemon_manager */
-  $pokemon_manager = \Drupal::service('pokemon.pokemon_manager');
-  $list = $pokemon_manager->getResourceList('type');
-
-  $queue = Queue::load('pokemon_import_type');
-  foreach ($list['results'] as $key => $value) {
-    $job = Job::create('pokemon_type_import_job', ['type_name' => $value['name']]);
-    $queue->enqueueJob($job);
-  }
+function pokemon_type_tax_callback(): void {
+  pokemon_create_jobs(
+    'type',
+    'pokemon_import_type',
+    'pokemon_type_import_job',
+    'type_name');
 }
 
 /**
  * The callback for the cron job.
  */
-function pokemon_stat_tax_callback() {
-  /** @var \Drupal\pokemon\PokemonManager $pokemon_manager */
-  $pokemon_manager = \Drupal::service('pokemon.pokemon_manager');
-  $list = $pokemon_manager->getResourceList('stat');
-
-  $queue = Queue::load('pokemon_import_stat');
-  foreach ($list['results'] as $key => $value) {
-    $job = Job::create('pokemon_stat_import_job', ['stat_name' => $value['name']]);
-    $queue->enqueueJob($job);
-  }
+function pokemon_stat_tax_callback(): void {
+  pokemon_create_jobs(
+    'stat',
+    'pokemon_import_stat',
+    'pokemon_stat_import_job',
+    'stat_name'
+  );
 }
 
 /**
  * The callback for the cron job.
  */
-function pokemon_egg_group_tax_callback() {
-  /** @var \Drupal\pokemon\PokemonManager $pokemon_manager */
-  $pokemon_manager = \Drupal::service('pokemon.pokemon_manager');
-  $list = $pokemon_manager->getResourceList('egg-group');
-
-  $queue = Queue::load('pokemon_import_egg_group');
-  foreach ($list['results'] as $key => $value) {
-    $job = Job::create('pokemon_egg_group_import_job', ['egg_group_name' => $value['name']]);
-    $queue->enqueueJob($job);
-  }
+function pokemon_egg_group_tax_callback(): void {
+  pokemon_create_jobs(
+    'egg-group',
+    'pokemon_import_egg_group',
+    'pokemon_egg_group_import_job',
+    'egg_group_name'
+  );
 }
 
 /**
  * The callback for the cron job.
  */
-function pokemon_node_callback() {
+function pokemon_node_callback(): void {
+  pokemon_create_jobs(
+    'pokemon',
+    'pokemon_import_node',
+    'pokemon_node_import_job',
+    'pokemon_name', 50);
+}
+
+
+function pokemon_create_jobs(string $endpoint, string $queue_id, string $job_type, string $field_name, int $limit = NULL): void {
   /** @var \Drupal\pokemon\PokemonManager $pokemon_manager */
   $pokemon_manager = \Drupal::service('pokemon.pokemon_manager');
-  $list = $pokemon_manager->getResourceList('pokemon', 50);
 
-  $queue = Queue::load('pokemon_import_node');
-  foreach ($list['results'] as $key => $value) {
-    $job = Job::create('pokemon_node_import_job', ['pokemon_name' => $value['name']]);
+  $list = is_null($limit)
+    ? $pokemon_manager->getResourceList($endpoint)
+    : $pokemon_manager->getResourceList($endpoint, $limit);
+
+  $queue = Queue::load($queue_id);
+  foreach ($list['results'] as $value) {
+    $job = Job::create($job_type, [$field_name => $value['name']]);
     $queue->enqueueJob($job);
   }
 }
-
