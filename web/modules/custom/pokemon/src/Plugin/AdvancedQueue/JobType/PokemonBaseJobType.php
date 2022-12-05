@@ -2,9 +2,12 @@
 
 namespace Drupal\pokemon\Plugin\AdvancedQueue\JobType;
 
+use Drupal\advancedqueue\Job;
+use Drupal\advancedqueue\JobResult;
 use Drupal\advancedqueue\Plugin\AdvancedQueue\JobType\JobTypeBase;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\pokemon\EntityCreationResult;
 use Drupal\pokemon\PokemonManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -59,6 +62,28 @@ abstract class PokemonBaseJobType extends JobTypeBase implements ContainerFactor
   }
 
   /**
+   * Provides a choice what entity to create(node or taxonomy term).
+   *
+   * @param bool $isNode
+   *   If true the entity is node, otherwise the entity is taxonomy term.
+   *
+   * @param array $params
+   *   Params to create the entity.
+   *
+   * @return EntityCreationResult
+   *   Job result.
+   */
+  public function createTaxonomyTerm(Job $job, string $endpoint, string $term_name, string $job_name) : JobResult {
+    $payload = $job->getPayload();
+
+    $term = $this->pokemonManager->getResourceList("$endpoint/{$payload[$term_name]}");
+    $entity_creation_result = $this->createTerm($job_name, $term['name']);
+
+    $msg = $entity_creation_result->getStatus();
+    return is_null($entity_creation_result->getEntity()) ? JobResult::failure($msg) : JobResult::success($msg);
+  }
+
+  /**
    * Creates taxonomy term.
    *
    * @param string $vid
@@ -67,25 +92,32 @@ abstract class PokemonBaseJobType extends JobTypeBase implements ContainerFactor
    * @param string $term_name
    *   Taxonomy term name.
    *
-   * @return ?int
-   *   Either SAVED_NEW or SAVED_UPDATED, or NULL depending on the operation
-   *   performed.
+   * @return EntityCreationResult
+   *   The entity creation result.
    */
-  public function createTaxonomyTerm(string $vid, string $term_name): ?int {
-    $term_id = $this->getTidByName($term_name, $vid);
+  private function createTerm(string $vid, string $term_name): EntityCreationResult {
+    try {
+      $term_id = $this->getTidByName($term_name, $vid);
 
-    if ($term_id) {
-      return NULL;
+      if ($term_id) {
+        $term = $this->entityTypeManager->getStorage('taxonomy_term')
+          ->load($term_id);
+        return new EntityCreationResult("Taxonomy term is already exist", $term);
+      }
+
+      $term = $this->entityTypeManager
+        ->getStorage('taxonomy_term')
+        ->create([
+          'name' => $term_name,
+          'vid' => $vid,
+        ]);
+      $term->save();
+
+      return new EntityCreationResult('Taxonomy term has successfully created', $term);
+
+    } catch (\Throwable $e) {
+      return new EntityCreationResult("Failure in creation new taxonomy term: {$e->getMessage()}");
     }
-
-    $term = $this->entityTypeManager
-      ->getStorage('taxonomy_term')
-      ->create([
-        'name' => $term_name,
-        'vid' => $vid,
-      ]);
-
-    return $term->save();
   }
 
   /**
@@ -103,47 +135,54 @@ abstract class PokemonBaseJobType extends JobTypeBase implements ContainerFactor
    * @param string $type
    *   Node type.
    *
-   * @return int
-   *   Either SAVED_NEW or SAVED_UPDATED or NULL, depending on the operation performed.
+   * @return EntityCreationResult
+   *   The entity creation result.
    */
-  public function createNode(array $fields, array $tax_fields, string $title, string $type): ?int {
+  public function createNode(array $fields, array $tax_fields, string $title, string $type): EntityCreationResult {
+    try {
+      // maybe get id_field and check the node by them(not by title)
+      $query = $this->entityTypeManager->getStorage('node')->getQuery();
+      $query->condition('title', $title);
+      $node_ids = $query->execute();
 
-    $query = $this->entityTypeManager->getStorage('node')->getQuery();
-    $query->condition('title', $title);
-    $result = $query->execute();
-
-    if(!empty($result)) {
-      return NULL;
-    }
-
-    $node = $this->entityTypeManager
-      ->getStorage('node')
-      ->create([
-        'type' => $type,
-        'title' => $title,
-      ]);
-    $node->save();
-
-    // Set regular fields.
-    foreach ($fields as $field) {
-      $node->set($field['field_name'], $field['value']);
-    }
-
-    // Set taxonomy fields.
-    foreach ($tax_fields as $tax_field) {
-      $terms = [];
-      foreach ($tax_field['terms'] as $term) {
-        $term_id = $this->getTidByName($term, $tax_field['vid']);
-        if (!$term_id) {
-          // Create new taxonomy term.
-          $this->createTaxonomyTerm($tax_field['vid'], $term);
-          $term_id = $this->getTidByName($term, $tax_field['vid']);
-        }
-        $terms[] = ['target_id' => $term_id];
+      if (!empty($node_ids)) {
+        $node = $this->entityTypeManager->getStorage('node')
+          ->load(reset($node_ids));
+        return new EntityCreationResult("Node is already exist", $node);
       }
-      $node->set($tax_field['field_name'], $terms);
+
+      $node = $this->entityTypeManager
+        ->getStorage('node')
+        ->create([
+          'type' => $type,
+          'title' => $title,
+        ]);
+      $node->save();
+
+      // Set regular fields.
+      foreach ($fields as $field) {
+        $node->set($field['field_name'], $field['value']);
+      }
+
+      // Set taxonomy fields.
+      foreach ($tax_fields as $tax_field) {
+        $terms = [];
+        foreach ($tax_field['terms'] as $term) {
+          $term_id = $this->getTidByName($term, $tax_field['vid']);
+          if (!$term_id) {
+            // Create new taxonomy term.
+            $this->createTaxonomyTerm($tax_field['vid'], $term);
+            $term_id = $this->getTidByName($term, $tax_field['vid']);
+          }
+          $terms[] = ['target_id' => $term_id];
+        }
+        $node->set($tax_field['field_name'], $terms);
+      }
+      $node->save();
+      return new EntityCreationResult('Node has successfully created', $node);
+    } catch (\Throwable $e) {
+      return new EntityCreationResult("Failure in creation new node: {$e->getMessage()}");
     }
-    return $node->save();
   }
 
   /**

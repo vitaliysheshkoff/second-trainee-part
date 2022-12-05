@@ -103,13 +103,10 @@ class PokemonNodeImportJob extends PokemonBaseJobType {
       ],
     ];
 
-    $status = $this->createNode($fields, $tax_fields, $pokemon['name'], 'pokemon');
+    $entity_creation_result = $this->createNode($fields, $tax_fields, $pokemon['name'], 'pokemon');
 
-    return ($status == SAVED_NEW || $status == SAVED_UPDATED) ?
-      JobResult::success('Node was saved.')
-      : (($status == NULL) ?
-        JobResult::success('Node is already exist')
-        : JobResult::failure('Node creation failed'));
+    $msg = $entity_creation_result->getStatus();
+    return is_null($entity_creation_result->getEntity()) ? JobResult::failure($msg) : JobResult::success($msg);
   }
 
   /**

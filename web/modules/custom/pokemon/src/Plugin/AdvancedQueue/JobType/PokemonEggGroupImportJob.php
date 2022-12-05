@@ -17,17 +17,8 @@ class PokemonEggGroupImportJob extends PokemonBaseJobType {
   /**
    * {@inheritdoc}
    */
-  public function process(Job $job) {
-    $payload = $job->getPayload();
-
-    $egg_group = $this->pokemonManager->getResourceList("egg-group/{$payload['egg_group_name']}");
-    $status = $this->createTaxonomyTerm('egg_groups_api', $egg_group['name']);
-
-    return ($status == SAVED_NEW || $status == SAVED_UPDATED) ?
-      JobResult::success('Taxonomy was saved.')
-      : (($status == NULL) ?
-        JobResult::success('Taxonomy term is already exist')
-        : JobResult::failure('Taxonomy creation failed'));
+  public function process(Job $job): JobResult {
+    return $this->createTaxonomyTerm($job, 'egg-group', 'egg_group_name', 'egg_groups_api');
   }
 
 }

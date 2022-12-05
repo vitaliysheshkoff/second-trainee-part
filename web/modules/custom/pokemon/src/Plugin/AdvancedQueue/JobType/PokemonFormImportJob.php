@@ -17,17 +17,8 @@ class PokemonFormImportJob extends PokemonBaseJobType {
   /**
    * {@inheritdoc}
    */
-  public function process(Job $job) {
-    $payload = $job->getPayload();
-
-    $form = $this->pokemonManager->getResourceList("pokemon-form/{$payload['form_name']}");
-    $status = $this->createTaxonomyTerm('forms_api', $form['name']);
-
-    return ($status == SAVED_NEW || $status == SAVED_UPDATED) ?
-      JobResult::success('Taxonomy was saved.')
-      : (($status == NULL) ?
-        JobResult::success('Taxonomy term is already exist')
-        : JobResult::failure('Taxonomy creation failed'));
+  public function process(Job $job): JobResult {
+    return $this->createTaxonomyTerm($job, 'pokemon-form', 'form_name', 'forms_api');
   }
 
 }

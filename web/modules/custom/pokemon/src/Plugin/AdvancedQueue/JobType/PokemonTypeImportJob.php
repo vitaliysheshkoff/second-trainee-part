@@ -17,17 +17,8 @@ class PokemonTypeImportJob extends PokemonBaseJobType {
   /**
    * {@inheritdoc}
    */
-  public function process(Job $job) {
-    $payload = $job->getPayload();
-
-    $type = $this->pokemonManager->getResourceList("type/{$payload['type_name']}");
-    $status = $this->createTaxonomyTerm('types_api', $type['name']);
-
-    return ($status == SAVED_NEW || $status == SAVED_UPDATED) ?
-      JobResult::success('Taxonomy was saved.')
-      : (($status == NULL) ?
-        JobResult::success('Taxonomy term is already exist')
-        : JobResult::failure('Taxonomy creation failed'));
+  public function process(Job $job): JobResult {
+    return $this->createTaxonomyTerm($job, 'type', 'type_name', 'types_api');
   }
 
 }

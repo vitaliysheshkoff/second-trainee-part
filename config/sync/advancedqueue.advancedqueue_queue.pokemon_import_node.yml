@@ -8,7 +8,7 @@ id: pokemon_import_node
 label: 'Pokemon: Import Node'
 backend: database
 backend_configuration:
-  lease_time: 3000000000000000000
+  lease_time: 300
 processor: cron
 processing_time: 90
 locked: false
