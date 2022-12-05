@@ -62,15 +62,21 @@ abstract class PokemonBaseJobType extends JobTypeBase implements ContainerFactor
   }
 
   /**
-   * Provides a choice what entity to create(node or taxonomy term).
+   * Creates taxonomy term.
    *
-   * @param bool $isNode
-   *   If true the entity is node, otherwise the entity is taxonomy term.
+   * @param Job $job
+   *   The current job.
    *
-   * @param array $params
-   *   Params to create the entity.
+   * @param string $endpoint
+   *   The name of endpoint.
    *
-   * @return EntityCreationResult
+   * @param string $term_name
+   *   The name of term.
+   *
+   * @param string $job_name
+   *   The name of job.
+   *
+   * @return \Drupal\advancedqueue\JobResult Job result.
    *   Job result.
    */
   public function createTaxonomyTerm(Job $job, string $endpoint, string $term_name, string $job_name) : JobResult {
@@ -171,7 +177,7 @@ abstract class PokemonBaseJobType extends JobTypeBase implements ContainerFactor
           $term_id = $this->getTidByName($term, $tax_field['vid']);
           if (!$term_id) {
             // Create new taxonomy term.
-            $this->createTaxonomyTerm($tax_field['vid'], $term);
+            $this->createTerm($tax_field['vid'], $term);
             $term_id = $this->getTidByName($term, $tax_field['vid']);
           }
           $terms[] = ['target_id' => $term_id];
