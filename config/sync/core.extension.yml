@@ -27,6 +27,7 @@ module:
   history: 0
   image: 0
   link: 0
+  media: 0
   menu_link_content: 0
   menu_ui: 0
   minute: 0
@@ -38,6 +39,7 @@ module:
   pokemon: 0
   rdf: 0
   search: 0
+  search_api: 0
   shortcut: 0
   system: 0
   taxonomy: 0

@@ -12,6 +12,7 @@ dependencies:
     - field.field.node.pokemon.field_height
     - field.field.node.pokemon.field_id
     - field.field.node.pokemon.field_name
+    - field.field.node.pokemon.field_pokemon_image
     - field.field.node.pokemon.field_shape
     - field.field.node.pokemon.field_specie
     - field.field.node.pokemon.field_stat
@@ -110,6 +111,16 @@ content:
     weight: 123
     region: content
     settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_pokemon_image:
+    type: entity_reference_autocomplete
+    weight: 135
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
       size: 60
       placeholder: ''
     third_party_settings: {  }

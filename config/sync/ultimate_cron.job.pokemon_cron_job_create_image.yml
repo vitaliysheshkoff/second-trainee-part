@@ -1,0 +1,19 @@
+uuid: 86e19b65-e7c4-4c43-8562-54edfc26887e
+langcode: en
+status: true
+dependencies:
+  module:
+    - pokemon
+_core:
+  default_config_hash: IEQwbDv4L7pBA9Wp1SGp320hLlRcO8aYvGXIEZoPoEg
+title: 'Cron for creating Media image from Pokemon API'
+id: pokemon_cron_job_create_image
+weight: 0
+module: pokemon
+callback: pokemon_image_callback
+scheduler:
+  id: simple
+launcher:
+  id: serial
+logger:
+  id: database

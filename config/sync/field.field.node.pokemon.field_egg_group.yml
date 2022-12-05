@@ -5,6 +5,7 @@ dependencies:
   config:
     - field.storage.node.field_egg_group
     - node.type.pokemon
+    - taxonomy.vocabulary.egg_groups_api
 id: node.pokemon.field_egg_group
 field_name: field_egg_group
 entity_type: node
@@ -18,7 +19,8 @@ default_value_callback: ''
 settings:
   handler: 'default:taxonomy_term'
   handler_settings:
-    target_bundles: {  }
+    target_bundles:
+      egg_groups_api: egg_groups_api
     sort:
       field: name
       direction: asc

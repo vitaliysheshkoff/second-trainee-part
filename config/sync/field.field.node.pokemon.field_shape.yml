@@ -5,6 +5,7 @@ dependencies:
   config:
     - field.storage.node.field_shape
     - node.type.pokemon
+    - taxonomy.vocabulary.shapes_api
 id: node.pokemon.field_shape
 field_name: field_shape
 entity_type: node
@@ -18,7 +19,8 @@ default_value_callback: ''
 settings:
   handler: 'default:taxonomy_term'
   handler_settings:
-    target_bundles: {  }
+    target_bundles:
+      shapes_api: shapes_api
     sort:
       field: name
       direction: asc

@@ -1,0 +1,19 @@
+uuid: fa7b5867-4f57-4c5c-858e-9a07818b3e45
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.media.field_pokemon_name
+    - media.type.pokemon_image
+id: media.pokemon_image.field_pokemon_name
+field_name: field_pokemon_name
+entity_type: media
+bundle: pokemon_image
+label: 'Pokemon name'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

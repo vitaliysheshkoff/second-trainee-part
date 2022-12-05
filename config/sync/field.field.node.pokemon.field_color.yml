@@ -5,6 +5,7 @@ dependencies:
   config:
     - field.storage.node.field_color
     - node.type.pokemon
+    - taxonomy.vocabulary.colors_api
 id: node.pokemon.field_color
 field_name: field_color
 entity_type: node
@@ -18,7 +19,8 @@ default_value_callback: ''
 settings:
   handler: 'default:taxonomy_term'
   handler_settings:
-    target_bundles: {  }
+    target_bundles:
+      colors_api: colors_api
     sort:
       field: name
       direction: asc

@@ -1,0 +1,22 @@
+uuid: 106d29e7-0054-42a4-bfcd-ca5f17d8503e
+langcode: en
+status: true
+dependencies:
+  config:
+    - media.type.pokemon_image
+id: media.pokemon_image.status
+field_name: status
+entity_type: media
+bundle: pokemon_image
+label: Published
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

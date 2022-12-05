@@ -120,6 +120,14 @@ function pokemon_node_callback(): void {
     'pokemon_name', 50);
 }
 
+function pokemon_image_callback(): void {
+ pokemon_create_jobs(
+    'pokemon',
+    'pokemon_import_image',
+    'pokemon_image_import_job',
+    'pokemon_name', 50);
+}
+
 
 function pokemon_create_jobs(string $endpoint, string $queue_id, string $job_type, string $field_name, int $limit = NULL): void {
   /** @var \Drupal\pokemon\PokemonManager $pokemon_manager */

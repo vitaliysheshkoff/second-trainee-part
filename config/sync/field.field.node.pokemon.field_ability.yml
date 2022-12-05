@@ -5,6 +5,7 @@ dependencies:
   config:
     - field.storage.node.field_ability
     - node.type.pokemon
+    - taxonomy.vocabulary.abilities_api
 id: node.pokemon.field_ability
 field_name: field_ability
 entity_type: node
@@ -18,7 +19,8 @@ default_value_callback: ''
 settings:
   handler: 'default:taxonomy_term'
   handler_settings:
-    target_bundles: {  }
+    target_bundles:
+      abilities_api: abilities_api
     sort:
       field: name
       direction: asc

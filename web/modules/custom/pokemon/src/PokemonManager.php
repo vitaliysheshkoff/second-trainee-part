@@ -18,6 +18,13 @@ class PokemonManager implements PokemonManagerInterface {
   const MAX_LIMIT = 1323;
 
   /**
+   * Pokemon images resource url.
+   *
+   * @var string
+   */
+  const IMAGES_RESOURCE_URL = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon';
+
+  /**
    * The entity type manager.
    *
    * @var \Drupal\Core\Entity\EntityTypeManager

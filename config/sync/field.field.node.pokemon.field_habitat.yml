@@ -5,6 +5,7 @@ dependencies:
   config:
     - field.storage.node.field_habitat
     - node.type.pokemon
+    - taxonomy.vocabulary.habitats_api
 id: node.pokemon.field_habitat
 field_name: field_habitat
 entity_type: node
@@ -18,7 +19,8 @@ default_value_callback: ''
 settings:
   handler: 'default:taxonomy_term'
   handler_settings:
-    target_bundles: {  }
+    target_bundles:
+      habitats_api: habitats_api
     sort:
       field: name
       direction: asc

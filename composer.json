@@ -30,6 +30,7 @@
         "drupal/core-composer-scaffold": "^9.4",
         "drupal/core-recommended": "^9.4",
         "drupal/radix": "^5.0",
+        "drupal/search_api": "^1.28",
         "drupal/ultimate_cron": "^2.0@alpha",
         "drupal/views_data_export": "^1.1",
         "drush/drush": "^11.0",

@@ -5,6 +5,7 @@ namespace Drupal\pokemon\Plugin\AdvancedQueue\JobType;
 use Drupal\advancedqueue\Annotation\AdvancedQueueJobType;
 use Drupal\advancedqueue\Job;
 use Drupal\advancedqueue\JobResult;
+use Drupal\pokemon\PokemonManager;
 
 /**
  * @AdvancedQueueJobType(
@@ -29,7 +30,7 @@ class PokemonNodeImportJob extends PokemonBaseJobType {
     $types = $this->getTaxField($pokemon['types'], 'type');
 
     $pokemon_species = $this->pokemonManager->getResourceList("pokemon-species/{$species}");
-    $egg_group[] = $this->getTaxField($pokemon_species['egg_groups']);
+    $egg_group = $this->getTaxField($pokemon_species['egg_groups']);
 
     $fields = [
       [
@@ -49,7 +50,7 @@ class PokemonNodeImportJob extends PokemonBaseJobType {
     $tax_fields = [
       [
         'field_name' => 'field_ability',
-        'vid' => 'ability_api',
+        'vid' => 'abilities_api',
         'terms' => $abilities,
       ],
       [
@@ -103,7 +104,19 @@ class PokemonNodeImportJob extends PokemonBaseJobType {
       ],
     ];
 
-    $entity_creation_result = $this->createNode($fields, $tax_fields, $pokemon['name'], 'pokemon');
+    $media_fields = [
+      'img' => [
+        'url' => PokemonManager::IMAGES_RESOURCE_URL."/{$pokemon['id']}.png",
+          'field_name' => 'field_pokemon_image',
+          'properties' => [
+            'field_pokemon_id' => $pokemon['id'],
+            'field_pokemon_name' => $pokemon['name'],
+            'bundle' => 'pokemon_image',
+          ],
+      ],
+    ];
+
+    $entity_creation_result = $this->createNode($fields, $tax_fields, $media_fields, $pokemon['name'],'pokemon');
 
     $msg = $entity_creation_result->getStatus();
     return is_null($entity_creation_result->getEntity()) ? JobResult::failure($msg) : JobResult::success($msg);

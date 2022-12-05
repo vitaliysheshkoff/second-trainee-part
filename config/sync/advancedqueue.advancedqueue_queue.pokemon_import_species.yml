@@ -1,4 +1,4 @@
-uuid: 8ac580dc-b5b5-40cc-91e4-9330d46e5d08
+uuid: 6ff50fc2-ee1c-470a-b7a5-efc061cb7279
 langcode: en
 status: true
 dependencies: {  }
@@ -10,9 +10,9 @@ backend: database
 backend_configuration:
   lease_time: 300
 processor: cron
-processing_time: 900
-locked: false
+processing_time: 90
 threshold:
   type: 0
   limit: 0
   state: all
+locked: false
