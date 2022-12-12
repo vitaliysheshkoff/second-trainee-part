@@ -154,7 +154,7 @@ function pokemon_create_jobs(string $endpoint, string $queue_id, string $job_typ
   /** @var \Drupal\pokemon\PokemonManager $pokemon_manager */
   $pokemon_manager = \Drupal::service('pokemon.pokemon_manager');
 
-  $list = is_null($limit)
+  $list = isset($limit)
     ? $pokemon_manager->getResourceList($endpoint)
     : $pokemon_manager->getResourceList($endpoint, $limit);
 

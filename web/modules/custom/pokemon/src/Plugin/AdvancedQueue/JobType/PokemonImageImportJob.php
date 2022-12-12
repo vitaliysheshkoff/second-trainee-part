@@ -25,7 +25,8 @@ class PokemonImageImportJob extends PokemonBaseJobType {
     $entity_creation_result = $this->createMediaImage($url, 'pokemon_image', $pokemon['name'], $pokemon['id']);
 
     $msg = $entity_creation_result->getStatus();
-    return is_null($entity_creation_result->getEntity()) ? JobResult::failure($msg) : JobResult::success($msg);
+    $result = $entity_creation_result->getEntity();
+    return isset($result) ? JobResult::failure($msg) : JobResult::success($msg);
 
   }
 
