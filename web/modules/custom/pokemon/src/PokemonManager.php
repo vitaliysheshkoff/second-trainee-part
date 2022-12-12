@@ -18,13 +18,6 @@ class PokemonManager implements PokemonManagerInterface {
   const MAX_LIMIT = 1323;
 
   /**
-   * Pokemon images resource url.
-   *
-   * @var string
-   */
-  const IMAGES_RESOURCE_URL = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon';
-
-  /**
    * The entity type manager.
    *
    * @var \Drupal\Core\Entity\EntityTypeManager
@@ -47,7 +40,7 @@ class PokemonManager implements PokemonManagerInterface {
   public function getResourceList(string $endpoint, int $limit = self::MAX_LIMIT): array {
     $api = new PokeApi;
     $resource_list_json = $api->resourceList($endpoint, $limit);
-    return json_decode($resource_list_json, TRUE);
+    return json_decode($resource_list_json, flags: JSON_OBJECT_AS_ARRAY | JSON_THROW_ON_ERROR);
   }
 
 }

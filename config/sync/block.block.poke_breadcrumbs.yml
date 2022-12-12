@@ -1,0 +1,22 @@
+uuid: bd4b2de3-4695-4d13-b619-9b360674edba
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - poke
+_core:
+  default_config_hash: NjcxOBrPOiK5-38t56DwFBDVY4yer7YSlbRWXFuHe7A
+id: poke_breadcrumbs
+theme: poke
+region: breadcrumb
+weight: 0
+provider: null
+plugin: system_breadcrumb_block
+settings:
+  id: system_breadcrumb_block
+  label: Breadcrumbs
+  label_display: '0'
+  provider: system
+visibility: {  }

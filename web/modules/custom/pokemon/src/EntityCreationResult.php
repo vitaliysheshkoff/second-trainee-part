@@ -2,6 +2,9 @@
 
 namespace Drupal\pokemon;
 
+
+use Drupal\Core\Entity\EntityInterface;
+
 /**
  * Helper class to store the result of creation of the entity.
  */
@@ -16,6 +19,8 @@ class EntityCreationResult {
 
   /**
    * The entity instance.
+   *
+   * @var \Drupal\Core\Entity\EntityInterface
    */
   private $entity;
 
@@ -27,7 +32,7 @@ class EntityCreationResult {
    * @param  $entity
    *   The entity or NULL.
    */
-  public function __construct(string $status, $entity = NULL) {
+  public function __construct(string $status, EntityInterface $entity = NULL) {
     $this->status = $status;
     $this->entity = $entity;
   }

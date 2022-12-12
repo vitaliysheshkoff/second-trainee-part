@@ -17,6 +17,7 @@ module:
   contextual: 0
   datetime: 0
   dblog: 0
+  devel: 0
   dynamic_page_cache: 0
   editor: 0
   field: 0
@@ -26,6 +27,8 @@ module:
   help: 0
   history: 0
   image: 0
+  layout_builder: 0
+  layout_discovery: 0
   link: 0
   media: 0
   menu_link_content: 0
@@ -38,8 +41,9 @@ module:
   path_alias: 0
   pokemon: 0
   rdf: 0
-  search: 0
   search_api: 0
+  search_api_db: 0
+  search_api_db_defaults: 0
   shortcut: 0
   system: 0
   taxonomy: 0
@@ -56,5 +60,8 @@ module:
 theme:
   olivero: 0
   claro: 0
-  trainee_basic: 0
+  stable: 0
+  stable9: 0
+  poemon: 0
+  poke: 0
 profile: standard

@@ -18,7 +18,7 @@ class PokemonFormImportJob extends PokemonBaseJobType {
    * {@inheritdoc}
    */
   public function process(Job $job): JobResult {
-    return $this->createTaxonomyTerm($job, 'pokemon-form', 'form_name', 'forms_api');
+    return $this->taxonomyJobProcessing($job, 'pokemon-form', 'form_name', 'forms_api');
   }
 
 }

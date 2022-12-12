@@ -18,7 +18,7 @@ class PokemonTypeImportJob extends PokemonBaseJobType {
    * {@inheritdoc}
    */
   public function process(Job $job): JobResult {
-    return $this->createTaxonomyTerm($job, 'type', 'type_name', 'types_api');
+    return $this->taxonomyJobProcessing($job, 'type', 'type_name', 'types_api');
   }
 
 }

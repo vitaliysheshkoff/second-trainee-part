@@ -1,0 +1,20 @@
+uuid: 75b4e54e-ef41-4f9a-8053-6674b41a413e
+langcode: en
+status: true
+dependencies:
+  theme:
+    - poemon
+_core:
+  default_config_hash: CdXfDmRgAvms7EQovxxWPdYi0GitxeRbVtScYK16ZH0
+id: poemon_local_actions
+theme: poemon
+region: content
+weight: -2
+provider: null
+plugin: local_actions_block
+settings:
+  id: local_actions_block
+  label: 'Primary admin actions'
+  label_display: '0'
+  provider: core
+visibility: {  }

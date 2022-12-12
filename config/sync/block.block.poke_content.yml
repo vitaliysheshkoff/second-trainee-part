@@ -1,0 +1,22 @@
+uuid: 66352a32-0778-4451-a7ae-253d1726d896
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - poke
+_core:
+  default_config_hash: a0Yyx1GeyKarZ4T_yXQBR_ZFKnXiFLtxAb6gWLd8nr0
+id: poke_content
+theme: poke
+region: content
+weight: -1
+provider: null
+plugin: system_main_block
+settings:
+  id: system_main_block
+  label: 'Main page content'
+  label_display: '0'
+  provider: system
+visibility: {  }

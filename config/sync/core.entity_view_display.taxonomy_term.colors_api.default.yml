@@ -1,0 +1,22 @@
+uuid: 12f9607c-c469-40ea-ab69-6abb3d816270
+langcode: en
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.colors_api
+  module:
+    - text
+id: taxonomy_term.colors_api.default
+targetEntityType: taxonomy_term
+bundle: colors_api
+mode: default
+content:
+  description:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  search_api_excerpt: true

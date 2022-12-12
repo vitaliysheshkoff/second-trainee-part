@@ -1,0 +1,28 @@
+uuid: 2bd03858-62bd-44db-ba50-80c98b3c9ed6
+langcode: en
+status: false
+dependencies:
+  config:
+    - core.entity_view_mode.taxonomy_term.full
+    - taxonomy.vocabulary.colors_api
+  module:
+    - layout_builder
+    - text
+third_party_settings:
+  layout_builder:
+    enabled: false
+    allow_custom: false
+id: taxonomy_term.colors_api.full
+targetEntityType: taxonomy_term
+bundle: colors_api
+mode: full
+content:
+  description:
+    type: text_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  search_api_excerpt: true

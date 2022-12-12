@@ -18,7 +18,7 @@ class PokemonShapeImportJob extends PokemonBaseJobType {
    * {@inheritdoc}
    */
   public function process(Job $job): JobResult {
-    return $this->createTaxonomyTerm($job, 'pokemon-shape', 'shape_name', 'shapes_api');
+    return $this->taxonomyJobProcessing($job, 'pokemon-shape', 'shape_name', 'shapes_api');
   }
 
 }

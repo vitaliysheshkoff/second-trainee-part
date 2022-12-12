@@ -8,6 +8,27 @@ use Drupal\advancedqueue\Entity\Queue;
 use Drupal\advancedqueue\Job;
 
 /**
+ * Implements hook_theme().
+ */
+function pokemon_theme($existing, $type, $theme, $path) {
+  return [
+    'pokemon_tax_term' => [
+      'variables' => [
+        'taxonomy_term' => NULL,
+      ],
+      'file' => 'pokemon.theme.inc',
+    ],
+    'pokemon_node' => [
+      'variables' => [
+        'node' => NULL,
+      ],
+      'file' => 'pokemon.theme.inc',
+    ],
+  ];
+}
+
+
+/**
  * The callback for the cron job.
  */
 function pokemon_ability_tax_callback(): void {
@@ -121,7 +142,7 @@ function pokemon_node_callback(): void {
 }
 
 function pokemon_image_callback(): void {
- pokemon_create_jobs(
+  pokemon_create_jobs(
     'pokemon',
     'pokemon_import_image',
     'pokemon_image_import_job',

@@ -18,7 +18,7 @@ class PokemonEggGroupImportJob extends PokemonBaseJobType {
    * {@inheritdoc}
    */
   public function process(Job $job): JobResult {
-    return $this->createTaxonomyTerm($job, 'egg-group', 'egg_group_name', 'egg_groups_api');
+    return $this->taxonomyJobProcessing($job, 'egg-group', 'egg_group_name', 'egg_groups_api');
   }
 
 }

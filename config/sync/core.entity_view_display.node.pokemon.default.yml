@@ -19,8 +19,13 @@ dependencies:
     - field.field.node.pokemon.field_type
     - node.type.pokemon
   module:
+    - layout_builder
     - text
     - user
+third_party_settings:
+  layout_builder:
+    enabled: false
+    allow_custom: false
 id: node.pokemon.default
 targetEntityType: node
 bundle: pokemon
@@ -31,51 +36,52 @@ content:
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 6
+    weight: 5
     region: content
   field_ability:
     type: entity_reference_label
-    label: above
+    label: hidden
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 6
+    region: content
+  field_color:
+    type: entity_reference_entity_view
+    label: hidden
+    settings:
+      view_mode: default
+      link: true
+    third_party_settings: {  }
+    weight: 4
+    region: content
+  field_egg_group:
+    type: entity_reference_label
+    label: hidden
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 13
+    region: content
+  field_form:
+    type: entity_reference_label
+    label: hidden
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 10
+    region: content
+  field_habitat:
+    type: entity_reference_label
+    label: hidden
     settings:
       link: true
     third_party_settings: {  }
     weight: 7
     region: content
-  field_color:
-    type: entity_reference_label
-    label: above
-    settings:
-      link: true
-    third_party_settings: {  }
-    weight: 5
-    region: content
-  field_egg_group:
-    type: entity_reference_label
-    label: above
-    settings:
-      link: true
-    third_party_settings: {  }
-    weight: 14
-    region: content
-  field_form:
-    type: entity_reference_label
-    label: above
-    settings:
-      link: true
-    third_party_settings: {  }
-    weight: 11
-    region: content
-  field_habitat:
-    type: entity_reference_label
-    label: above
-    settings:
-      link: true
-    third_party_settings: {  }
-    weight: 8
-    region: content
   field_height:
     type: number_integer
-    label: above
+    label: hidden
     settings:
       thousand_separator: ''
       prefix_suffix: true
@@ -84,7 +90,7 @@ content:
     region: content
   field_id:
     type: number_integer
-    label: above
+    label: hidden
     settings:
       thousand_separator: ''''
       prefix_suffix: true
@@ -93,14 +99,14 @@ content:
     region: content
   field_name:
     type: text_default
-    label: above
+    label: hidden
     settings: {  }
     third_party_settings: {  }
     weight: 2
     region: content
   field_pokemon_image:
     type: entity_reference_entity_view
-    label: above
+    label: hidden
     settings:
       view_mode: default
       link: false
@@ -109,40 +115,36 @@ content:
     region: content
   field_shape:
     type: entity_reference_label
-    label: above
+    label: hidden
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 8
+    region: content
+  field_specie:
+    type: entity_reference_label
+    label: hidden
     settings:
       link: true
     third_party_settings: {  }
     weight: 9
     region: content
-  field_specie:
-    type: entity_reference_label
-    label: above
-    settings:
-      link: true
-    third_party_settings: {  }
-    weight: 10
-    region: content
   field_stat:
     type: entity_reference_label
-    label: above
-    settings:
-      link: true
-    third_party_settings: {  }
-    weight: 13
-    region: content
-  field_type:
-    type: entity_reference_label
-    label: above
+    label: hidden
     settings:
       link: true
     third_party_settings: {  }
     weight: 12
     region: content
-  links:
-    settings: {  }
+  field_type:
+    type: entity_reference_label
+    label: hidden
+    settings:
+      link: true
     third_party_settings: {  }
-    weight: 4
+    weight: 11
     region: content
 hidden:
+  links: true
   search_api_excerpt: true

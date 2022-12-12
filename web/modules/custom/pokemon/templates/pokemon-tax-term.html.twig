@@ -1,0 +1,10 @@
+<div{{ attributes.addClass('tax_term') }}>
+  <div class={{ "tax_term__" ~ item.bundle }}>
+    <div class="tax_term__header">
+      <h2 class="tax_term__title">{{ item.label }}</h2>
+    </div>
+    <div class="tax-term__content">
+      {{ item.view }}
+    </div>
+  </div>
+</div>

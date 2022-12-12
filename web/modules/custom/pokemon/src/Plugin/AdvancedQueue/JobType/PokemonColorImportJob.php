@@ -18,7 +18,7 @@ class PokemonColorImportJob extends PokemonBaseJobType {
    * {@inheritdoc}
    */
   public function process(Job $job): JobResult {
-    return $this->createTaxonomyTerm($job, 'pokemon-color', 'color_name', 'colors_api');
+    return $this->taxonomyJobProcessing($job, 'pokemon-color', 'color_name', 'colors_api');
   }
 
 }

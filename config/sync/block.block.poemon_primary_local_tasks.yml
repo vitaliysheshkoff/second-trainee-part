@@ -1,0 +1,22 @@
+uuid: b26ed3e7-e9c2-4006-825f-478627f6ae60
+langcode: en
+status: true
+dependencies:
+  theme:
+    - poemon
+_core:
+  default_config_hash: ACjBZI5shAMiiUpsz-inLYVXDqNNXRnSzAWV3kV_8Hw
+id: poemon_primary_local_tasks
+theme: poemon
+region: header
+weight: 0
+provider: null
+plugin: local_tasks_block
+settings:
+  id: local_tasks_block
+  label: 'Primary tabs'
+  label_display: '0'
+  provider: core
+  primary: true
+  secondary: false
+visibility: {  }

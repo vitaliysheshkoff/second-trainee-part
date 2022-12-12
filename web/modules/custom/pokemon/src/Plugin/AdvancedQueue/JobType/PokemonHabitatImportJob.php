@@ -18,7 +18,7 @@ class PokemonHabitatImportJob extends PokemonBaseJobType {
    * {@inheritdoc}
    */
   public function process(Job $job): JobResult {
-    return $this->createTaxonomyTerm($job, 'pokemon-habitat', 'habitat_name', 'habitats_api');
+    return $this->taxonomyJobProcessing($job, 'pokemon-habitat', 'habitat_name', 'habitats_api');
   }
 
 }

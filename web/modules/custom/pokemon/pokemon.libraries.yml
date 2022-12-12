@@ -1,0 +1,8 @@
+tax-style:
+  css:
+    theme:
+      css/tax_style.css: { }
+node-style:
+  css:
+    theme:
+      css/node_style.css: { }

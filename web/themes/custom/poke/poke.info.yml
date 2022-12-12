@@ -1,0 +1,8 @@
+name: Poke Theme
+description: Pokemon theme.
+type: theme
+core_version_requirement: ^8 || ^9
+package: Trainee custom theme.
+base theme: claro
+libraries:
+  - poke/global-styling

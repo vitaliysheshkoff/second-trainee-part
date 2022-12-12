@@ -116,6 +116,10 @@ abstract class PokemonBaseJobType extends JobTypeBase implements ContainerFactor
         $file = system_retrieve_file(trim($url), $dir, TRUE);
       }
 
+      if (!isset($file)) {
+        return new EntityCreationResult("Can't gets the image");
+      }
+
       $media = Media::create([
         'bundle' => $bundle_name,
         'uid' => $uid,
@@ -150,17 +154,19 @@ abstract class PokemonBaseJobType extends JobTypeBase implements ContainerFactor
    *   The name of term.
    * @param string $job_name
    *   The name of job.
+   *
    * @return \Drupal\advancedqueue\JobResult Job result.
    *   Job result.
    */
-  public function createTaxonomyTerm(Job $job, string $endpoint, string $term_name, string $job_name): JobResult {
+  protected function taxonomyJobProcessing(Job $job, string $endpoint, string $term_name, string $job_name): JobResult {
     $payload = $job->getPayload();
 
     $term = $this->pokemonManager->getResourceList("$endpoint/{$payload[$term_name]}");
     $entity_creation_result = $this->createTerm($job_name, $term['name']);
 
     $msg = $entity_creation_result->getStatus();
-    return is_null($entity_creation_result->getEntity()) ? JobResult::failure($msg) : JobResult::success($msg);
+    $result = $entity_creation_result->getEntity();
+    return isset($result) ? JobResult::failure($msg) : JobResult::success($msg);
   }
 
   /**
@@ -218,7 +224,7 @@ abstract class PokemonBaseJobType extends JobTypeBase implements ContainerFactor
    * @return EntityCreationResult
    *   The entity creation result.
    */
-  public function createNode(array $fields, array $tax_fields, array $media_fields, string $title, string $type): EntityCreationResult {
+  public function createNode(array $fields, array $tax_fields, array $img_field, string $title, string $type): EntityCreationResult {
     try {
       // maybe get id_field and check the node by them(not by title)
       $query = $this->entityTypeManager->getStorage('node')->getQuery();
@@ -266,20 +272,19 @@ abstract class PokemonBaseJobType extends JobTypeBase implements ContainerFactor
         $node->set($tax_field['field_name'], $terms);
       }
 
-      // Set Media fields
-      foreach ($media_fields as $media_field) {
-        $media_id = $this->getTidByName('media', $media_field['properties']);
-        if (!$media_id) {
-          // Create new media image.
-          $this->createMediaImage($media_field['url'],
-            $media_field['properties']['bundle'],
-            $media_field['properties']['field_pokemon_name'],
-            $media_field['properties']['field_pokemon_id'],
-          );
-          $media_id = $this->getTidByName('media', $media_field['properties']);
-        }
-        $node->set($media_field['field_name'], ['target_id' => $media_id]);
+      // Set Img field
+      $media_id = $this->getTidByName('media', $img_field['properties']);
+      if (!$media_id) {
+        // Create new media image.
+        $this->createMediaImage(
+          $img_field['url'],
+          $img_field['properties']['bundle'],
+          $img_field['properties']['field_pokemon_name'],
+          $img_field['properties']['field_pokemon_id'],
+        );
+        $media_id = $this->getTidByName('media', $img_field['properties']);
       }
+      $node->set($img_field['field_name'], ['target_id' => $media_id]);
 
       $node->save();
       return new EntityCreationResult('Node has successfully created', $node);

@@ -1,0 +1,65 @@
+<div{{ attributes.addClass('pokemon_node_field') }}>
+  {% if(img_url) %}
+    <div class=>
+      <img class="pokemon_node_field__img" src="{{ img_url }}"/>
+    </div>
+  {% endif %}
+
+  {% if(tax_variables) %}
+    <div class="pokemon_node_field__table">
+      <table>
+        <tr>
+          <th>Pokemon Properties</th>
+          <th>Value</th>
+        </tr>
+        <tr>
+          {% if(id) %}
+          <td>id</td>
+          <td>
+            <div class="pokemon_node_field__id">
+              {{ id }}
+            </div>
+          </td>
+        </tr>
+        {% endif %}
+        <tr>
+          {% if(name) %}
+            <td>name</td>
+            <td>
+              <div class="pokemon_node_field__name">
+                {{ name }}
+              </div>
+            </td>
+          {% endif %}
+        </tr>
+        <tr>
+          {% if(height) %}
+            <td>height</td>
+            <td>
+              <div class="pokemon_node_field__height">
+                {{ height }}
+              </div>
+            </td>
+          {% endif %}
+        </tr>
+        {% for name, tax_variable in tax_variables %}
+          {% if(tax_variable) %}
+            <tr class={{ "pokemon_node_field__tax_" ~ name }}>
+              <td>{{ name }}</td>
+              <td>
+                {% for name, term in tax_variable %}
+                  {% if(tax_variable ) %}
+                    <div class={{ "pokemon_node_field__term_" ~ name }}>
+                      <a href="{{ term.url }}"> {{ term.value }}</a>
+                    </div>
+                  {% endif %}
+                {% endfor %}
+              </td>
+            </tr>
+          {% endif %}
+        {% endfor %}
+      </table>
+    </div>
+  {% endif %}
+</div>
+

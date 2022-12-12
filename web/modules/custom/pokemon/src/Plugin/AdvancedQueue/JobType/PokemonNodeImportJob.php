@@ -5,7 +5,6 @@ namespace Drupal\pokemon\Plugin\AdvancedQueue\JobType;
 use Drupal\advancedqueue\Annotation\AdvancedQueueJobType;
 use Drupal\advancedqueue\Job;
 use Drupal\advancedqueue\JobResult;
-use Drupal\pokemon\PokemonManager;
 
 /**
  * @AdvancedQueueJobType(
@@ -32,94 +31,120 @@ class PokemonNodeImportJob extends PokemonBaseJobType {
     $pokemon_species = $this->pokemonManager->getResourceList("pokemon-species/{$species}");
     $egg_group = $this->getTaxField($pokemon_species['egg_groups']);
 
-    $fields = [
-      [
-        'field_name' => 'field_name',
-        'value' => $pokemon['name'],
-      ],
-      [
-        'field_name' => 'field_id',
-        'value' => $pokemon['id'],
-      ],
-      [
-        'field_name' => 'field_height',
-        'value' => $pokemon['height'],
-      ],
+    // [0] => field name, [1] => field id.
+    $fields_properties = [
+      ['field_name', $pokemon['name']],
+      ['field_id', $pokemon['id']],
+      ['field_height', $pokemon['height']],
     ];
 
-    $tax_fields = [
-      [
-        'field_name' => 'field_ability',
-        'vid' => 'abilities_api',
-        'terms' => $abilities,
-      ],
-      [
-        'field_name' => 'field_form',
-        'vid' => 'forms_api',
-        'terms' => $forms,
-      ],
-
-      [
-        'field_name' => 'field_type',
-        'vid' => 'types_api',
-        'terms' => $types,
-      ],
-      [
-        'field_name' => 'field_stat',
-        'vid' => 'stats_api',
-        'terms' => $stats,
-      ],
-      [
-        'field_name' => 'field_specie',
-        'vid' => 'species_api',
-        'terms' => [
-          $species,
-        ],
-      ],
-      [
-        'field_name' => 'field_color',
-        'vid' => 'colors_api',
-        'terms' => [
-          $pokemon_species['color']['name'],
-        ],
-      ],
-      [
-        'field_name' => 'field_habitat',
-        'vid' => 'habitats_api',
-        'terms' => [
-          $pokemon_species['habitat']['name'],
-        ],
-      ],
-      [
-        'field_name' => 'field_shape',
-        'vid' => 'shapes_api',
-        'terms' => [
-          $pokemon_species['shape']['name'],
-        ],
-      ],
-      [
-        'field_name' => 'field_egg_group',
-        'vid' => 'egg_groups_api',
-        'terms' => $egg_group,
-      ],
+    // [0] => field name, [1] => vid, [2] => terms.
+    $tax_field_properties = [
+      ['field_ability', 'abilities_api', $abilities],
+      ['field_form', 'forms_api', $forms],
+      ['field_type', 'types_api', $types],
+      ['field_stat', 'stats_api', $stats],
+      ['field_specie', 'species_api', [$species]],
+      ['field_color', 'colors_api', [$pokemon_species['color']['name']]],
+      ['field_habitat', 'habitats_api', [$pokemon_species['habitat']['name']]],
+      ['field_shape', 'shapes_api', [$pokemon_species['shape']['name']]],
+      ['field_egg_group', 'egg_groups_api', $egg_group],
     ];
 
-    $media_fields = [
-      'img' => [
-        'url' => PokemonManager::IMAGES_RESOURCE_URL."/{$pokemon['id']}.png",
-          'field_name' => 'field_pokemon_image',
-          'properties' => [
-            'field_pokemon_id' => $pokemon['id'],
-            'field_pokemon_name' => $pokemon['name'],
-            'bundle' => 'pokemon_image',
-          ],
-      ],
-    ];
+    $fields = [];
+    foreach ($fields_properties as $field) {
+      $fields[] = $this->setField($field[0], $field[1]);
+    }
 
-    $entity_creation_result = $this->createNode($fields, $tax_fields, $media_fields, $pokemon['name'],'pokemon');
+    $tax_fields = [];
+    foreach ($tax_field_properties as $tax_field) {
+      $tax_fields[] = $this->setTaxonomyField($tax_field[0], $tax_field[1], $tax_field[2]);
+    }
+
+    $img_field = $this->setImageField(
+      'pokemon_image',
+      'field_pokemon_image',
+      $pokemon['sprites']['other']['official-artwork']['front_default'],
+      $pokemon['id'], $pokemon['name'],
+    );
+
+    $entity_creation_result = $this->createNode($fields, $tax_fields, $img_field, $pokemon['name'], 'pokemon');
 
     $msg = $entity_creation_result->getStatus();
     return is_null($entity_creation_result->getEntity()) ? JobResult::failure($msg) : JobResult::success($msg);
+  }
+
+  /**
+   * @param string $field_name
+   *   The name of the field.
+   *
+   * @param string $vid
+   *   The taxonomy machine name.
+   *
+   * @param array $terms
+   *   The array of items.
+   *
+   * @return array
+   *   The taxonomy field.
+   */
+  protected function setTaxonomyField(string $field_name, string $vid, array $terms): array {
+    return [
+      'field_name' => $field_name,
+      'vid' => $vid,
+      'terms' => $terms,
+    ];
+  }
+
+  /**
+   * Sets default field.
+   *
+   * @param string $field_name
+   *   The name of the field.
+   *
+   * @param string $value
+   *   The value of the field.
+   *
+   * @return array
+   *   The field.
+   */
+  protected function setField(string $field_name, string $value): array {
+    return [
+      'field_name' => $field_name,
+      'value' => $value,
+    ];
+  }
+
+  /**
+   * Sets image field.
+   *
+   * @param string $bundle
+   *   The term bundle.
+   *
+   * @param string $field_name
+   *   The name of the field.
+   *
+   * @param string $img_url
+   *   The img url.
+   *
+   * @param int $pokemon_id
+   *   The id of pokemon.
+   *
+   * @param string $pokemon_name
+   *   The name of pokemon.
+   *
+   * @return array
+   *   The list of image fields.
+   */
+  protected function setImageField(string $bundle, string $field_name, string $img_url, int $pokemon_id, string $pokemon_name): array {
+    return [
+      'url' => $img_url,
+      'field_name' => $field_name,
+      'properties' => [
+        'field_pokemon_id' => $pokemon_id,
+        'field_pokemon_name' => $pokemon_name,
+        'bundle' => $bundle,
+      ],
+    ];
   }
 
   /**
@@ -134,7 +159,7 @@ class PokemonNodeImportJob extends PokemonBaseJobType {
    * @return array
    *  Terms of taxonomy field.
    */
-  public function getTaxField(array $tax_field_terms, string $name = NULL): array {
+  protected function getTaxField(array $tax_field_terms, string $name = NULL): array {
     $terms = [];
     foreach ($tax_field_terms as $term) {
       $terms[] = is_null($name) ? $term['name'] : $term[$name]['name'];

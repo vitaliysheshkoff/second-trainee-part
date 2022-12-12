@@ -1,0 +1,8 @@
+.field--type-image{
+  border: 2px solid;
+  background: linear-gradient(177deg, rgb(0, 145, 235), rgb(0, 0, 0));
+}
+
+.field{
+  text-align: center;
+}

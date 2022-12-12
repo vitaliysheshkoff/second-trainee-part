@@ -1,0 +1,22 @@
+uuid: 69b289ac-4a46-402c-98c4-bf91ad8aa21a
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - poemon
+_core:
+  default_config_hash: a0Yyx1GeyKarZ4T_yXQBR_ZFKnXiFLtxAb6gWLd8nr0
+id: poemon_content
+theme: poemon
+region: content
+weight: -1
+provider: null
+plugin: system_main_block
+settings:
+  id: system_main_block
+  label: 'Main page content'
+  label_display: '0'
+  provider: system
+visibility: {  }

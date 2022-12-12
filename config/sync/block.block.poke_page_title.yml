@@ -1,0 +1,20 @@
+uuid: bd293b50-9ee4-45e2-8788-e8f8e4d1f01b
+langcode: en
+status: true
+dependencies:
+  theme:
+    - poke
+_core:
+  default_config_hash: fNwDdW063tk_ktzSWzZVeQS9wzvLooVO280BQ9WrsIs
+id: poke_page_title
+theme: poke
+region: header
+weight: -30
+provider: null
+plugin: page_title_block
+settings:
+  id: page_title_block
+  label: 'Page title'
+  label_display: '0'
+  provider: core
+visibility: {  }
