@@ -1,4 +1,4 @@
-uuid: 67c1cb32-d3e1-43f0-b89a-e5b95a22b70c
+uuid: 546d1c14-c98b-43bf-945b-89b6fa161ef0
 langcode: en
 status: true
 dependencies:
@@ -13,7 +13,19 @@ module: pokemon
 callback: pokemon_form_tax_callback
 scheduler:
   id: simple
+  configuration:
+    rules:
+      - '0+@ 0 * * 0'
 launcher:
   id: serial
+  configuration:
+    timeouts:
+      lock_timeout: 3600
+    launcher:
+      thread: 0
 logger:
   id: database
+  configuration:
+    method: '3'
+    expire: 1209600
+    retain: 1000

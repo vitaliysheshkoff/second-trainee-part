@@ -2,6 +2,7 @@
 
 namespace Drupal\pokemon;
 
+use Drupal\Component\Serialization\Json;
 use Drupal\Core\Entity\EntityTypeManager;
 use PokePHP\PokeApi;
 
@@ -40,7 +41,8 @@ class PokemonManager implements PokemonManagerInterface {
   public function getResourceList(string $endpoint, int $limit = self::MAX_LIMIT): array {
     $api = new PokeApi;
     $resource_list_json = $api->resourceList($endpoint, $limit);
-    return json_decode($resource_list_json, flags: JSON_OBJECT_AS_ARRAY | JSON_THROW_ON_ERROR);
+
+    return json_decode($resource_list_json, flags: JSON_OBJECT_AS_ARRAY | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT | JSON_THROW_ON_ERROR);
   }
 
 }

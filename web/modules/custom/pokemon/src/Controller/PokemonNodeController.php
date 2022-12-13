@@ -20,6 +20,9 @@ class PokemonNodeController extends ControllerBase {
         '#theme' => 'pokemon_node',
         '#node' => $node,
         '#attached' => ['library' => ['pokemon/node-style']],
+        '#cache' => [
+          'tags' => ['node_list'],
+          ],
       ];
     }
   }

@@ -1,4 +1,4 @@
-uuid: 78b24025-489e-44de-abdf-4ad0f1967211
+uuid: b121b407-5648-4cf8-857b-fcb812f82d67
 langcode: en
 status: true
 dependencies:
@@ -13,7 +13,19 @@ module: pokemon
 callback: pokemon_node_callback
 scheduler:
   id: simple
+  configuration:
+    rules:
+      - '0+@ 0 * * 0'
 launcher:
   id: serial
+  configuration:
+    timeouts:
+      lock_timeout: 3600
+    launcher:
+      thread: 0
 logger:
   id: database
+  configuration:
+    method: '3'
+    expire: 1209600
+    retain: 1000

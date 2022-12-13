@@ -1,10 +1,16 @@
 <div{{ attributes.addClass('tax_term') }}>
-  <div class={{ "tax_term__" ~ item.bundle }}>
+  <div class={{ "tax_term__" ~ taxonomy_term.bundle }}>
     <div class="tax_term__header">
-      <h2 class="tax_term__title">{{ item.label }}</h2>
+      <h2 class="tax_term__title">{{ taxonomy_term.label }}</h2>
     </div>
     <div class="tax-term__content">
-      {{ item.view }}
+      {% set pokemon_view = drupal_view('pokemons', 'pokemon_taxonomy_embed', taxonomy_term.id) %}
+      {% if pokemon_view %}
+        {{ pokemon_view }}
+      {% else %}
+        {# Default term view shipped with drupal core.#}
+        {{ drupal_view('taxonomy_term', 'page_1', taxonomy_term.id) }}
+      {% endif %}
     </div>
   </div>
 </div>

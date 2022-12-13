@@ -2,7 +2,7 @@ services:
   pokemon.pokemon_manager:
     class: Drupal\pokemon\PokemonManager
     arguments: [ '@entity_type.manager' ]
-  dummy.route_subscriber:
+  pokemon.route_subscriber:
     class: Drupal\pokemon\EventSubscriber\RouteSubscriber
     tags:
       - { name: event_subscriber }

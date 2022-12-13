@@ -36,11 +36,10 @@ class PokemonTaxonomyTermController extends ControllerBase {
         '#theme' => 'pokemon_tax_term',
         '#taxonomy_term' => $taxonomy_term,
         '#attached' => ['library' => ['pokemon/tax-style']],
+        '#cache' => [
+          'tags' => ['taxonomy_term_list'],
+        ],
       ];
-    }
-    else {
-      // Default term view shipped with drupal core.
-      return views_embed_view('taxonomy_term', 'pokemon_api_view', $taxonomy_term->id());
     }
   }
 

@@ -1,4 +1,4 @@
-uuid: 86e19b65-e7c4-4c43-8562-54edfc26887e
+uuid: 24154d76-30e4-4773-91fc-3f056ea4cdf3
 langcode: en
 status: true
 dependencies:
@@ -13,7 +13,19 @@ module: pokemon
 callback: pokemon_image_callback
 scheduler:
   id: simple
+  configuration:
+    rules:
+      - '0+@ 0 * * 0'
 launcher:
   id: serial
+  configuration:
+    timeouts:
+      lock_timeout: 3600
+    launcher:
+      thread: 0
 logger:
   id: database
+  configuration:
+    method: '3'
+    expire: 1209600
+    retain: 1000

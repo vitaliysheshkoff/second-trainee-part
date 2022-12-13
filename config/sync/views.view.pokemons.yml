@@ -266,8 +266,8 @@ display:
         - 'user.node_grants:view'
         - user.permissions
       tags: {  }
-  embed_2:
-    id: embed_2
+  pokemon_taxonomy_embed:
+    id: pokemon_taxonomy_embed
     display_title: Embed
     display_plugin: embed
     position: 1

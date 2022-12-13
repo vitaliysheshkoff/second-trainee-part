@@ -109,6 +109,7 @@ abstract class PokemonBaseJobType extends JobTypeBase implements ContainerFactor
       if ($media_id) {
         $media = $this->entityTypeManager->getStorage('media')
           ->load($media_id);
+
         return new EntityCreationResult("Media is already exist", $media);
       }
 
@@ -138,6 +139,7 @@ abstract class PokemonBaseJobType extends JobTypeBase implements ContainerFactor
       $media->save();
 
       return new EntityCreationResult('Media image has successfully created', $media);
+
     } catch (\Throwable $e) {
       return new EntityCreationResult("Failure in creation new media image: {$e->getMessage()}");
     }
@@ -166,7 +168,8 @@ abstract class PokemonBaseJobType extends JobTypeBase implements ContainerFactor
 
     $msg = $entity_creation_result->getStatus();
     $result = $entity_creation_result->getEntity();
-    return isset($result) ? JobResult::failure($msg) : JobResult::success($msg);
+
+    return is_null($result) ? JobResult::failure($msg) : JobResult::success($msg);
   }
 
   /**
@@ -284,10 +287,12 @@ abstract class PokemonBaseJobType extends JobTypeBase implements ContainerFactor
         );
         $media_id = $this->getTidByName('media', $img_field['properties']);
       }
-      $node->set($img_field['field_name'], ['target_id' => $media_id]);
 
+      $node->set($img_field['field_name'], ['target_id' => $media_id]);
       $node->save();
+
       return new EntityCreationResult('Node has successfully created', $node);
+
     } catch (\Throwable $e) {
       return new EntityCreationResult("Failure in creation new node: {$e->getMessage()}");
     }

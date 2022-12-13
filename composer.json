@@ -32,6 +32,7 @@
         "drupal/radix": "^5.0",
         "drupal/search_api": "^1.28",
         "drupal/tvi": "^1.0@RC",
+        "drupal/twig_tweak": "^3.2",
         "drupal/ultimate_cron": "^2.0@alpha",
         "drupal/views_data_export": "^1.1",
         "drush/drush": "^11.0",

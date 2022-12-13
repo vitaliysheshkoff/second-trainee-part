@@ -72,7 +72,7 @@ class PokemonNodeImportJob extends PokemonBaseJobType {
 
     $msg = $entity_creation_result->getStatus();
     $result = $entity_creation_result->getEntity();
-    return isset($result) ? JobResult::failure($msg) : JobResult::success($msg);
+    return is_null($result) ? JobResult::failure($msg) : JobResult::success($msg);
   }
 
   /**
@@ -163,7 +163,7 @@ class PokemonNodeImportJob extends PokemonBaseJobType {
   protected function getTaxField(array $tax_field_terms, string $name = NULL): array {
     $terms = [];
     foreach ($tax_field_terms as $term) {
-      $terms[] = isset($name) ? $term['name'] : $term[$name]['name'];
+      $terms[] = is_null($name) ? $term['name'] : $term[$name]['name'];
     }
     return $terms;
   }
