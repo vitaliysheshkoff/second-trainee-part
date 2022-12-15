@@ -2,7 +2,6 @@
 
 namespace Drupal\pokemon\Plugin\AdvancedQueue\JobType;
 
-use Drupal\advancedqueue\Annotation\AdvancedQueueJobType;
 use Drupal\advancedqueue\Job;
 use Drupal\advancedqueue\JobResult;
 
@@ -152,13 +151,13 @@ class PokemonNodeImportJob extends PokemonBaseJobType {
    * Gets taxonomy field.
    *
    * @param array $tax_field_terms
-   *  Taxonomy field terms.
+   *   Taxonomy field terms.
    *
    * @param string|null $name
-   *  An optional name where term place.
+   *   An optional name where term place.
    *
    * @return array
-   *  Terms of taxonomy field.
+   *   Terms of taxonomy field.
    */
   protected function getTaxField(array $tax_field_terms, string $name = NULL): array {
     $terms = [];

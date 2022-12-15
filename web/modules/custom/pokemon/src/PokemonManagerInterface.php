@@ -12,7 +12,6 @@ interface PokemonManagerInterface {
    *
    * @param string $endpoint
    *   Name of endpoint.
-   *
    * @param int $limit
    *   Maximum limit of records.
    *
@@ -20,6 +19,5 @@ interface PokemonManagerInterface {
    *   Endpoint resource list.
    */
   public function getResourceList(string $endpoint, int $limit): array;
-
 
 }

@@ -2,11 +2,12 @@
 
 namespace Drupal\pokemon\Plugin\AdvancedQueue\JobType;
 
-use Drupal\advancedqueue\Annotation\AdvancedQueueJobType;
 use Drupal\advancedqueue\Job;
 use Drupal\advancedqueue\JobResult;
 
 /**
+ * Job for importing taxonomy terms.
+ *
  * @AdvancedQueueJobType(
  *   id = "pokemon_ability_import_job",
  *   label = @Translation("Pokemon: Ability Import Job"),

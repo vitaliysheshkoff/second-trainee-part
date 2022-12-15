@@ -6,7 +6,7 @@ use Drupal\Core\Controller\ControllerBase;
 use Drupal\taxonomy\TermInterface;
 
 /**
- * Class PokemonTaxonomyTermController.
+ * Provides controller for taxonomy terms.
  */
 class PokemonTaxonomyTermController extends ControllerBase {
 

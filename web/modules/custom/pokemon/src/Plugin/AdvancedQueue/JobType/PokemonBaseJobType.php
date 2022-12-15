@@ -36,7 +36,7 @@ abstract class PokemonBaseJobType extends JobTypeBase implements ContainerFactor
   /**
    * File system service.
    *
-   * @var \Drupal\Core\File\FileSystem;
+   * @var \Drupal\Core\File\FileSystem
    */
   protected $fileSystem;
 
@@ -51,13 +51,22 @@ abstract class PokemonBaseJobType extends JobTypeBase implements ContainerFactor
    *   The plugin implementation definition.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *   The entity query factory.
+   * @param \Drupal\pokemon\PokemonManager $pokemon_manager
+   *   Helper service to common functionality with Pokemon.
+   * @param \Drupal\Core\File\FileSystem $file_system
+   *   File system service.
    */
-  public function __construct(array          $configuration, $plugin_id, $plugin_definition, EntityTypeManagerInterface $entity_type_manager,
-                              PokemonManager $pokemon_manager, FileSystem $file_system) {
+  public function __construct(array $configuration,
+                                                         $plugin_id,
+                                                         $plugin_definition,
+                              EntityTypeManagerInterface $entity_type_manager,
+                              PokemonManager $pokemon_manager,
+                              FileSystem $file_system) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->entityTypeManager = $entity_type_manager;
     $this->pokemonManager = $pokemon_manager;
     $this->fileSystem = $file_system;
+
   }
 
   /**
@@ -84,17 +93,21 @@ abstract class PokemonBaseJobType extends JobTypeBase implements ContainerFactor
    * @param string $pokemon_name
    *   The name of pokemon.
    * @param string $pokemon_id
-   *   The id of pokemon
+   *   The id of pokemon.
    * @param int $uid
    *   The user id.
    * @param string $dir
    *   Temporary dir.
    *
-   * @return \Drupal\pokemon\EntityCreationResult.
+   * @return \Drupal\pokemon\EntityCreationResult
    *   Entity creation result result.
    */
-  public function createMediaImage(string $url, string $bundle_name, string $pokemon_name, string $pokemon_id,
-                                   int    $uid = 1, string $dir = 'public://media'): EntityCreationResult {
+  public function createMediaImage(string $url,
+                                   string $bundle_name,
+                                   string $pokemon_name,
+                                   string $pokemon_id,
+                                   int $uid = 1,
+                                   string $dir = 'public://media'): EntityCreationResult {
     $img_field = 'field_media_image_1';
     $id_field = 'field_pokemon_id';
     $name_field = 'field_pokemon_name';
@@ -140,7 +153,8 @@ abstract class PokemonBaseJobType extends JobTypeBase implements ContainerFactor
 
       return new EntityCreationResult('Media image has successfully created', $media);
 
-    } catch (\Throwable $e) {
+    }
+    catch (\Throwable $e) {
       return new EntityCreationResult("Failure in creation new media image: {$e->getMessage()}");
     }
   }
@@ -148,7 +162,7 @@ abstract class PokemonBaseJobType extends JobTypeBase implements ContainerFactor
   /**
    * Creates taxonomy term.
    *
-   * @param Job $job
+   * @param \Drupal\advancedqueue\Job $job
    *   The current job.
    * @param string $endpoint
    *   The name of endpoint.
@@ -157,7 +171,7 @@ abstract class PokemonBaseJobType extends JobTypeBase implements ContainerFactor
    * @param string $job_name
    *   The name of job.
    *
-   * @return \Drupal\advancedqueue\JobResult Job result.
+   * @return \Drupal\advancedqueue\JobResult
    *   Job result.
    */
   protected function taxonomyJobProcessing(Job $job, string $endpoint, string $term_name, string $job_name): JobResult {
@@ -180,7 +194,7 @@ abstract class PokemonBaseJobType extends JobTypeBase implements ContainerFactor
    * @param string $term_name
    *   Taxonomy term name.
    *
-   * @return EntityCreationResult
+   * @return \Drupal\pokemon\EntityCreationResult
    *   The entity creation result.
    */
   protected function createTerm(string $vid, string $term_name): EntityCreationResult {
@@ -207,7 +221,8 @@ abstract class PokemonBaseJobType extends JobTypeBase implements ContainerFactor
 
       return new EntityCreationResult('Taxonomy term has successfully created', $term);
 
-    } catch (\Throwable $e) {
+    }
+    catch (\Throwable $e) {
       return new EntityCreationResult("Failure in creation new taxonomy term: {$e->getMessage()}");
     }
   }
@@ -219,20 +234,22 @@ abstract class PokemonBaseJobType extends JobTypeBase implements ContainerFactor
    *   List of regular fields.
    * @param array $tax_fields
    *   List of taxonomy fields.
+   * @param array $img_field
+   *   The image.
    * @param string $title
    *   Node title.
    * @param string $type
    *   Node type.
    *
-   * @return EntityCreationResult
+   * @return \Drupal\pokemon\EntityCreationResult
    *   The entity creation result.
    */
   public function createNode(array $fields, array $tax_fields, array $img_field, string $title, string $type): EntityCreationResult {
     try {
-      // maybe get id_field and check the node by them(not by title)
+      // Maybe get id_field and check the node by them(not by title)
       $query = $this->entityTypeManager->getStorage('node')->getQuery();
       $query->condition('title', $title);
-      $node_ids = $query->execute();
+      $node_ids = $query->accessCheck(FALSE)->execute();
 
       if (!empty($node_ids)) {
         $node = $this->entityTypeManager->getStorage('node')
@@ -275,7 +292,7 @@ abstract class PokemonBaseJobType extends JobTypeBase implements ContainerFactor
         $node->set($tax_field['field_name'], $terms);
       }
 
-      // Set Img field
+      // Set Img field.
       $media_id = $this->getTidByName('media', $img_field['properties']);
       if (!$media_id) {
         // Create new media image.
@@ -293,7 +310,8 @@ abstract class PokemonBaseJobType extends JobTypeBase implements ContainerFactor
 
       return new EntityCreationResult('Node has successfully created', $node);
 
-    } catch (\Throwable $e) {
+    }
+    catch (\Throwable $e) {
       return new EntityCreationResult("Failure in creation new node: {$e->getMessage()}");
     }
   }
@@ -302,12 +320,12 @@ abstract class PokemonBaseJobType extends JobTypeBase implements ContainerFactor
    * Finds entity id by properties.
    *
    * @param string $entity_type_id
-   *  The entity type id.
+   *   The entity type id.
    * @param array $properties
-   *  The entity properties.
+   *   The entity properties.
    *
    * @return int
-   *  Term id or 0 if none.
+   *   Term id or 0 if none.
    */
   protected function getTidByName(string $entity_type_id, array $properties): int {
     $entity = $this->entityTypeManager->getStorage($entity_type_id)

@@ -4,10 +4,9 @@ namespace Drupal\pokemon\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\node\Entity\Node;
-use Drupal\taxonomy\TermInterface;
 
 /**
- * Class PokemonNodeController.
+ * Controller that manages pakemon node for pokemon module.
  */
 class PokemonNodeController extends ControllerBase {
 
@@ -22,7 +21,7 @@ class PokemonNodeController extends ControllerBase {
         '#attached' => ['library' => ['pokemon/node-style']],
         '#cache' => [
           'tags' => ['node_list'],
-          ],
+        ],
       ];
     }
   }

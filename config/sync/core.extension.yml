@@ -6,6 +6,7 @@ module:
   admin_toolbar_tools: 0
   advancedqueue: 0
   automated_cron: 0
+  batch_test: 0
   big_pipe: 0
   block: 0
   block_content: 0
@@ -13,6 +14,8 @@ module:
   ckeditor: 0
   comment: 0
   config: 0
+  config_filter: 0
+  config_split: 0
   contact: 0
   contextual: 0
   datetime: 0
@@ -63,6 +66,5 @@ theme:
   claro: 0
   stable: 0
   stable9: 0
-  poemon: 0
   poke: 0
 profile: standard

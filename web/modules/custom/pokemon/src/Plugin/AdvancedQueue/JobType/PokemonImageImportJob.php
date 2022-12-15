@@ -2,7 +2,6 @@
 
 namespace Drupal\pokemon\Plugin\AdvancedQueue\JobType;
 
-use Drupal\advancedqueue\Annotation\AdvancedQueueJobType;
 use Drupal\advancedqueue\Job;
 use Drupal\advancedqueue\JobResult;
 

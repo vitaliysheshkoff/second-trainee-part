@@ -2,7 +2,6 @@
 
 namespace Drupal\pokemon;
 
-
 use Drupal\Core\Entity\EntityInterface;
 
 /**
@@ -29,7 +28,7 @@ class EntityCreationResult {
    *
    * @param string $status
    *   The status from creation.
-   * @param  $entity
+   * @param \Drupal\Core\Entity\EntityInterface|null $entity
    *   The entity or NULL.
    */
   public function __construct(string $status, EntityInterface $entity = NULL) {
