@@ -1,0 +1,18 @@
+uuid: a132c95c-657b-43ea-9252-2bdfadec294f
+langcode: en
+status: true
+dependencies:
+  module:
+    - basic_auth
+    - pokemon
+    - serialization
+id: pokemon_pokemon_colors
+plugin_id: pokemon_pokemon_colors
+granularity: resource
+configuration:
+  methods:
+    - GET
+  formats:
+    - json
+  authentication:
+    - basic_auth

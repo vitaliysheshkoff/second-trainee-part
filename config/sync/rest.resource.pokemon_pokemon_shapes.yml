@@ -1,0 +1,18 @@
+uuid: 95b87c68-59f2-498c-8323-8d5fc58c496e
+langcode: en
+status: true
+dependencies:
+  module:
+    - basic_auth
+    - pokemon
+    - serialization
+id: pokemon_pokemon_shapes
+plugin_id: pokemon_pokemon_shapes
+granularity: resource
+configuration:
+  methods:
+    - GET
+  formats:
+    - json
+  authentication:
+    - basic_auth

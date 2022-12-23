@@ -1,0 +1,18 @@
+uuid: a75dd03b-0fe5-4393-ad53-35c42bf5df22
+langcode: en
+status: true
+dependencies:
+  module:
+    - basic_auth
+    - pokemon
+    - serialization
+id: pokemon_pokemon_egg_groups
+plugin_id: pokemon_pokemon_egg_groups
+granularity: resource
+configuration:
+  methods:
+    - GET
+  formats:
+    - json
+  authentication:
+    - basic_auth
