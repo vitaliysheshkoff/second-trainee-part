@@ -3,7 +3,9 @@
 namespace Drupal\pokemon\Plugin\rest\resource;
 
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\File\FileUrlGeneratorInterface;
 use Drupal\Core\Session\AccountProxyInterface;
+use Drupal\media\Entity\Media;
 use Drupal\node\Entity\Node;
 use Drupal\rest\Plugin\ResourceBase;
 use Drupal\rest\ResourceResponse;
@@ -40,11 +42,25 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 abstract class PokemonResource extends ResourceBase {
 
   /**
+   * A current user instance.
+   *
+   * @var \Drupal\Core\Session\AccountProxyInterface
+   */
+  protected $currentUser;
+
+  /**
    * The entity type manager.
    *
    * @var \Drupal\Core\Entity\EntityTypeManagerInterface
    */
   protected $entityTypeManager;
+
+  /**
+   * The file URL generator.
+   *
+   * @var \Drupal\Core\File\FileUrlGeneratorInterface
+   */
+  protected $fileUrlGenerator;
 
   /**
    * Constructs a new GetArticleResource object.
@@ -63,6 +79,8 @@ abstract class PokemonResource extends ResourceBase {
    *   A current user instance.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *   The entity type manager.
+   * @param \Drupal\Core\File\FileUrlGeneratorInterface $file_url_generator
+   *   The file URL generator.
    */
   public function __construct(
     array $configuration,
@@ -72,10 +90,12 @@ abstract class PokemonResource extends ResourceBase {
     LoggerInterface $logger,
     AccountProxyInterface $current_user,
     EntityTypeManagerInterface $entity_type_manager,
+    FileUrlGeneratorInterface $file_url_generator,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $serializer_formats, $logger);
     $this->currentUser = $current_user;
     $this->entityTypeManager = $entity_type_manager;
+    $this->fileUrlGenerator = $file_url_generator;
   }
 
   /**
@@ -90,6 +110,7 @@ abstract class PokemonResource extends ResourceBase {
       $container->get('logger.factory')->get('rest'),
       $container->get('current_user'),
       $container->get('entity_type.manager'),
+      $container->get('file_url_generator'),
     );
   }
 
@@ -147,6 +168,7 @@ abstract class PokemonResource extends ResourceBase {
    */
   protected function getFields(Node $node): array {
     $terms = [];
+    $imgs = [];
     $reg_fields = [];
 
     foreach ($node->getFields() as $key => $field) {
@@ -154,6 +176,7 @@ abstract class PokemonResource extends ResourceBase {
         $targetType = $field->getFieldDefinition()
           ->getItemDefinition()
           ->getSetting('target_type');
+        // Taxonomy terms.
         if ($targetType == 'taxonomy_term') {
           $field_name = $field->getName();
           $new_terms = array_map(function (TermInterface $term) {
@@ -164,7 +187,23 @@ abstract class PokemonResource extends ResourceBase {
           }, $field->referencedEntities());
           $terms = array_merge($terms, [$field_name => $new_terms]);
         }
+        // Media.
+        elseif ($targetType == 'media') {
+          $field_name = $field->getName();
+          $new_medias = array_map(function (Media $media) {
+            $image_uri = $media->get('field_media_image_1')->entity->getFileUri();
+            $media_url = \Drupal::service('file_url_generator')
+              ->generateAbsoluteString($image_uri);
+            return [
+              'name' => $media->label(),
+              'id' => $media->id(),
+              'url' => $media_url,
+            ];
+          }, $field->referencedEntities());
+          $imgs = array_merge($imgs, [$field_name => $new_medias]);
+        }
       }
+      // Not reference fields.
       else {
         $reg_fields[] = [$key => $field];
       }
@@ -173,6 +212,7 @@ abstract class PokemonResource extends ResourceBase {
     return [
       'regular_fields' => $reg_fields,
       'taxonomy_terms' => $terms,
+      'media' => $imgs,
     ];
   }
 
