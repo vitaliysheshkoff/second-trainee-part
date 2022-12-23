@@ -136,7 +136,6 @@ abstract class PokemonResource extends ResourceBase {
     );
 
     $results = [];
-
     foreach ($tree as $term) {
       $results[] = [
         'name' => $term->getName(),
@@ -192,7 +191,7 @@ abstract class PokemonResource extends ResourceBase {
           $field_name = $field->getName();
           $new_medias = array_map(function (Media $media) {
             $image_uri = $media->get('field_media_image_1')->entity->getFileUri();
-            $media_url = \Drupal::service('file_url_generator')
+            $media_url = $this->fileUrlGenerator
               ->generateAbsoluteString($image_uri);
             return [
               'name' => $media->label(),
@@ -215,5 +214,6 @@ abstract class PokemonResource extends ResourceBase {
       'media' => $imgs,
     ];
   }
+
 
 }
