@@ -1,4 +1,4 @@
-uuid: 21bb4c24-f2f0-4ad1-ae90-833ece9b07c2
+uuid: b6631d9d-b841-4333-96e8-3cfb39781632
 langcode: en
 status: true
 dependencies:
@@ -13,19 +13,7 @@ module: pokemon
 callback: pokemon_habitat_tax_callback
 scheduler:
   id: simple
-  configuration:
-    rules:
-      - '0+@ 0 * * 0'
 launcher:
   id: serial
-  configuration:
-    timeouts:
-      lock_timeout: 3600
-    launcher:
-      thread: 0
 logger:
   id: database
-  configuration:
-    method: '3'
-    expire: 1209600
-    retain: 1000

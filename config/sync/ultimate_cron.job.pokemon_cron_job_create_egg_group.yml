@@ -1,4 +1,4 @@
-uuid: ea75e7e7-e5db-4982-99ca-7c840ff8ac40
+uuid: 10a862ea-a6e0-428f-9c40-a5c8d155a30b
 langcode: en
 status: true
 dependencies:
@@ -13,19 +13,7 @@ module: pokemon
 callback: pokemon_egg_group_tax_callback
 scheduler:
   id: simple
-  configuration:
-    rules:
-      - '0+@ 0 * * 0'
 launcher:
   id: serial
-  configuration:
-    timeouts:
-      lock_timeout: 3600
-    launcher:
-      thread: 0
 logger:
   id: database
-  configuration:
-    method: '3'
-    expire: 1209600
-    retain: 1000

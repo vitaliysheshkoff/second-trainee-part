@@ -1,4 +1,6 @@
 _core:
-  default_config_hash: bOGVyms_cp_FJ08wn0UYeqPPzDPrilSD6Wk49AQKDW0
+  default_config_hash: ZnHozY923eDI8x5ooi7j6fc9OxBQiLuunWbU-_-aAYY
 even_title: 'Even minute'
 odd_title: 'Odd minute'
+even_entity: ''
+odd_entity: ''

@@ -57,8 +57,8 @@ abstract class PokemonBaseJobType extends JobTypeBase implements ContainerFactor
    *   File system service.
    */
   public function __construct(array $configuration,
-                                                         $plugin_id,
-                                                         $plugin_definition,
+                              $plugin_id,
+                              $plugin_definition,
                               EntityTypeManagerInterface $entity_type_manager,
                               PokemonManager $pokemon_manager,
                               FileSystem $file_system) {
