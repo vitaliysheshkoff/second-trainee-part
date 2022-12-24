@@ -1,6 +1,6 @@
 uuid: e45da56b-6a27-4fc7-a85a-7ba94eaa50ed
 langcode: en
-status: false
+status: true
 dependencies:
   module:
     - basic_auth

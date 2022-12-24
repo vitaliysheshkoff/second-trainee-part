@@ -1,17 +1,20 @@
-uuid: 7babdc99-e38e-4746-8cac-abb29a9bf356
+uuid: cb14c7fc-395d-47cb-932c-2b156a4ac405
 langcode: en
 status: true
 dependencies:
   module:
     - basic_auth
-    - pokemon
+    - openapi_test
     - serialization
-id: pokemon_pokemon_forms
-plugin_id: pokemon_pokemon_forms
+id: entity.openapi_test_entity
+plugin_id: 'entity:openapi_test_entity'
 granularity: resource
 configuration:
   methods:
     - GET
+    - POST
+    - DELETE
+    - PATCH
   formats:
     - json
   authentication:

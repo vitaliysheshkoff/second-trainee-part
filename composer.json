@@ -29,6 +29,11 @@
         "drupal/config_split": "^2.0@RC",
         "drupal/core-composer-scaffold": "^9.4",
         "drupal/core-recommended": "^9.4",
+        "drupal/fancy_file_delete": "^2.0",
+        "drupal/file_delete": "^2.0",
+        "drupal/image_style_warmer": "^1.1",
+        "drupal/media_entity_remote_image": "^1.0@alpha",
+        "drupal/media_thumbnails": "^1.0@beta",
         "drupal/openapi": "^2.1",
         "drupal/openapi_rest": "^2.0@RC",
         "drupal/openapi_ui": "^1.0@RC",
@@ -104,8 +109,6 @@
         "composer-exit-on-patch-failure": true,
         "patchLevel": {
             "drupal/core": "-p2"
-        },
-        "patches": {
         }
     }
 }

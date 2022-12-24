@@ -272,6 +272,9 @@ display:
     display_plugin: embed
     position: 1
     display_options:
+      defaults:
+        use_ajax: false
+      use_ajax: true
       display_extenders: {  }
     cache_metadata:
       max-age: -1

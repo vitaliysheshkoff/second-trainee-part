@@ -1,13 +1,12 @@
-uuid: 7babdc99-e38e-4746-8cac-abb29a9bf356
+uuid: af5c3284-63da-46f9-875b-c99165a8a6b3
 langcode: en
 status: true
 dependencies:
   module:
     - basic_auth
-    - pokemon
     - serialization
-id: pokemon_pokemon_forms
-plugin_id: pokemon_pokemon_forms
+id: entity.entity_view_mode
+plugin_id: 'entity:entity_view_mode'
 granularity: resource
 configuration:
   methods:

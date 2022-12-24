@@ -1,0 +1,8 @@
+initial_image_styles:
+  large: large
+  medium: medium
+  thumbnail: thumbnail
+queue_image_styles:
+  large: large
+  medium: medium
+  thumbnail: thumbnail

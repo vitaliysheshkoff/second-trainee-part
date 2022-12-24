@@ -1,6 +1,6 @@
 uuid: 8751740c-6f8a-4bac-891e-842c4fb4e52f
 langcode: en
-status: true
+status: false
 dependencies:
   config:
     - field.storage.node.field_color

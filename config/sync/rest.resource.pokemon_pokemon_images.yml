@@ -1,4 +1,4 @@
-uuid: 7babdc99-e38e-4746-8cac-abb29a9bf356
+uuid: f8acf071-e178-47a7-9c2e-c030a35e7ac6
 langcode: en
 status: true
 dependencies:
@@ -6,8 +6,8 @@ dependencies:
     - basic_auth
     - pokemon
     - serialization
-id: pokemon_pokemon_forms
-plugin_id: pokemon_pokemon_forms
+id: pokemon_pokemon_images
+plugin_id: pokemon_pokemon_images
 granularity: resource
 configuration:
   methods:

@@ -13,6 +13,7 @@ use Drupal\media\Entity\Media;
 use Drupal\pokemon\EntityCreationResult;
 use Drupal\pokemon\PokemonManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Twig\Error\RuntimeError;
 
 /**
  * Provides the base class for Pokemon Import job types.
@@ -127,7 +128,7 @@ abstract class PokemonBaseJobType extends JobTypeBase implements ContainerFactor
       }
 
       if ($this->fileSystem->prepareDirectory($dir, FileSystemInterface::CREATE_DIRECTORY)) {
-        $file = system_retrieve_file(trim($url), $dir, TRUE);
+        $file = system_retrieve_file(trim($url), $dir, TRUE, FileSystemInterface::EXISTS_REPLACE);
       }
 
       if (!isset($file)) {

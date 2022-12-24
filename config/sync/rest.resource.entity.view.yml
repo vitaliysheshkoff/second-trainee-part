@@ -1,11 +1,10 @@
 uuid: 7406b258-df92-47b6-a4d4-2044821a531d
 langcode: en
-status: false
+status: true
 dependencies:
   module:
     - basic_auth
     - serialization
-    - user
     - views
 id: entity.view
 plugin_id: 'entity:view'
@@ -17,4 +16,3 @@ configuration:
     - json
   authentication:
     - basic_auth
-    - cookie
