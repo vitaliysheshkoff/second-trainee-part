@@ -45,7 +45,7 @@ class UserApiConfigForm extends ConfigFormBase {
       '#title' => $this->t('API Base URL'),
       '#decription' => $this->t('the API Base URL'),
       '#required' => TRUE,
-      '#default_value' => $config->get('api_base_url' ?? ''),
+      '#default_value' => $config->get('api_base_url') ?? '',
     ];
 
     $form['header_accept'] = [
