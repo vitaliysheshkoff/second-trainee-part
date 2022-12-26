@@ -6,6 +6,12 @@
 
 use Drupal\advancedqueue\Entity\Queue;
 use Drupal\advancedqueue\Job;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\media\Entity\Media;
+use Drupal\node\NodeInterface;
+use Drupal\pokemon\Controller\PokemonTaxonomyTermController;
+use Drupal\pokemon\Event\PokemonMailingListEvent;
+use Drupal\taxonomy\Entity\Term;
 
 /**
  * Implements hook_theme().
@@ -168,3 +174,60 @@ function pokemon_create_jobs(string $endpoint, string $queue_id, string $job_typ
     $queue->enqueueJob($job);
   }
 }
+
+/**
+ * Implements hook_mail().
+ *
+ * @see \Drupal\pokemon\Mail\MailHandler
+ */
+function pokemon_mail(string $key, array &$message, array $params): void {
+  /** @var \Drupal\Core\Render\RendererInterface $renderer */
+  $renderer = \Drupal::service('renderer');
+
+  if (isset($params['headers'])) {
+    $message['headers'] = array_merge($message['headers'], $params['headers']);
+  }
+  if (!empty($params['from'])) {
+    $message['from'] = $params['from'];
+  }
+  $message['subject'] = $params['subject'];
+  $message['body'][] = $renderer->renderPlain($params['body']);
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_update().
+ */
+function pokemon_node_update(NodeInterface $node) {
+  if ($node->bundle() == "pokemon") {
+    pokemon_dispatch_event($node, PokemonMailingListEvent::UPDATE_POKEMON_NODE);
+  }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_update().
+ */
+function pokemon_taxonomy_term_update(Term $term) {
+  if (in_array($term->bundle(), PokemonTaxonomyTermController::VOCABULARIES)) {
+    pokemon_dispatch_event($term, PokemonMailingListEvent::UPDATE_POKEMON_TAX_TERM);
+  }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_update().
+ */
+function pokemon_media_update(Media $media) {
+  if ($media->bundle() == 'pokemon_image') {
+    pokemon_dispatch_event($media, PokemonMailingListEvent::UPDATE_POKEMON_MEDIA);
+  }
+}
+
+/**
+ * Dispatch event function
+ */
+function pokemon_dispatch_event(EntityInterface $entity, string $event_name) {
+  /** @var \Drupal\Component\EventDispatcher\ContainerAwareEventDispatcher $dispatcher */
+  $dispatcher = \Drupal::service('event_dispatcher');
+  $event = new PokemonMailingListEvent($entity);
+  $dispatcher->dispatch($event, $event_name);
+}
+

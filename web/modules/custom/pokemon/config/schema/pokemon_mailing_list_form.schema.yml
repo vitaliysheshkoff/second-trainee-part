@@ -1,0 +1,7 @@
+pokemon_mailing_list_form.settings:
+  type: config_object
+  label: 'Mailing list form settings'
+  mapping:
+    mailing_list:
+      type: text
+      label: 'Mailing list'

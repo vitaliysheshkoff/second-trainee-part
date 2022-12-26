@@ -13,7 +13,6 @@ use Drupal\media\Entity\Media;
 use Drupal\pokemon\EntityCreationResult;
 use Drupal\pokemon\PokemonManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Twig\Error\RuntimeError;
 
 /**
  * Provides the base class for Pokemon Import job types.

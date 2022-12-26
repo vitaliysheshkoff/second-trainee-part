@@ -86,6 +86,8 @@ class UserApiConfigForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
+    parent::submitForm($form, $form_state);
+
     $this->config(static::SETTINGS)
       ->set('api_base_url', $form_state->getValue('api_base_url'))
       ->set('api_token', $form_state->getValue('api_token'))
@@ -95,8 +97,6 @@ class UserApiConfigForm extends ConfigFormBase {
 
     $this->messenger()
       ->addMessage($this->t('New configuration has been saved'));
-
-    parent::submitForm($form, $form_state);
   }
 
 }
