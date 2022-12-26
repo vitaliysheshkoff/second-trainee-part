@@ -5,7 +5,7 @@ namespace Drupal\pokemon\Event;
 use Drupal\Component\EventDispatcher\Event;
 
 /**
- * Event for obtaining .
+ * Event for obtaining entity updates.
  */
 class PokemonMailingListEvent extends Event {
 

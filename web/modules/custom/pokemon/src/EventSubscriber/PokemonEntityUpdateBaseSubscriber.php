@@ -9,7 +9,7 @@ use Drupal\pokemon\Mail\EntityUpdateNotificationMail;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
- * Pokemon update node event subscriber.
+ * Pokemon entity update base event subscriber.
  */
 abstract class PokemonEntityUpdateBaseSubscriber implements EventSubscriberInterface {
 
@@ -32,7 +32,7 @@ abstract class PokemonEntityUpdateBaseSubscriber implements EventSubscriberInter
    * Constructs a new PokemonEntityUpdateBaseSubscriber object.
    *
    * @param \Drupal\pokemon\Mail\EntityUpdateNotificationMail $entity_update_notification_mail
-   *   The node update notification mail service.
+   *   The entity update notification mail service.
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
    *   The config factory.
    */
