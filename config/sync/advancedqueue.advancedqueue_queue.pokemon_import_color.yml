@@ -1,0 +1,18 @@
+uuid: 473b65bc-adb9-41f3-b15b-6b8520f74176
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: HbogkFM-P36Xju_4yZWv7dUh9Rl8ZTr9ZUzjOAroQbM
+id: pokemon_import_color
+label: 'Pokemon: Import Color'
+backend: database
+backend_configuration:
+  lease_time: 300
+processor: cron
+processing_time: 90
+threshold:
+  type: 0
+  limit: 0
+  state: all
+locked: false

@@ -1,0 +1,8 @@
+uuid: e4075c50-00f1-4186-8b00-6851b5e096a3
+langcode: en
+status: true
+dependencies: {  }
+name: 'Forms API'
+vid: forms_api
+description: ''
+weight: 0

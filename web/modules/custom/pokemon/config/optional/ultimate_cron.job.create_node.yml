@@ -1,0 +1,16 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - pokemon
+title: 'Cron for creating node from Pokemon API'
+id: pokemon_cron_job_create_node
+weight: 0
+module: pokemon
+callback: pokemon_node_callback
+scheduler:
+  id: simple
+launcher:
+  id: serial
+logger:
+  id: database

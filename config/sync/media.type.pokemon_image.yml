@@ -1,0 +1,13 @@
+uuid: c9f040c2-82af-4ed1-8986-f2e3eb551e45
+langcode: en
+status: true
+dependencies: {  }
+id: pokemon_image
+label: 'Pokemon Image'
+description: 'Pokemon image'
+source: image
+queue_thumbnail_downloads: false
+new_revision: false
+source_configuration:
+  source_field: field_media_image_1
+field_map: {  }

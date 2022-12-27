@@ -1,0 +1,20 @@
+uuid: 4a8daee8-60b5-41ea-994b-04927fbfe2ed
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - taxonomy
+id: node.field_ability
+field_name: field_ability
+entity_type: node
+type: entity_reference
+settings:
+  target_type: taxonomy_term
+module: core
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

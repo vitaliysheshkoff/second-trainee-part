@@ -1,4 +1,4 @@
-uuid: 349464a5-5df7-425a-9bdf-af4ed3317302
+uuid: 84e39822-4166-4c2f-9938-3f71027c5a79
 langcode: en
 status: true
 dependencies:
@@ -11,7 +11,7 @@ _core:
 id: olivero_messages
 theme: olivero
 region: highlighted
-weight: -6
+weight: -5
 provider: null
 plugin: system_messages_block
 settings:

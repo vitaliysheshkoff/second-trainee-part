@@ -1,0 +1,31 @@
+uuid: dc678c81-9489-4c94-b605-19d975e4874c
+langcode: en
+status: true
+dependencies:
+  module:
+    - pokemon
+_core:
+  default_config_hash: WXKg0K0FqYF1BrLaqpMwHzzr3m6ZJPuZe6EaclLhkHs
+title: 'Cron for creating form taxonomy from Pokemon API'
+id: pokemon_cron_job_create_form
+weight: 0
+module: pokemon
+callback: pokemon_form_tax_callback
+scheduler:
+  id: simple
+  configuration:
+    rules:
+      - '0+@ 0 * * 0'
+launcher:
+  id: serial
+  configuration:
+    timeouts:
+      lock_timeout: 3600
+    launcher:
+      thread: 0
+logger:
+  id: database
+  configuration:
+    method: '3'
+    expire: 1209600
+    retain: 1000

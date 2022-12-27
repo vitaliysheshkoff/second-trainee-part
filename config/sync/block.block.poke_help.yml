@@ -1,0 +1,22 @@
+uuid: eb8020bf-2adf-4bdd-9d37-9d5d98062058
+langcode: en
+status: true
+dependencies:
+  module:
+    - help
+  theme:
+    - poke
+_core:
+  default_config_hash: jccFSSVqV0WCDb6NtML1VWAWTtDbZ-zn5YgTRMgMrIM
+id: poke_help
+theme: poke
+region: help
+weight: 0
+provider: null
+plugin: help_block
+settings:
+  id: help_block
+  label: Help
+  label_display: '0'
+  provider: help
+visibility: {  }

@@ -1,0 +1,5 @@
+pokemon.update_nodes_batch:
+  route_name: pokemon.update_nodes_batch
+  title: Pokemon batch
+  description: 'Pokemon Batch API.'
+  parent: system.admin_config_content

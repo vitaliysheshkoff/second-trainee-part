@@ -1,0 +1,10 @@
+uuid: 91dec7e3-9bd7-4a3e-a649-0b6e72b1987d
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.pokemon_teaser
+label: 'Pokemon Teaser'
+targetEntityType: node
+cache: true

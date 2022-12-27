@@ -1,0 +1,31 @@
+uuid: 6b1730e3-d8c0-4c16-923b-b6865d232223
+langcode: en
+status: true
+dependencies:
+  module:
+    - pokemon
+_core:
+  default_config_hash: iXpCMnDtqSBnDeweyVjGgLldQiF9PSUdkJXAtGzWeVw
+title: 'Cron for creating ability taxonomy from Pokemon API'
+id: pokemon_cron_job_create_ability
+weight: 0
+module: pokemon
+callback: pokemon_ability_tax_callback
+scheduler:
+  id: simple
+  configuration:
+    rules:
+      - '0+@ 0 * * 0'
+launcher:
+  id: serial
+  configuration:
+    timeouts:
+      lock_timeout: 3600
+    launcher:
+      thread: 0
+logger:
+  id: database
+  configuration:
+    method: '3'
+    expire: 1209600
+    retain: 1000

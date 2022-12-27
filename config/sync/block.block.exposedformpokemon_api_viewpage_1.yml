@@ -1,0 +1,28 @@
+uuid: 024dd85f-83c6-45d6-a270-28341f3ccd6d
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.pokemon_api_view
+  module:
+    - system
+    - views
+  theme:
+    - claro
+id: exposedformpokemon_api_viewpage_1
+theme: claro
+region: content
+weight: -4
+provider: null
+plugin: 'views_exposed_filter_block:pokemon_api_view-page_1'
+settings:
+  id: 'views_exposed_filter_block:pokemon_api_view-page_1'
+  label: ''
+  label_display: '0'
+  provider: views
+  views_label: ''
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    pages: '<front>'

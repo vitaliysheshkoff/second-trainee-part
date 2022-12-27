@@ -1,4 +1,4 @@
-uuid: 6f813634-f49e-4df7-8866-0430537895ab
+uuid: 217fdbf4-a4e3-4e24-ab20-3265001c7132
 langcode: en
 status: true
 dependencies:
@@ -8,7 +8,7 @@ dependencies:
     - comment
     - contact
     - filter
-    - search
+    - media
     - shortcut
     - system
 _core:
@@ -23,6 +23,6 @@ permissions:
   - 'access shortcuts'
   - 'access site-wide contact form'
   - 'post comments'
-  - 'search content'
   - 'skip comment approval'
   - 'use text format basic_html'
+  - 'view media'

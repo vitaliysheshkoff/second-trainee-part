@@ -1,0 +1,279 @@
+uuid: 34e4e586-71bf-484d-9ee1-b02fa618c5b4
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ability
+    - field.storage.node.field_color
+    - field.storage.node.field_egg_group
+    - field.storage.node.field_form
+    - field.storage.node.field_habitat
+    - field.storage.node.field_height
+    - field.storage.node.field_id
+    - field.storage.node.field_name
+    - field.storage.node.field_shape
+    - field.storage.node.field_specie
+    - field.storage.node.field_stat
+    - field.storage.node.field_type
+    - search_api.server.default_server
+  module:
+    - node
+    - search_api
+id: pokemon_index
+name: 'Pokemon Index'
+description: ''
+read_only: false
+field_settings:
+  field_ability:
+    label: Ability
+    datasource_id: 'entity:node'
+    property_path: field_ability
+    type: integer
+    dependencies:
+      config:
+        - field.storage.node.field_ability
+  field_color:
+    label: Color
+    datasource_id: 'entity:node'
+    property_path: field_color
+    type: integer
+    dependencies:
+      config:
+        - field.storage.node.field_color
+  field_egg_group:
+    label: 'Egg Group'
+    datasource_id: 'entity:node'
+    property_path: field_egg_group
+    type: integer
+    dependencies:
+      config:
+        - field.storage.node.field_egg_group
+  field_form:
+    label: Form
+    datasource_id: 'entity:node'
+    property_path: field_form
+    type: integer
+    dependencies:
+      config:
+        - field.storage.node.field_form
+  field_habitat:
+    label: Habitat
+    datasource_id: 'entity:node'
+    property_path: field_habitat
+    type: integer
+    dependencies:
+      config:
+        - field.storage.node.field_habitat
+  field_height:
+    label: Height
+    datasource_id: 'entity:node'
+    property_path: field_height
+    type: integer
+    dependencies:
+      config:
+        - field.storage.node.field_height
+  field_id:
+    label: ID
+    datasource_id: 'entity:node'
+    property_path: field_id
+    type: integer
+    dependencies:
+      config:
+        - field.storage.node.field_id
+  field_name:
+    label: Name
+    datasource_id: 'entity:node'
+    property_path: field_name
+    type: text
+    boost: !!float 8
+    dependencies:
+      config:
+        - field.storage.node.field_name
+  field_shape:
+    label: Shape
+    datasource_id: 'entity:node'
+    property_path: field_shape
+    type: integer
+    dependencies:
+      config:
+        - field.storage.node.field_shape
+  field_specie:
+    label: Specie
+    datasource_id: 'entity:node'
+    property_path: field_specie
+    type: integer
+    dependencies:
+      config:
+        - field.storage.node.field_specie
+  field_stat:
+    label: Stat
+    datasource_id: 'entity:node'
+    property_path: field_stat
+    type: integer
+    dependencies:
+      config:
+        - field.storage.node.field_stat
+  field_type:
+    label: Type
+    datasource_id: 'entity:node'
+    property_path: field_type
+    type: integer
+    dependencies:
+      config:
+        - field.storage.node.field_type
+  node_grants:
+    label: 'Node access information'
+    property_path: search_api_node_grants
+    type: string
+    indexed_locked: true
+    type_locked: true
+    hidden: true
+  status:
+    label: status
+    datasource_id: 'entity:node'
+    property_path: status
+    type: boolean
+    indexed_locked: true
+    type_locked: true
+    dependencies:
+      module:
+        - node
+  type:
+    label: 'Content type'
+    datasource_id: 'entity:node'
+    property_path: type
+    type: string
+    dependencies:
+      module:
+        - node
+  uid:
+    label: uid
+    datasource_id: 'entity:node'
+    property_path: uid
+    type: integer
+    indexed_locked: true
+    type_locked: true
+    dependencies:
+      module:
+        - node
+datasource_settings:
+  'entity:node':
+    bundles:
+      default: false
+      selected:
+        - pokemon
+    languages:
+      default: true
+      selected: {  }
+processor_settings:
+  add_url: {  }
+  aggregated_field: {  }
+  content_access:
+    weights:
+      preprocess_query: -30
+  entity_status: {  }
+  entity_type: {  }
+  highlight:
+    weights:
+      postprocess_query: 0
+    prefix: '<strong>'
+    suffix: '</strong>'
+    excerpt: true
+    excerpt_always: false
+    excerpt_length: 256
+    exclude_fields: {  }
+    highlight: always
+    highlight_partial: true
+  html_filter:
+    weights:
+      preprocess_index: -15
+      preprocess_query: -15
+    all_fields: false
+    fields:
+      - field_name
+    title: true
+    alt: true
+    tags:
+      b: 2
+      h1: 5
+      h2: 3
+      h3: 2
+      strong: 2
+  ignorecase:
+    weights:
+      preprocess_index: -20
+      preprocess_query: -20
+    all_fields: false
+    fields:
+      - field_name
+  language_with_fallback: {  }
+  rendered_item: {  }
+  stopwords:
+    weights:
+      preprocess_index: -5
+      preprocess_query: -2
+    all_fields: false
+    fields:
+      - field_name
+    stopwords:
+      - a
+      - an
+      - and
+      - are
+      - as
+      - at
+      - be
+      - but
+      - by
+      - for
+      - if
+      - in
+      - into
+      - is
+      - it
+      - 'no'
+      - not
+      - of
+      - 'on'
+      - or
+      - s
+      - such
+      - t
+      - that
+      - the
+      - their
+      - then
+      - there
+      - these
+      - they
+      - this
+      - to
+      - was
+      - will
+      - with
+  tokenizer:
+    weights:
+      preprocess_index: -6
+      preprocess_query: -6
+    all_fields: false
+    fields:
+      - field_name
+    spaces: ''
+    ignored: ._-
+    overlap_cjk: 1
+    minimum_word_size: '3'
+  transliteration:
+    weights:
+      preprocess_index: -20
+      preprocess_query: -20
+    all_fields: false
+    fields:
+      - field_name
+tracker_settings:
+  default:
+    indexing_order: fifo
+options:
+  cron_limit: 50
+  index_directly: true
+  track_changes_in_references: true
+server: default_server

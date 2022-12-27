@@ -1,0 +1,31 @@
+uuid: 97903849-0007-4dd0-a28e-c0d63e977000
+langcode: en
+status: true
+dependencies:
+  module:
+    - pokemon
+_core:
+  default_config_hash: p5NOfZRoz9-9fOYe6GjAUMGDipIVxBbJiW63ZMdODEQ
+title: 'Cron for creating node from Pokemon API'
+id: pokemon_cron_job_create_node
+weight: 0
+module: pokemon
+callback: pokemon_node_callback
+scheduler:
+  id: simple
+  configuration:
+    rules:
+      - '0+@ 0 * * 0'
+launcher:
+  id: serial
+  configuration:
+    timeouts:
+      lock_timeout: 3600
+    launcher:
+      thread: 0
+logger:
+  id: database
+  configuration:
+    method: '3'
+    expire: 1209600
+    retain: 1000

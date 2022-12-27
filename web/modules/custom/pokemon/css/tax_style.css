@@ -1,0 +1,14 @@
+/**
+ * @file
+ * Styles for taxonomy displays.
+ * Contains \Drupal\pokemon\css\style.css.
+ */
+
+.tax_term {
+  border: 3px solid black;
+  text-align: center;
+}
+.tax_term__header {
+  font-weight: bold;
+  background: #7d919d;
+}

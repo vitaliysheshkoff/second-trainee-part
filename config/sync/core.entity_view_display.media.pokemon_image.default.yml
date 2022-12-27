@@ -1,0 +1,36 @@
+uuid: 2811a975-c2ba-4f2d-85b9-00dec0a4e650
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.media.pokemon_image.field_media_image_1
+    - field.field.media.pokemon_image.field_pokemon_id
+    - field.field.media.pokemon_image.field_pokemon_name
+    - image.style.large
+    - media.type.pokemon_image
+  module:
+    - image
+id: media.pokemon_image.default
+targetEntityType: media
+bundle: pokemon_image
+mode: default
+content:
+  field_media_image_1:
+    type: image
+    label: hidden
+    settings:
+      image_link: ''
+      image_style: large
+      image_loading:
+        attribute: lazy
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  created: true
+  field_pokemon_id: true
+  field_pokemon_name: true
+  name: true
+  search_api_excerpt: true
+  thumbnail: true
+  uid: true

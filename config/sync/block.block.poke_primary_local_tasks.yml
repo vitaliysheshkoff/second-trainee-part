@@ -1,0 +1,22 @@
+uuid: 31122e42-fb5c-4f09-bcc5-b2f60defde11
+langcode: en
+status: true
+dependencies:
+  theme:
+    - poke
+_core:
+  default_config_hash: ACjBZI5shAMiiUpsz-inLYVXDqNNXRnSzAWV3kV_8Hw
+id: poke_primary_local_tasks
+theme: poke
+region: header
+weight: 0
+provider: null
+plugin: local_tasks_block
+settings:
+  id: local_tasks_block
+  label: 'Primary tabs'
+  label_display: '0'
+  provider: core
+  primary: true
+  secondary: false
+visibility: {  }

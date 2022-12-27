@@ -1,0 +1,13 @@
+services:
+  pokemon.pokemon_manager:
+    class: Drupal\pokemon\PokemonManager
+    arguments: [ '@entity_type.manager' ]
+  pokemon.route_subscriber:
+    class: Drupal\pokemon\EventSubscriber\RouteSubscriber
+    tags:
+      - { name: event_subscriber }
+  pokemon.commands:
+    class: Drupal\pokemon\Commands\PokemonDrushCommands
+    arguments: [ '@entity_type.manager', '@logger.factory' ]
+    tags:
+      - { name: drush.command }

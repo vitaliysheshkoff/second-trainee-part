@@ -9,5 +9,5 @@ fetch:
   timeout: 30
 notification:
   emails:
-    - drupal-first@mail.com
+    - drupal-site@mail.com
   threshold: all

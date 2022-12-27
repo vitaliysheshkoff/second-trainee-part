@@ -1,0 +1,7 @@
+pokemon.update_nodes_batch:
+  path: '/admin/config/content/update-nodes-batch'
+  defaults:
+    _title: 'Pokemon update nodes batch'
+    _form: 'Drupal\pokemon\Form\UpdatePokemonNodeBatchForm'
+  requirements:
+    _permission: 'administer site configuration'

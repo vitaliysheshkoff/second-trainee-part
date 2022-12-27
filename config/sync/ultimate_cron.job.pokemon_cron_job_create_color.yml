@@ -1,0 +1,31 @@
+uuid: 42f1c2be-12a4-4eee-bfe9-f5b2908fb7a4
+langcode: en
+status: true
+dependencies:
+  module:
+    - pokemon
+_core:
+  default_config_hash: x8a0NNGQJaDvMEEVgPHjcn6PeY9174-hH1PuaJuL5as
+title: 'Cron for creating color taxonomy from Pokemon API'
+id: pokemon_cron_job_create_color
+weight: 0
+module: pokemon
+callback: pokemon_color_tax_callback
+scheduler:
+  id: simple
+  configuration:
+    rules:
+      - '0+@ 0 * * 0'
+launcher:
+  id: serial
+  configuration:
+    timeouts:
+      lock_timeout: 3600
+    launcher:
+      thread: 0
+logger:
+  id: database
+  configuration:
+    method: '3'
+    expire: 1209600
+    retain: 1000

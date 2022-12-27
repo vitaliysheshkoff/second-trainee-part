@@ -1,4 +1,4 @@
-uuid: a6f67f9c-4cc3-4913-925f-064ee937979e
+uuid: 777992c3-6a42-4564-9873-aba62bfd0f5e
 langcode: en
 status: true
 dependencies:
@@ -11,7 +11,7 @@ _core:
 id: olivero_breadcrumbs
 theme: olivero
 region: breadcrumb
-weight: -7
+weight: 0
 provider: null
 plugin: system_breadcrumb_block
 settings:

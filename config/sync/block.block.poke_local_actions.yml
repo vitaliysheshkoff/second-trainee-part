@@ -1,0 +1,20 @@
+uuid: a72dec42-f123-4b33-ace4-b943fce25b98
+langcode: en
+status: true
+dependencies:
+  theme:
+    - poke
+_core:
+  default_config_hash: CdXfDmRgAvms7EQovxxWPdYi0GitxeRbVtScYK16ZH0
+id: poke_local_actions
+theme: poke
+region: content
+weight: -2
+provider: null
+plugin: local_actions_block
+settings:
+  id: local_actions_block
+  label: 'Primary admin actions'
+  label_display: '0'
+  provider: core
+visibility: {  }

@@ -1,21 +1,56 @@
-uuid: 74a5c128-8db9-4cd3-8af0-9f58754770af
+uuid: 0232e504-a6ad-49b2-ab39-ce45617c735b
 langcode: en
 status: true
 dependencies:
   config:
+    - field.field.node.page.body
+    - field.field.node.page.field_example_image
+    - field.field.node.page.field_external_user
+    - field.field.node.page.field_title
+    - image.style.thumbnail
     - node.type.page
   module:
+    - image
     - path
+    - text
+_core:
+  default_config_hash: SfpLhPExzvR0MgFp0Wp7CrmgEnhcqQ-fXIWFhbf4ue0
 id: node.page.default
 targetEntityType: node
 bundle: page
 mode: default
 content:
+  body:
+    type: text_textarea_with_summary
+    weight: 6
+    region: content
+    settings:
+      rows: 9
+      summary_rows: 3
+      placeholder: ''
+      show_summary: false
+    third_party_settings: {  }
   created:
     type: datetime_timestamp
     weight: 2
     region: content
     settings: {  }
+    third_party_settings: {  }
+  field_example_image:
+    type: image_image
+    weight: 26
+    region: content
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
+    third_party_settings: {  }
+  field_title:
+    type: text_textfield
+    weight: 27
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
     third_party_settings: {  }
   path:
     type: path
@@ -32,7 +67,7 @@ content:
     third_party_settings: {  }
   status:
     type: boolean_checkbox
-    weight: 6
+    weight: 7
     region: content
     settings:
       display_label: true
@@ -62,4 +97,5 @@ content:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-hidden: {  }
+hidden:
+  field_external_user: true
