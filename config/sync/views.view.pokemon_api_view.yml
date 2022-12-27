@@ -210,7 +210,7 @@ display:
         type: grid
         options:
           uses_fields: false
-          columns: 5
+          columns: 4
           automatic_width: true
           alignment: horizontal
           row_class_custom: ''

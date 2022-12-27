@@ -1,4 +1,4 @@
-uuid: eb8020bf-2adf-4bdd-9d37-9d5d98062058
+uuid: f052b6e7-00e2-4617-b3ad-5ef2bcd1330c
 langcode: en
 status: true
 dependencies:
@@ -7,10 +7,10 @@ dependencies:
   theme:
     - poke
 _core:
-  default_config_hash: jccFSSVqV0WCDb6NtML1VWAWTtDbZ-zn5YgTRMgMrIM
+  default_config_hash: VfPFqqxfkomud5CO8DUijw85QIl9GIxh_nIxLOYESxg
 id: poke_help
 theme: poke
-region: help
+region: content_above
 weight: 0
 provider: null
 plugin: help_block
