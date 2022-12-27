@@ -1,0 +1,7 @@
+advertisement.advertisement:
+  path: '/advertisement'
+  defaults:
+    _title: 'Advertisement'
+    _form: 'Drupal\advertisement\Form\AdvertisementForm'
+  requirements:
+    _permission: 'access content'
