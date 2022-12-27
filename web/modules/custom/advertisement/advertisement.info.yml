@@ -1,0 +1,5 @@
+name: advertisement
+type: module
+description: Provides adding form to manipulate advertisement.
+package: Trainee custom modules
+core_version_requirement: ^9 || ^10
