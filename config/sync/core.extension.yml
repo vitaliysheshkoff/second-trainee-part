@@ -39,10 +39,13 @@ module:
   layout_builder: 0
   layout_discovery: 0
   link: 0
+  mailsystem: 0
   media: 0
   media_thumbnails: 0
   menu_link_content: 0
   menu_ui: 0
+  mimemail: 0
+  mimemail_example: 0
   minute: 0
   mysql: 0
   node: 0
@@ -65,6 +68,9 @@ module:
   search_api_db_defaults: 0
   serialization: 0
   shortcut: 0
+  smtp: 0
+  swiftmailer: 0
+  swiftmailer_test: 0
   system: 0
   taxonomy: 0
   text: 0
