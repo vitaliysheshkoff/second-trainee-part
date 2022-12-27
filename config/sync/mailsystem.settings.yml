@@ -5,4 +5,7 @@ defaults:
   sender: swiftmailer
   formatter: swiftmailer
 modules:
-  swiftmailer: {  }
+  swiftmailer:
+    none:
+      sender: php_mail
+      formatter: swiftmailer

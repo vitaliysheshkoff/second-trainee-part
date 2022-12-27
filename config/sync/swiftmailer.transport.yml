@@ -10,5 +10,5 @@ smtp_credential_provider: swiftmailer
 smtp_credentials:
   swiftmailer:
     username: testu8418@gmail.com
-    password: testuser8418
+    password: jogimjubybbirxga
 spool_directory: ''

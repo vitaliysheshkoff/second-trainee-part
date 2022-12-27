@@ -8,7 +8,7 @@ smtp_protocol: ssl
 smtp_autotls: true
 smtp_timeout: 30
 smtp_username: testu8418@gmail.com
-smtp_password: testuser8418
+smtp_password: jogimjubybbirxga
 smtp_from: testu8418@gmail.com
 smtp_fromname: ''
 smtp_client_hostname: ''
@@ -16,6 +16,6 @@ smtp_client_helo: ''
 smtp_allowhtml: '0'
 smtp_test_address: testu8418@gmail.com
 smtp_reroute_address: ''
-smtp_debugging: true
+smtp_debugging: false
 prev_mail_system: php_mail
 smtp_keepalive: false
