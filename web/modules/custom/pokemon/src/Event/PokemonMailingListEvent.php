@@ -3,6 +3,7 @@
 namespace Drupal\pokemon\Event;
 
 use Drupal\Component\EventDispatcher\Event;
+use Drupal\Core\Entity\EntityInterface;
 
 /**
  * Event for obtaining entity updates.
@@ -47,7 +48,7 @@ class PokemonMailingListEvent extends Event {
   /**
    * Returns the entity from hooks.
    */
-  public function getEntity() {
+  public function getEntity(): EntityInterface {
     return $this->entity;
   }
 

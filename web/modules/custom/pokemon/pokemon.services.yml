@@ -11,23 +11,8 @@ services:
     arguments: [ '@entity_type.manager', '@logger.factory' ]
     tags:
       - { name: drush.command }
-  pokemon.pokemon_update_node_subscriber:
-    class: Drupal\pokemon\EventSubscriber\PokemonUpdateNodeSubscriber
-    arguments: ['@pokemon.entity_update_notification_mail', '@config.factory']
-    tags:
-      - { name: event_subscriber }
-  pokemon.pokemon_update_tax_term_subscriber:
-    class: Drupal\pokemon\EventSubscriber\PokemonUpdateTaxTermSubscriber
-    arguments: [ '@pokemon.entity_update_notification_mail','@config.factory' ]
-    tags:
-      - { name: event_subscriber }
-  pokemon.pokemon_update_media_subscriber:
-    class: Drupal\pokemon\EventSubscriber\PokemonUpdateMediaSubscriber
-    arguments: [ '@pokemon.entity_update_notification_mail', '@config.factory' ]
-    tags:
-      - { name: event_subscriber }
-  pokemon.pokemon_entity_update_media_subscriber:
-    class: Drupal\pokemon\EventSubscriber\PokemonUpdateMediaSubscriber
+  pokemon.pokemon_entity_update_base_subscriber:
+    class: Drupal\pokemon\EventSubscriber\PokemonEntityUpdateSubscriber
     arguments: [ '@pokemon.entity_update_notification_mail', '@config.factory' ]
     tags:
       - { name: event_subscriber }

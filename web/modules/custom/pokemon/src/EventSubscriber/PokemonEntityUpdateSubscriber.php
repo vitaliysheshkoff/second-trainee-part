@@ -9,9 +9,9 @@ use Drupal\pokemon\Mail\EntityUpdateNotificationMail;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
- * Pokemon entity update base event subscriber.
+ * Pokemon entity update event subscriber.
  */
-abstract class PokemonEntityUpdateBaseSubscriber implements EventSubscriberInterface {
+class PokemonEntityUpdateSubscriber implements EventSubscriberInterface {
 
   /**
    * The entity update notification mail service.
@@ -19,7 +19,6 @@ abstract class PokemonEntityUpdateBaseSubscriber implements EventSubscriberInter
    * @var \Drupal\pokemon\Mail\EntityUpdateNotificationMail
    */
   protected $entityUpdateNotificationMail;
-
 
   /**
    * The config factory.
@@ -29,7 +28,7 @@ abstract class PokemonEntityUpdateBaseSubscriber implements EventSubscriberInter
   protected $configFactory;
 
   /**
-   * Constructs a new PokemonEntityUpdateBaseSubscriber object.
+   * Constructs a new PokemonEntityUpdateSubscriber object.
    *
    * @param \Drupal\pokemon\Mail\EntityUpdateNotificationMail $entity_update_notification_mail
    *   The entity update notification mail service.
@@ -45,6 +44,7 @@ abstract class PokemonEntityUpdateBaseSubscriber implements EventSubscriberInter
    * Subscriber function  for PokemonMailingListEvent::XXX.
    *
    * @param \Drupal\pokemon\Event\PokemonMailingListEvent $event
+   *   The event for obtaining entity updates.
    */
   public function updateEntity(PokemonMailingListEvent $event) {
     $config = $this->configFactory->getEditable(PokemonMailingListForm::SETTINGS);
@@ -55,6 +55,17 @@ abstract class PokemonEntityUpdateBaseSubscriber implements EventSubscriberInter
     foreach ($emails_arr as $email) {
       $this->entityUpdateNotificationMail->send($event->getEntity(), $email);
     }
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function getSubscribedEvents(): array {
+    $events[PokemonMailingListEvent::UPDATE_POKEMON_NODE][] = ['updateEntity'];
+    $events[PokemonMailingListEvent::UPDATE_POKEMON_TAX_TERM][] = ['updateEntity'];
+    $events[PokemonMailingListEvent::UPDATE_POKEMON_MEDIA][] = ['updateEntity'];
+
+    return $events;
   }
 
 }
