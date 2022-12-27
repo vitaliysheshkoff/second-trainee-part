@@ -25,7 +25,6 @@ module:
   devel: 0
   dynamic_page_cache: 0
   editor: 0
-  fancy_file_delete: 0
   field: 0
   field_ui: 0
   file: 0
@@ -39,13 +38,10 @@ module:
   layout_builder: 0
   layout_discovery: 0
   link: 0
-  mailsystem: 0
   media: 0
   media_thumbnails: 0
   menu_link_content: 0
   menu_ui: 0
-  mimemail: 0
-  mimemail_example: 0
   minute: 0
   mysql: 0
   node: 0
@@ -69,8 +65,8 @@ module:
   serialization: 0
   shortcut: 0
   smtp: 0
-  swiftmailer: 0
-  swiftmailer_test: 0
+  symfony_mailer: 0
+  symfony_mailer_bc: 0
   system: 0
   taxonomy: 0
   text: 0
@@ -81,7 +77,6 @@ module:
   ultimate_cron: 0
   update: 0
   user: 0
-  views_bulk_operations: 0
   views_ui: 0
   views: 10
   standard: 1000
