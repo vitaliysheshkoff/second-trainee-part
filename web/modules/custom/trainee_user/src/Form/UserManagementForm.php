@@ -63,13 +63,13 @@ class UserManagementForm extends FormBase {
    * {@inheritdoc}
    */
   public function validateForm(array &$form, FormStateInterface $form_state) {
+    parent::validateForm($form, $form_state);
+
     $email = $form_state->getValue('email');
     if (!$this->emailValidator->isValid($email)) {
       $form_state->setErrorByName('email',
         $this->t('The email address %mail is not valid.', ['%mail' => $email]));
     }
-
-    parent::validateForm($form, $form_state);
   }
 
   /**
