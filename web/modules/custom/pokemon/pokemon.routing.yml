@@ -5,3 +5,10 @@ pokemon.update_nodes_batch:
     _form: 'Drupal\pokemon\Form\UpdatePokemonNodeBatchForm'
   requirements:
     _permission: 'administer site configuration'
+pokemon.update-mailing_list:
+  path: '/admin/config/update-mailing-list'
+  defaults:
+    _form: 'Drupal\pokemon\Form\PokemonMailingListForm'
+    _title: 'Mailing list configuration'
+  requirements:
+    _permission: 'administer site configuration'

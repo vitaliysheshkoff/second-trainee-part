@@ -3,8 +3,12 @@
   margin-left: auto;
   margin-right: auto;
 }
-
-tr:hover {
-  background-color: coral;
+.pokemon_node_field__table {
+  margin-left: 30%;
 }
-
+tr:hover {
+  background-color: #007bc6;
+}
+.pokemon_node_field {
+  text-align: center;
+}

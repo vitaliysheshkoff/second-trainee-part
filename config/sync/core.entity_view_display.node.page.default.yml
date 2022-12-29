@@ -9,7 +9,7 @@ dependencies:
     - field.field.node.page.field_title
     - node.type.page
   module:
-    - image
+    - text
     - user
 _core:
   default_config_hash: M_Y8L5tfmhx7DR143E05YyZSpvgil6VFvqcfBWykalg
@@ -18,20 +18,22 @@ targetEntityType: node
 bundle: page
 mode: default
 content:
-  field_example_image:
-    type: image
+  body:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_title:
+    type: text_default
     label: above
-    settings:
-      image_link: ''
-      image_style: ''
-      image_loading:
-        attribute: lazy
+    settings: {  }
     third_party_settings: {  }
     weight: 0
     region: content
 hidden:
-  body: true
+  field_example_image: true
   field_external_user: true
-  field_title: true
   links: true
   search_api_excerpt: true

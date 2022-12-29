@@ -3,6 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - core.entity_view_mode.node.pokemon_teaser
     - field.storage.node.body
     - field.storage.node.field_ability
     - field.storage.node.field_color
@@ -19,6 +20,8 @@ dependencies:
     - field.storage.node.field_type
   module:
     - node
+    - rest
+    - serialization
     - text
     - user
 id: current_pokemon
@@ -989,12 +992,10 @@ display:
           row_class: ''
           default_row_class: true
       row:
-        type: fields
+        type: 'entity:node'
         options:
-          default_field_elements: true
-          inline: {  }
-          separator: ''
-          hide_empty: false
+          relationship: none
+          view_mode: pokemon_teaser
       query:
         type: views_query
         options:
@@ -1043,6 +1044,92 @@ display:
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
+        - url
+        - 'user.node_grants:view'
+        - user.permissions
+      tags:
+        - 'config:field.storage.node.body'
+        - 'config:field.storage.node.field_ability'
+        - 'config:field.storage.node.field_color'
+        - 'config:field.storage.node.field_egg_group'
+        - 'config:field.storage.node.field_form'
+        - 'config:field.storage.node.field_habitat'
+        - 'config:field.storage.node.field_height'
+        - 'config:field.storage.node.field_id'
+        - 'config:field.storage.node.field_name'
+        - 'config:field.storage.node.field_pokemon_image'
+        - 'config:field.storage.node.field_shape'
+        - 'config:field.storage.node.field_specie'
+        - 'config:field.storage.node.field_stat'
+        - 'config:field.storage.node.field_type'
+  rest_export_pokemon:
+    id: rest_export_pokemon
+    display_title: 'REST export'
+    display_plugin: rest_export
+    position: 2
+    display_options:
+      style:
+        type: serializer
+        options:
+          uses_fields: false
+          formats:
+            json: json
+      row:
+        type: data_field
+        options:
+          field_options:
+            field_pokemon_image:
+              alias: ''
+              raw_output: false
+            field_id:
+              alias: ''
+              raw_output: false
+            field_name:
+              alias: ''
+              raw_output: false
+            field_height:
+              alias: ''
+              raw_output: false
+            field_ability:
+              alias: ''
+              raw_output: false
+            body:
+              alias: ''
+              raw_output: false
+            field_color:
+              alias: ''
+              raw_output: false
+            field_egg_group:
+              alias: ''
+              raw_output: false
+            field_form:
+              alias: ''
+              raw_output: false
+            field_habitat:
+              alias: ''
+              raw_output: false
+            field_shape:
+              alias: ''
+              raw_output: false
+            field_specie:
+              alias: ''
+              raw_output: false
+            field_stat:
+              alias: ''
+              raw_output: false
+            field_type:
+              alias: ''
+              raw_output: false
+      display_extenders: {  }
+      path: api/v1/pokemonnn/%
+      auth:
+        - basic_auth
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - request_format
         - url
         - 'user.node_grants:view'
         - user.permissions

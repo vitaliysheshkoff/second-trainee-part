@@ -29,8 +29,20 @@
         "drupal/config_split": "^2.0@RC",
         "drupal/core-composer-scaffold": "^9.4",
         "drupal/core-recommended": "^9.4",
+        "drupal/file_delete": "^2.0",
+        "drupal/image_style_warmer": "^1.1",
+        "drupal/media_entity_remote_image": "^1.0@alpha",
+        "drupal/media_thumbnails": "^1.0@beta",
+        "drupal/openapi": "^2.1",
+        "drupal/openapi_rest": "^2.0@RC",
+        "drupal/openapi_ui": "^1.0@RC",
+        "drupal/openapi_ui_redoc": "^1.0@RC",
         "drupal/radix": "^5.0",
+        "drupal/restui": "^1.21",
         "drupal/search_api": "^1.28",
+        "drupal/smtp": "^1.2",
+        "drupal/swagger_ui_formatter": "^3.4",
+        "drupal/symfony_mailer": "^1.1@beta",
         "drupal/tvi": "^1.0@RC",
         "drupal/twig_tweak": "^3.2",
         "drupal/ultimate_cron": "^2.0@alpha",
@@ -98,8 +110,6 @@
         "composer-exit-on-patch-failure": true,
         "patchLevel": {
             "drupal/core": "-p2"
-        },
-        "patches": {
         }
     }
 }

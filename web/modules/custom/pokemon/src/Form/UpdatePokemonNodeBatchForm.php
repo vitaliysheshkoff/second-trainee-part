@@ -11,7 +11,7 @@ use Drupal\pokemon\PokemonProcessNodeBatch;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Configure Dummy settings for this site.
+ * Update batch for Pokemon nodes.
  */
 class UpdatePokemonNodeBatchForm extends FormBase {
 

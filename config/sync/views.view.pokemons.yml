@@ -190,9 +190,9 @@ display:
         type: grid
         options:
           uses_fields: false
-          columns: 4
-          automatic_width: true
-          alignment: vertical
+          columns: 3
+          automatic_width: false
+          alignment: horizontal
           row_class_custom: ''
           row_class_default: true
           col_class_custom: ''
@@ -272,6 +272,9 @@ display:
     display_plugin: embed
     position: 1
     display_options:
+      defaults:
+        use_ajax: false
+      use_ajax: true
       display_extenders: {  }
     cache_metadata:
       max-age: -1

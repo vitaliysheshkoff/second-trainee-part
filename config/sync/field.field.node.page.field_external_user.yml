@@ -17,7 +17,7 @@ required: false
 translatable: false
 default_value:
   -
-    external_user_id: 3028
+    external_user_id: 6191
 default_value_callback: ''
 settings: {  }
 field_type: user_reference_field

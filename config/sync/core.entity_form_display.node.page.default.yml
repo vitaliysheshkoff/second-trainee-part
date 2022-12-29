@@ -7,10 +7,8 @@ dependencies:
     - field.field.node.page.field_example_image
     - field.field.node.page.field_external_user
     - field.field.node.page.field_title
-    - image.style.thumbnail
     - node.type.page
   module:
-    - image
     - path
     - text
 _core:
@@ -36,17 +34,9 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  field_example_image:
-    type: image_image
-    weight: 26
-    region: content
-    settings:
-      progress_indicator: throbber
-      preview_image_style: thumbnail
-    third_party_settings: {  }
   field_title:
     type: text_textfield
-    weight: 27
+    weight: 8
     region: content
     settings:
       size: 60
@@ -98,4 +88,5 @@ content:
       placeholder: ''
     third_party_settings: {  }
 hidden:
+  field_example_image: true
   field_external_user: true

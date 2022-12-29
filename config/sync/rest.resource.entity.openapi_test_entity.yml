@@ -1,0 +1,21 @@
+uuid: cb14c7fc-395d-47cb-932c-2b156a4ac405
+langcode: en
+status: true
+dependencies:
+  module:
+    - basic_auth
+    - openapi_test
+    - serialization
+id: entity.openapi_test_entity
+plugin_id: 'entity:openapi_test_entity'
+granularity: resource
+configuration:
+  methods:
+    - GET
+    - POST
+    - DELETE
+    - PATCH
+  formats:
+    - json
+  authentication:
+    - basic_auth

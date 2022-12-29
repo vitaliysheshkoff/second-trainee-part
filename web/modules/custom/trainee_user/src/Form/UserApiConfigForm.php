@@ -45,7 +45,7 @@ class UserApiConfigForm extends ConfigFormBase {
       '#title' => $this->t('API Base URL'),
       '#decription' => $this->t('the API Base URL'),
       '#required' => TRUE,
-      '#default_value' => $config->get('api_base_url' ?? ''),
+      '#default_value' => $config->get('api_base_url') ?? '',
     ];
 
     $form['header_accept'] = [
@@ -86,6 +86,8 @@ class UserApiConfigForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
+    parent::submitForm($form, $form_state);
+
     $this->config(static::SETTINGS)
       ->set('api_base_url', $form_state->getValue('api_base_url'))
       ->set('api_token', $form_state->getValue('api_token'))
@@ -95,8 +97,6 @@ class UserApiConfigForm extends ConfigFormBase {
 
     $this->messenger()
       ->addMessage($this->t('New configuration has been saved'));
-
-    parent::submitForm($form, $form_state);
   }
 
 }

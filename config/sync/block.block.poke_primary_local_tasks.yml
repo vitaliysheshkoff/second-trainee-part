@@ -1,15 +1,15 @@
-uuid: 31122e42-fb5c-4f09-bcc5-b2f60defde11
+uuid: 41921308-5262-4d16-81c4-d1ca6a97b464
 langcode: en
 status: true
 dependencies:
   theme:
     - poke
 _core:
-  default_config_hash: ACjBZI5shAMiiUpsz-inLYVXDqNNXRnSzAWV3kV_8Hw
+  default_config_hash: nGE3EoPQQaQCuqTUtZgw0-KIzmrqdKDzdNQf2JyPUt4
 id: poke_primary_local_tasks
 theme: poke
-region: header
-weight: 0
+region: highlighted
+weight: -4
 provider: null
 plugin: local_tasks_block
 settings:

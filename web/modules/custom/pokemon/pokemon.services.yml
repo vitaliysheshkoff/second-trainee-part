@@ -11,3 +11,14 @@ services:
     arguments: [ '@entity_type.manager', '@logger.factory' ]
     tags:
       - { name: drush.command }
+  pokemon.pokemon_entity_update_base_subscriber:
+    class: Drupal\pokemon\EventSubscriber\PokemonEntityUpdateSubscriber
+    arguments: [ '@pokemon.entity_update_notification_mail', '@config.factory' ]
+    tags:
+      - { name: event_subscriber }
+  pokemon.mail_handler:
+    class: Drupal\pokemon\Mail\MailHandler
+    arguments: [ '@plugin.manager.mail', '@language_manager', '@language.default', '@string_translation' ]
+  pokemon.entity_update_notification_mail:
+    class: Drupal\pokemon\Mail\EntityUpdateNotificationMail
+    arguments: [ '@pokemon.mail_handler', '@request_stack', '@config.factory' ]

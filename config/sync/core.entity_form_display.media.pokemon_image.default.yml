@@ -6,7 +6,7 @@ dependencies:
     - field.field.media.pokemon_image.field_media_image_1
     - field.field.media.pokemon_image.field_pokemon_id
     - field.field.media.pokemon_image.field_pokemon_name
-    - image.style.thumbnail
+    - image.style.medium
     - media.type.pokemon_image
   module:
     - image
@@ -20,8 +20,8 @@ content:
     weight: 2
     region: content
     settings:
-      progress_indicator: throbber
-      preview_image_style: thumbnail
+      progress_indicator: bar
+      preview_image_style: medium
     third_party_settings: {  }
   field_pokemon_id:
     type: number

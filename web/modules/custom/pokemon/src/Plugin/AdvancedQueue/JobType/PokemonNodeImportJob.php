@@ -71,16 +71,17 @@ class PokemonNodeImportJob extends PokemonBaseJobType {
 
     $msg = $entity_creation_result->getStatus();
     $result = $entity_creation_result->getEntity();
+
     return is_null($result) ? JobResult::failure($msg) : JobResult::success($msg);
   }
 
   /**
+   * Sets taxonomy field.
+   *
    * @param string $field_name
    *   The name of the field.
-   *
    * @param string $vid
    *   The taxonomy machine name.
-   *
    * @param array $terms
    *   The array of items.
    *
@@ -100,7 +101,6 @@ class PokemonNodeImportJob extends PokemonBaseJobType {
    *
    * @param string $field_name
    *   The name of the field.
-   *
    * @param string $value
    *   The value of the field.
    *
@@ -119,16 +119,12 @@ class PokemonNodeImportJob extends PokemonBaseJobType {
    *
    * @param string $bundle
    *   The term bundle.
-   *
    * @param string $field_name
    *   The name of the field.
-   *
    * @param string $img_url
    *   The img url.
-   *
    * @param int $pokemon_id
    *   The id of pokemon.
-   *
    * @param string $pokemon_name
    *   The name of pokemon.
    *
@@ -152,7 +148,6 @@ class PokemonNodeImportJob extends PokemonBaseJobType {
    *
    * @param array $tax_field_terms
    *   Taxonomy field terms.
-   *
    * @param string|null $name
    *   An optional name where term place.
    *

@@ -1,4 +1,4 @@
-uuid: 657eab13-357e-4a4b-8472-cdc88715d1e7
+uuid: a5a44771-d10c-4462-9f78-d2ad7d7ef98d
 langcode: en
 status: true
 dependencies:
@@ -7,7 +7,7 @@ dependencies:
   theme:
     - poke
 _core:
-  default_config_hash: NjcxOBrPOiK5-38t56DwFBDVY4yer7YSlbRWXFuHe7A
+  default_config_hash: VhBzWb7lMRtIOg9G7VSw_0uopi-7zXeHq4vXqqV1HFE
 id: poke_breadcrumbs
 theme: poke
 region: breadcrumb

@@ -1,15 +1,15 @@
-uuid: a72dec42-f123-4b33-ace4-b943fce25b98
+uuid: 6cd9d196-737e-4e98-af27-1f411e0421db
 langcode: en
 status: true
 dependencies:
   theme:
     - poke
 _core:
-  default_config_hash: CdXfDmRgAvms7EQovxxWPdYi0GitxeRbVtScYK16ZH0
-id: poke_local_actions
+  default_config_hash: Q9_2whdOj1YIomfvsIfopROW4FT_X5pY0DjdOiOaQ5U
+id: poke_primary_admin_actions
 theme: poke
-region: content
-weight: -2
+region: highlighted
+weight: -5
 provider: null
 plugin: local_actions_block
 settings:

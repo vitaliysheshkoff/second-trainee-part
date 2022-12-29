@@ -1,0 +1,18 @@
+uuid: 1c5f56ed-1378-453d-87ef-056427a86d18
+langcode: en
+status: true
+dependencies:
+  module:
+    - basic_auth
+    - pokemon
+    - serialization
+id: pokemon_pokemon_abilities
+plugin_id: pokemon_pokemon_abilities
+granularity: resource
+configuration:
+  methods:
+    - GET
+  formats:
+    - json
+  authentication:
+    - basic_auth

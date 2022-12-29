@@ -1,0 +1,18 @@
+uuid: 1192c8ec-308e-4c27-acf6-a805c1da9d8d
+langcode: en
+status: true
+dependencies: {  }
+id: swiftmailer
+label: 'Imported from swiftmailer'
+plugin: smtp
+configuration:
+  user: testu8418@gmail.com
+  pass: jogimjubybbirxga
+  host: smtp.gmail.com
+  port: 465
+  query:
+    verify_peer: true
+    local_domain: ''
+    restart_threshold: null
+    restart_threshold_sleep: null
+    ping_threshold: null
